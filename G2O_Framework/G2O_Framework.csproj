@@ -41,20 +41,42 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Hand.cs" />
+    <Compile Include="HandItemEquipedEventArgs.cs" />
+    <Compile Include="IInventory.cs" />
+    <Compile Include="IItem.cs" />
+    <Compile Include="IItemInstanceProvider.cs" />
+    <Compile Include="IPlugin.cs" />
+    <Compile Include="IPluginManager.cs" />
+    <Compile Include="ISquirrelApi.cs" />
+    <Compile Include="ItemEquipedEventArgs.cs" />
+    <Compile Include="ChangeWeaponModeEventArgs.cs" />
+    <Compile Include="ColorChangedEventArgs.cs" />
+    <Compile Include="DeadEventArgs.cs" />
+    <Compile Include="DisconnectReason.cs" />
+    <Compile Include="FocusChangedEventArgs.cs" />
     <Compile Include="HealthChangedEventArgs.cs" />
     <Compile Include="ClientDisconnectedEventArgs.cs" />
+    <Compile Include="HitEventArgs.cs" />
     <Compile Include="ICharacter.cs" />
     <Compile Include="IClient.cs" />
     <Compile Include="IClientList.cs" />
+    <Compile Include="IItemInstance.cs" />
     <Compile Include="IPacket.cs" />
     <Compile Include="IServer.cs" />
     <Compile Include="ClientConnectedEventArgs.cs" />
     <Compile Include="MaxHealthChangedEventArgs.cs" />
     <Compile Include="PacketReceivedEventArgs.cs" />
+    <Compile Include="PacketReliability.cs" />
     <Compile Include="Point3D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RespawnEventArgs.cs" />
     <Compile Include="ServerInitializedEventArgs.cs" />
     <Compile Include="ServerTime.cs" />
+    <Compile Include="SkillWeapon.cs" />
+    <Compile Include="Talent.cs" />
+    <Compile Include="UnconsciousEventArgs.cs" />
+    <Compile Include="WeaponMode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

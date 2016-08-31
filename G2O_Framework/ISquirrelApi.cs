@@ -5,7 +5,7 @@ namespace GothicOnline.G2.DotNet.Squirrel
     /// <summary>
     /// Provides all functions the squirrel moduel api.
     /// <remarks>Each method has at leat two overloads. One with the vm parameter an one without. 
-    /// If the vm is not provided explicitely, the default one is used.</remarks>
+    /// If the vm is not provided explicitly, the default one is used.</remarks>
     /// </summary>
     public interface ISquirrelApi
     {

@@ -38,7 +38,6 @@
     <Compile Include="Entry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Squirrel\Sqobject.cs" />
-    <Compile Include="Squirrel\ISquirrelApi.cs" />
     <Compile Include="Squirrel\ParamterDelegates.cs" />
     <Compile Include="Squirrel\SQObjectType.cs" />
     <Compile Include="Squirrel\SqObjectValue.cs" />
@@ -48,6 +47,12 @@
     <Compile Include="Squirrel\Squirrel.cs" />
     <Compile Include="Squirrel\SquirrelObjectTypeMask.cs" />
     <Compile Include="Squirrel\VmState.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\G2O_Framework\G2O_Framework.csproj">
+      <Project>{91cc7772-325c-454d-bcb1-57219f17ec26}</Project>
+      <Name>G2O_Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
