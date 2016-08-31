@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "G2O_DotNet_LoaderCLI", "G2O_DotNet_LoaderCLI\G2O_DotNet_LoaderCLI.vcxproj", "{48A6B4E1-DD91-4B3C-9F67-7604661C5D00}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G2O_DotNet", "G2O_DotNet\G2O_DotNet.csproj", "{3E62A4E0-7A83-45DE-814D-1FEB9D16D92A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Enviroment", "Enviroment", "{1276E019-B316-4334-B7E9-122DAA6ED50D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G2O_Framework", "G2O_Framework\G2O_Framework.csproj", "{91CC7772-325C-454D-BCB1-57219F17EC26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,18 @@ Global
 		{3E62A4E0-7A83-45DE-814D-1FEB9D16D92A}.Release|x64.Build.0 = Release|Any CPU
 		{3E62A4E0-7A83-45DE-814D-1FEB9D16D92A}.Release|x86.ActiveCfg = Release|Any CPU
 		{3E62A4E0-7A83-45DE-814D-1FEB9D16D92A}.Release|x86.Build.0 = Release|Any CPU
+		{91CC7772-325C-454D-BCB1-57219F17EC26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91CC7772-325C-454D-BCB1-57219F17EC26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91CC7772-325C-454D-BCB1-57219F17EC26}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{91CC7772-325C-454D-BCB1-57219F17EC26}.Debug|x64.Build.0 = Debug|Any CPU
+		{91CC7772-325C-454D-BCB1-57219F17EC26}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{91CC7772-325C-454D-BCB1-57219F17EC26}.Debug|x86.Build.0 = Debug|Any CPU
+		{91CC7772-325C-454D-BCB1-57219F17EC26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91CC7772-325C-454D-BCB1-57219F17EC26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91CC7772-325C-454D-BCB1-57219F17EC26}.Release|x64.ActiveCfg = Release|Any CPU
+		{91CC7772-325C-454D-BCB1-57219F17EC26}.Release|x64.Build.0 = Release|Any CPU
+		{91CC7772-325C-454D-BCB1-57219F17EC26}.Release|x86.ActiveCfg = Release|Any CPU
+		{91CC7772-325C-454D-BCB1-57219F17EC26}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,5 +79,6 @@ Global
 		{48A6B4E1-DD91-4B3C-9F67-7604661C5D00} = {422A5E3F-BAC7-4A5B-904E-FFA1E64E74F4}
 		{7273799D-F145-49BF-964D-38395E8EF154} = {422A5E3F-BAC7-4A5B-904E-FFA1E64E74F4}
 		{3E62A4E0-7A83-45DE-814D-1FEB9D16D92A} = {BA7CCF80-498E-4EB2-94BE-44EBA64928E9}
+		{91CC7772-325C-454D-BCB1-57219F17EC26} = {BA7CCF80-498E-4EB2-94BE-44EBA64928E9}
 	EndGlobalSection
 EndGlobal

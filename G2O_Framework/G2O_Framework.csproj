@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3E62A4E0-7A83-45DE-814D-1FEB9D16D92A}</ProjectGuid>
+    <ProjectGuid>{91CC7772-325C-454D-BCB1-57219F17EC26}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GothicOnline.G2.DotNet</RootNamespace>
-    <AssemblyName>G2O_DotNet</AssemblyName>
+    <RootNamespace>G2O_Framework</RootNamespace>
+    <AssemblyName>G2O_Framework</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Debug\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Release\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -33,21 +33,28 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entry.cs" />
+    <Compile Include="HealthChangedEventArgs.cs" />
+    <Compile Include="ClientDisconnectedEventArgs.cs" />
+    <Compile Include="ICharacter.cs" />
+    <Compile Include="IClient.cs" />
+    <Compile Include="IClientList.cs" />
+    <Compile Include="IPacket.cs" />
+    <Compile Include="IServer.cs" />
+    <Compile Include="ClientConnectedEventArgs.cs" />
+    <Compile Include="MaxHealthChangedEventArgs.cs" />
+    <Compile Include="PacketReceivedEventArgs.cs" />
+    <Compile Include="Point3D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Squirrel\Sqobject.cs" />
-    <Compile Include="Squirrel\ISquirrelApi.cs" />
-    <Compile Include="Squirrel\ParamterDelegates.cs" />
-    <Compile Include="Squirrel\SQObjectType.cs" />
-    <Compile Include="Squirrel\SqObjectValue.cs" />
-    <Compile Include="Squirrel\SqResult.cs" />
-    <Compile Include="Squirrel\SqStackInfos.cs" />
-    <Compile Include="Squirrel\SquirrelApi.cs" />
-    <Compile Include="Squirrel\Squirrel.cs" />
-    <Compile Include="Squirrel\SquirrelObjectTypeMask.cs" />
-    <Compile Include="Squirrel\VmState.cs" />
+    <Compile Include="ServerInitializedEventArgs.cs" />
+    <Compile Include="ServerTime.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
