@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SqResult.cs" company="Colony Online Project">
+// <copyright file="HandItemEquipedEventArgs.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  <ulian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,21 +19,24 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Squirrel
+namespace GothicOnline.G2.DotNet.Character
 {
-    /// <summary>
-    ///     Defines the possible results of squirrel functions.
-    /// </summary>
-    public enum SqResult
-    {
-        /// <summary>
-        ///     The function call caused an error.
-        /// </summary>
-        SqError = -1, 
+    using System;
+    using System.ComponentModel;
 
-        /// <summary>
-        ///     The function call was successfull.
-        /// </summary>
-        SqOk = 0
+    public class HandItemEquipedEventArgs : ItemEquipedEventArgs
+    {
+        public HandItemEquipedEventArgs(ICharacter character, IItemInstance instance, Hand hand)
+            : base(character, instance)
+        {
+            if (!Enum.IsDefined(typeof(Hand), hand))
+            {
+                throw new InvalidEnumArgumentException(nameof(hand), (int)hand, typeof(Hand));
+            }
+
+            this.Hand = hand;
+        }
+
+        public Hand Hand { get; }
     }
 }

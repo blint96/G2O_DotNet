@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SqResult.cs" company="Colony Online Project">
+// <copyright file="IPluginManager.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  <ulian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,21 +19,26 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Squirrel
+namespace GothicOnline.G2.DotNet.Plugin
 {
-    /// <summary>
-    ///     Defines the possible results of squirrel functions.
-    /// </summary>
-    public enum SqResult
+    public interface IPluginManager
     {
-        /// <summary>
-        ///     The function call caused an error.
-        /// </summary>
-        SqError = -1, 
+        int PluginCount { get; }
 
         /// <summary>
-        ///     The function call was successfull.
+        ///     Gets the directory of the calling plugin.
         /// </summary>
-        SqOk = 0
+        /// <returns> The directory of the calling plugin.</returns>
+        string GetLocalPluginDirectory();
+
+        string GetPluginFilePath();
+
+        /// <summary>
+        ///     Gets the public interface of another plugin.
+        ///     <remarks>Can return null if the given interface is not available.</remarks>
+        /// </summary>
+        /// <typeparam name="TPlugin">The type of the interface that should be returned.</typeparam>
+        /// <returns>The instance of the interface that was provided by the other plugin</returns>
+        TPlugin GetPluginInterface<TPlugin>();
     }
 }

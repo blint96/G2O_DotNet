@@ -22,7 +22,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
     using System.Reflection;
     using System.Runtime.InteropServices;
 
-    using GothicOnline.G2.DotNet.Squirrel.Squirrel;
+    using GothicOnline.G2.DotNet.Squirrel;
 
     internal class SquirrelApi : ISquirrelApi
     {
@@ -88,7 +88,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         ///     <remarks>Only works on arrays.</remarks>
         /// </summary>
         /// <param name="index">Index of the target array in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqArrayAppend(int index)
         {
             return this._Api.ArrayAppend(this.Vm, index) == SqResult.SqOk;
@@ -100,7 +100,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="vm">The target VM.</param>
         /// <param name="index">Index of the target array in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqArrayAppend(IntPtr vm, int index)
         {
             if (vm == IntPtr.Zero)
@@ -117,7 +117,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="index">Index of the target array in the stack.</param>
         /// <param name="destPos">The postion in the array where the item has to be inserted.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqArrayInsert(int index, int destPos)
         {
             return this._Api.ArrayInsert(this.Vm, index, destPos) == SqResult.SqOk;
@@ -130,7 +130,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// <param name="vm">The target VM.</param>
         /// <param name="index">Index of the target array in the stack.</param>
         /// <param name="destPos">The postion in the array where the item has to be inserted.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqArrayInsert(IntPtr vm, int index, int destPos)
         {
             if (vm == IntPtr.Zero)
@@ -147,7 +147,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="index">Index of the target array in the stack</param>
         /// <param name="pushVal">If true the poped value is pushed on the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqArrayPop(int index, bool pushVal)
         {
             return this._Api.ArrayPop(this.Vm, index, pushVal) == SqResult.SqOk;
@@ -160,7 +160,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// <param name="vm">The target VM.</param>
         /// <param name="index">Index of the target array in the stack.</param>
         /// <param name="pushVal">If true the poped value is pushed on the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqArrayPop(IntPtr vm, int index, bool pushVal)
         {
             if (vm == IntPtr.Zero)
@@ -177,7 +177,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="index">Index of the target array in the stack.</param>
         /// <param name="itemIndex">The index of the item in the array that has to be removed.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqArrayRemove(int index, int itemIndex)
         {
             return this._Api.ArrayRemove(this.Vm, index, itemIndex) == SqResult.SqOk;
@@ -190,7 +190,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// <param name="vm">The target VM.</param>
         /// <param name="index">Index of the target array in the stack.</param>
         /// <param name="itemIndex">The index of the item in the array that has to be removed.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqArrayRemove(IntPtr vm, int index, int itemIndex)
         {
             if (vm == IntPtr.Zero)
@@ -210,7 +210,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="index">Index of the target array in the stack.</param>
         /// <param name="newSize">Requested size of the array.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqArrayResize(int index, int newSize)
         {
             return this._Api.ArrayResize(this.Vm, index, newSize) == SqResult.SqOk;
@@ -226,7 +226,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// <param name="vm">The target VM.</param>
         /// <param name="index">Index of the target array in the stack.</param>
         /// <param name="newSize">Requested size of the array.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqArrayResize(IntPtr vm, int index, int newSize)
         {
             if (vm == IntPtr.Zero)
@@ -242,7 +242,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         ///     <remarks>Only works on arrays.</remarks>
         /// </summary>
         /// <param name="index">Index of the target array in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqArrayReverse(int index)
         {
             return this._Api.ArrayReverse(this.Vm, index) == SqResult.SqOk;
@@ -254,7 +254,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="vm">The target VM.</param>
         /// <param name="index">Index of the target array in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqArrayReverse(IntPtr vm, int index)
         {
             if (vm == IntPtr.Zero)
@@ -290,7 +290,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         ///     <remarks>Only works on tables and arrays.</remarks>
         /// </summary>
         /// <param name="index">Index of the target object in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqClear(int index)
         {
             return this._Api.Clear(this.Vm, index) == SqResult.SqOk;
@@ -302,7 +302,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="vm">The target VM.</param>
         /// <param name="index">Index of the target object in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqClear(IntPtr vm, int index)
         {
             if (vm == IntPtr.Zero)
@@ -317,7 +317,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         ///     Clones the table, array or class instance at the position idx, clones it and pushes the new object in the stack.
         /// </summary>
         /// <param name="index">Index of the target object in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqClone(int index)
         {
             return this._Api.Clone(this.Vm, index) == SqResult.SqOk;
@@ -328,7 +328,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="vm">The target VM.</param>
         /// <param name="index">Index of the target object in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqClone(IntPtr vm, int index)
         {
             if (vm == IntPtr.Zero)
@@ -638,7 +638,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="index">Index of the target table in the stack.</param>
         /// <param name="pushVal">If this param is true the function will push the value of the deleted slot.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqDeleteSlot(int index, bool pushVal)
         {
             return this._Api.DeleteSlot(this.Vm, index, pushVal) == SqResult.SqOk;
@@ -652,7 +652,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// <param name="vm">The target VM.</param>
         /// <param name="index">Index of the target table in the stack.</param>
         /// <param name="pushVal">If this param is true the function will push the value of the deleted slot.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqDeleteSlot(IntPtr vm, int index, bool pushVal)
         {
             if (vm == IntPtr.Zero)
@@ -710,7 +710,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         ///     </remarks>
         /// </summary>
         /// <param name="index">Index of the target object in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqGet(int index)
         {
             return this._Api.Get(this.Vm, index) == SqResult.SqOk;
@@ -726,7 +726,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="vm">The target VM.</param>
         /// <param name="index">Index of the target object in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqGet(IntPtr vm, int index)
         {
             if (vm == IntPtr.Zero)
@@ -829,7 +829,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         ///     Pushes the current delegate of the object at the position idx in the stack.
         /// </summary>
         /// <param name="index">Index of the target object in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqGetDelegate(int index)
         {
             return this._Api.GetDelegate(this.Vm, index) == SqResult.SqOk;
@@ -840,7 +840,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="vm">The target VM.</param>
         /// <param name="index">Index of the target object in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqGetDelegate(IntPtr vm, int index)
         {
             if (vm == IntPtr.Zero)
@@ -1088,7 +1088,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         ///     <remarks>If the function fails, nothing is pushed in the stack.</remarks>
         /// </summary>
         /// <param name="index">Index of the target weak reference</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqGetWeakRefVal(int index)
         {
             return this._Api.GetWeakRefVal(this.Vm, index) == SqResult.SqOk;
@@ -1100,7 +1100,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="vm">The target VM.</param>
         /// <param name="index">Index of the target weak reference</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqGetWeakRefVal(IntPtr vm, int index)
         {
             if (vm == IntPtr.Zero)
@@ -1205,7 +1205,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="index">Index of the target table in the stack.</param>
         /// <param name="bStatic">If true, creates a static member. This parameter is only used if the target object is a class.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqNewSlot(int index, bool bStatic)
         {
             return this._Api.NewSlot(this.Vm, index, bStatic) == SqResult.SqOk;
@@ -1221,7 +1221,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// <param name="vm">The target VM.</param>
         /// <param name="index">Index of the target table in the stack.</param>
         /// <param name="bStatic">If true, creates a static member. This parameter is only used if the target object is a class.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqNewSlot(IntPtr vm, int index, bool bStatic)
         {
             if (vm == IntPtr.Zero)
@@ -1299,7 +1299,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         ///     when all slots have been iterated(see Tables and arrays manipulation).
         /// </summary>
         /// <param name="index">Index of the target object in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqNext(int index)
         {
             return this._Api.Next(this.Vm, index) == SqResult.SqOk;
@@ -1314,7 +1314,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="vm">The target VM.</param>
         /// <param name="index">Index of the target object in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqNext(IntPtr vm, int index)
         {
             if (vm == IntPtr.Zero)
@@ -1627,7 +1627,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="index">Index of the target table in the stack.</param>
         /// <param name="pushVal">If this param is true the function will push the value of the deleted slot.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqRawDeleteSlot(int index, bool pushVal)
         {
             return this._Api.RawDeleteSlot(this.Vm, index, pushVal) == SqResult.SqOk;
@@ -1640,7 +1640,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// <param name="vm">The target VM.</param>
         /// <param name="index">Index of the target table in the stack.</param>
         /// <param name="pushVal">If this param is true the function will push the value of the deleted slot.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqRawDeleteSlot(IntPtr vm, int index, bool pushVal)
         {
             if (vm == IntPtr.Zero)
@@ -1657,7 +1657,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         ///     <remarks>Only works on tables and arrays.</remarks>
         /// </summary>
         /// <param name="index">Index of the target object in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqRawGet(int index)
         {
             return this._Api.RawGet(this.Vm, index) == SqResult.SqOk;
@@ -1670,7 +1670,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="vm">The target VM.</param>
         /// <param name="index">Index of the target object in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqRawGet(IntPtr vm, int index)
         {
             if (vm == IntPtr.Zero)
@@ -1687,7 +1687,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         ///     <remarks>It only works on tables and arrays. if the function fails nothing will be pushed in the stack.</remarks>
         /// </summary>
         /// <param name="index">Index of the target object in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqRawSet(int index)
         {
             return this._Api.RawSet(this.Vm, index) == SqResult.SqOk;
@@ -1700,7 +1700,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="vm">The target vm.</param>
         /// <param name="index">Index of the target object in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqRawSet(IntPtr vm, int index)
         {
             if (vm == IntPtr.Zero)
@@ -1716,7 +1716,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="readFunction">Delegate of a read function that will be invoked by the vm during the serialization.</param>
         /// <param name="up">Pointer that will be passed to each call to the write function</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqReadClosure(SqReadFunc readFunction, IntPtr up)
         {
             return this._Api.ReadClosure(this.Vm, readFunction, up) == SqResult.SqOk;
@@ -1728,7 +1728,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// <param name="vm">The target VM.</param>
         /// <param name="readFunction">Delegate of a read function that will be invoked by the vm during the serialization.</param>
         /// <param name="up">Pointer that will be passed to each call to the write function</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqReadClosure(IntPtr vm, SqReadFunc readFunction, IntPtr up)
         {
             if (vm == IntPtr.Zero)
@@ -1854,7 +1854,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         ///     </remarks>
         /// </summary>
         /// <param name="index">Index of the target object in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqSet(int index)
         {
             return this._Api.Set(this.Vm, index) == SqResult.SqOk;
@@ -1869,7 +1869,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="vm">The target VM.</param>
         /// <param name="index">Index of the target object in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqSet(IntPtr vm, int index)
         {
             if (vm == IntPtr.Zero)
@@ -1953,7 +1953,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// <summary>
         ///     Pops a table from the stack and set it as const table.
         /// </summary>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqSetConstTable()
         {
             return this._Api.SetConstTable(this.Vm) == SqResult.SqOk;
@@ -1963,7 +1963,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         ///     Pops a table from the stack and set it as const table.
         /// </summary>
         /// <param name="vm">The target VM.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqSetConstTable(IntPtr vm)
         {
             if (vm == IntPtr.Zero)
@@ -2009,7 +2009,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         ///     <remarks>To remove the delgate from an object is necessary to use null as delegate instead of a table.</remarks>
         /// </summary>
         /// <param name="index">Index of the target object in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqSetDelegate(int index)
         {
             return this._Api.SetDelegate(this.Vm, index) == SqResult.SqOk;
@@ -2021,7 +2021,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="vm">The target VM.</param>
         /// <param name="index">Index of the target object in the stack.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqSetDelegate(IntPtr vm, int index)
         {
             if (vm == IntPtr.Zero)
@@ -2093,7 +2093,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="index">Index of the target object in the stack.</param>
         /// <param name="nVal">0 based index of the free variable(relative to the closure).</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqSetFreeVariable(int index, uint nVal)
         {
             return this._Api.SetFreeVariable(this.Vm, index, nVal) == SqResult.SqOk;
@@ -2105,7 +2105,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// <param name="vm">The target VM.</param>
         /// <param name="index">Index of the target object in the stack.</param>
         /// <param name="nVal">0 based index of the free variable(relative to the closure).</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqSetFreeVariable(IntPtr vm, int index, uint nVal)
         {
             if (vm == IntPtr.Zero)
@@ -2201,7 +2201,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// <summary>
         ///     Pops a table from the stack and set it as root table.
         /// </summary>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqSetRootTable()
         {
             return this._Api.SetRootTable(this.Vm) == SqResult.SqOk;
@@ -2211,7 +2211,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         ///     Pops a table from the stack and set it as root table.
         /// </summary>
         /// <param name="vm">The target VM.</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqSetRootTable(IntPtr vm)
         {
             if (vm == IntPtr.Zero)
@@ -2431,7 +2431,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="writeFunction">Delegate of a write function that will be invoked by the vm during the serialization.</param>
         /// <param name="up">Pointer that will be passed to each call to the write function</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqWriteClosure(SqWriteFunc writeFunction, IntPtr up)
         {
             return this._Api.WriteClosure(this.Vm, writeFunction, up) == SqResult.SqOk;
@@ -2443,7 +2443,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// <param name="vm">The target VM.</param>
         /// <param name="writeFunction">Delegate of a write function that will be invoked by the vm during the serialization.</param>
         /// <param name="up">Pointer that will be passed to each call to the write function</param>
-        /// <returns>True if the call was succesfull, false if not.</returns>
+        /// <returns>True if the call was successful, false if not.</returns>
         public bool SqWriteClosure(IntPtr vm, SqWriteFunc writeFunction, IntPtr up)
         {
             if (vm == IntPtr.Zero)

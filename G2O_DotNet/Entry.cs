@@ -20,7 +20,7 @@ namespace GothicOnline.G2.DotNet.Loader
     using System;
 
     using GothicOnline.G2.DotNet.Loader.Squirrel;
-    using GothicOnline.G2.DotNet.Squirrel.Squirrel;
+    using GothicOnline.G2.DotNet.Squirrel;
 
     class Entry
     {

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SqResult.cs" company="Colony Online Project">
+// <copyright file="ClientDisconnectedEventArgs.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  <ulian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,21 +19,31 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Squirrel
+namespace GothicOnline.G2.DotNet.Client
 {
-    /// <summary>
-    ///     Defines the possible results of squirrel functions.
-    /// </summary>
-    public enum SqResult
-    {
-        /// <summary>
-        ///     The function call caused an error.
-        /// </summary>
-        SqError = -1, 
+    using System;
+    using System.ComponentModel;
 
-        /// <summary>
-        ///     The function call was successfull.
-        /// </summary>
-        SqOk = 0
+    public class ClientDisconnectedEventArgs : EventArgs
+    {
+        public ClientDisconnectedEventArgs(IClient client, DisconnectReason reason)
+        {
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
+
+            if (!Enum.IsDefined(typeof(DisconnectReason), reason))
+            {
+                throw new InvalidEnumArgumentException(nameof(reason), (int)reason, typeof(DisconnectReason));
+            }
+
+            this.Client = client;
+            this.Reason = reason;
+        }
+
+        public IClient Client { get; }
+
+        public DisconnectReason Reason { get; }
     }
 }

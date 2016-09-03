@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SqResult.cs" company="Colony Online Project">
+// <copyright file="IPacket.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  <ulian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,21 +19,34 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Squirrel
+namespace GothicOnline.G2.DotNet.Server
 {
-    /// <summary>
-    ///     Defines the possible results of squirrel functions.
-    /// </summary>
-    public enum SqResult
+    public interface IPacket
     {
-        /// <summary>
-        ///     The function call caused an error.
-        /// </summary>
-        SqError = -1, 
+        bool ReadBool();
 
-        /// <summary>
-        ///     The function call was successfull.
-        /// </summary>
-        SqOk = 0
+        char ReadChar();
+
+        float ReadFloat();
+
+        short ReadInt16();
+
+        int ReadInt32();
+
+        string ReadString();
+
+        void Reset();
+
+        void WriteBool(bool value);
+
+        void WriteChar(char value);
+
+        void WriteFloat(float value);
+
+        void WriteInt16(int value);
+
+        void WriteInt32(int value);
+
+        void WriteString(string value);
     }
 }

@@ -20,7 +20,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
     using System;
     using System.Runtime.InteropServices;
 
-    using GothicOnline.G2.DotNet.Squirrel.Squirrel;
+    using GothicOnline.G2.DotNet.Squirrel;
 
     // delegates
     #region vm
