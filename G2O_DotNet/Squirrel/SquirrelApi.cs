@@ -977,12 +977,17 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
 
         public bool SqGetString(int index, out string value)
         {
-            throw new NotImplementedException();
+            return this._Api.GetString(this.Vm, index, out value) == SqResult.SqOk;
         }
 
         public bool SqGetString(IntPtr vm, int index, out string value)
         {
-            throw new NotImplementedException();
+            if (vm == IntPtr.Zero)
+            {
+                throw new ArgumentException("The vm argument must not be IntPtr.Zero.", nameof(vm));
+            }
+
+            return this._Api.GetString(vm, index, out value) == SqResult.SqOk;
         }
 
         public bool SqGetThread(int index, out IntPtr threadPtr)
@@ -1593,22 +1598,48 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
 
         public void SqPushString(string value)
         {
-            throw new NotImplementedException();
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            this._Api.PushString(this.Vm,Marshal.StringToHGlobalAnsi(value),value.Length);
         }
 
         public void SqPushString(IntPtr vm, string value)
         {
-            throw new NotImplementedException();
+            if (vm == IntPtr.Zero)
+            {
+                throw new ArgumentException("The vm argument must not be IntPtr.Zero.", nameof(vm));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            this._Api.PushString(this.Vm, Marshal.StringToHGlobalAnsi(value), value.Length);
         }
 
         public void SqPushString(IntPtr value, int length)
         {
-            throw new NotImplementedException();
+            if (value == IntPtr.Zero)
+            {
+                throw new ArgumentException("The value argument must not be IntPtr.Zero.", nameof(value));
+            }
+            this._Api.PushString(this.Vm, value, length);
         }
 
         public void SqPushString(IntPtr vm, IntPtr value, int length)
         {
-            throw new NotImplementedException();
+            if (vm == IntPtr.Zero)
+            {
+                throw new ArgumentException("The vm argument must not be IntPtr.Zero.", nameof(vm));
+            }
+            if (value == IntPtr.Zero)
+            {
+                throw new ArgumentException("The value argument must not be IntPtr.Zero.", nameof(value));
+            }
+            this._Api.PushString(vm, value, length);
         }
 
         public void SqPushUserPointer(IntPtr pointer)

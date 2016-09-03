@@ -48,6 +48,7 @@
     <Compile Include="Character\IItemInstanceProvider.cs" />
     <Compile Include="Plugin\IPlugin.cs" />
     <Compile Include="Plugin\IPluginManager.cs" />
+    <Compile Include="Server\Server.cs" />
     <Compile Include="Squirrel\ISquirrelApi.cs" />
     <Compile Include="Character\ItemEquipedEventArgs.cs" />
     <Compile Include="Character\ChangeWeaponModeEventArgs.cs" />

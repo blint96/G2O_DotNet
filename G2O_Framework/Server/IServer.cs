@@ -27,16 +27,34 @@ namespace GothicOnline.G2.DotNet.Server
 
     public interface IServer
     {
+        /// <summary>
+        /// Invokes all registered handlers when the server gets initialized.
+        /// </summary>
         event EventHandler<ClientConnectedEventArgs> Initialize;
 
+        /// <summary>
+        /// Gets the client list.
+        /// </summary>
         IClientList Clients { get; }
 
+        /// <summary>
+        /// Gets or sets the server description.
+        /// </summary>
         string Description { get; set; }
 
+        /// <summary>
+        /// Gets or sets the respawn time.
+        /// </summary>
         int RespawnTime { get; set; }
 
+        /// <summary>
+        /// Gets or sets the server time.
+        /// </summary>
         ServerTime Time { get; set; }
 
+        /// <summary>
+        /// Gets or sets the server world.
+        /// </summary>
         string World { get; set; }
 
         void SendMessageToAll(int r, int g, int b, string message);

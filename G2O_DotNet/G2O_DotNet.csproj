@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GothicOnline.G2.DotNet.Loader</RootNamespace>
-    <AssemblyName>G2O_DotNet</AssemblyName>
+    <AssemblyName>GothicOnline.G2.DotNet.Loader</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
