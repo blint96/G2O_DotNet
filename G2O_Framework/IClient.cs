@@ -1,38 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace G2O_Framework
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IClient.cs" company="Colony Online Project">
+// Copyright (C) <2016>  <Julian Vogel>
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+// GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with this program.If not, see<http://www.gnu.org/licenses/>.
+// </copyright>
+// <summary>
+// </summary>
+//  -------------------------------------------------------------------------------------------------------------------
+namespace GothicOnline.G2.DotNet.Squirrel
 {
+    using System;
     using System.Net;
     using System.Net.NetworkInformation;
 
     public interface IClient
     {
+        event EventHandler<ClientDisconnectedEventArgs> Disconnect;
+
+        event EventHandler<PacketReceivedEventArgs> PacketReceived;
+
+        int ClientId { get; }
+
+        IPAddress IpAddress { get; }
+
+        bool IsConnected { get; }
+
+        PhysicalAddress MacAddress { get; }
+
         /// <summary>
-        /// Gets the nickname that was specified by the user before connecting.
+        ///     Gets the nickname that was specified by the user before connecting.
         /// </summary>
         string Nickname { get; }
 
         ICharacter PlayerCharacter { get; }
 
-        int ClientId { get; }
-
         void SendMessage(int r, int g, int b, string message);
-
-        void SendMessageToClient(IClient receiver, int r, int g, int b, string message);
 
         void SendMessageToAll(int r, int g, int b, string message);
 
-        bool IsConnected { get; }
-
-        IPAddress IpAddress { get; }
-
-        PhysicalAddress MacAddress { get; }
-
-        event EventHandler<PacketReceivedEventArgs> PacketReceived;
-
-        event EventHandler<ClientDisconnectedEventArgs> Disconnect;
+        void SendMessageToClient(IClient receiver, int r, int g, int b, string message);
     }
 }

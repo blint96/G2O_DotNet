@@ -1,8 +1,10 @@
-﻿using System;
-using GothicOnline.G2.DotNet.Squirrel;
-
-namespace GothicOnline.G2.DotNet
+﻿namespace GothicOnline.G2.DotNet.Loader
 {
+    using System;
+
+    using GothicOnline.G2.DotNet.Loader.Squirrel;
+    using GothicOnline.G2.DotNet.Squirrel.Squirrel;
+
     class Entry
     {
         /// <summary>

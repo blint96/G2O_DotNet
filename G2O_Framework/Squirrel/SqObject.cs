@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ClientConnectedEventArgs.cs" company="Colony Online Project">
+// <copyright file="SqObject.cs" company="Colony Online Project">
 // Copyright (C) <2016>  <Julian Vogel>
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,17 +15,15 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Squirrel
+namespace GothicOnline.G2.DotNet.Squirrel.Squirrel
 {
-    using System;
+    using System.Runtime.InteropServices;
 
-    public class ClientConnectedEventArgs : EventArgs
+    [StructLayout(LayoutKind.Sequential)]
+    public struct SqObject
     {
-        public ClientConnectedEventArgs(IClient newClient)
-        {
-            this.NewClient = newClient;
-        }
+        public SqObjectType Type;
 
-        private IClient NewClient { get; }
+        public SqObjectValue UnValue;
     }
 }

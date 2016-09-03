@@ -7,7 +7,7 @@
     <ProjectGuid>{3E62A4E0-7A83-45DE-814D-1FEB9D16D92A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GothicOnline.G2.DotNet</RootNamespace>
+    <RootNamespace>GothicOnline.G2.DotNet.Loader</RootNamespace>
     <AssemblyName>G2O_DotNet</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -37,16 +37,8 @@
   <ItemGroup>
     <Compile Include="Entry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Squirrel\Sqobject.cs" />
-    <Compile Include="Squirrel\ParamterDelegates.cs" />
-    <Compile Include="Squirrel\SQObjectType.cs" />
-    <Compile Include="Squirrel\SqObjectValue.cs" />
-    <Compile Include="Squirrel\SqResult.cs" />
-    <Compile Include="Squirrel\SqStackInfos.cs" />
     <Compile Include="Squirrel\SquirrelApi.cs" />
     <Compile Include="Squirrel\Squirrel.cs" />
-    <Compile Include="Squirrel\SquirrelObjectTypeMask.cs" />
-    <Compile Include="Squirrel\VmState.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\G2O_Framework\G2O_Framework.csproj">

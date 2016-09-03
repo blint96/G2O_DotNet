@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ClientConnectedEventArgs.cs" company="Colony Online Project">
+// <copyright file="VMState.cs" company="Colony Online Project">
 // Copyright (C) <2016>  <Julian Vogel>
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,17 +15,26 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Squirrel
+namespace GothicOnline.G2.DotNet.Squirrel.Squirrel
 {
-    using System;
-
-    public class ClientConnectedEventArgs : EventArgs
+    /// <summary>
+    ///     Defines the execution states of the squirrel vm.
+    /// </summary>
+    public enum VmState
     {
-        public ClientConnectedEventArgs(IClient newClient)
-        {
-            this.NewClient = newClient;
-        }
+        /// <summary>
+        ///     The vm is idle.
+        /// </summary>
+        SqVmstateIdle = 0, 
 
-        private IClient NewClient { get; }
+        /// <summary>
+        ///     The vm is running.
+        /// </summary>
+        SqVmstateRunning = 1, 
+
+        /// <summary>
+        ///     The vm is suspended.
+        /// </summary>
+        SqVmstateSuspended = 2, 
     }
 }

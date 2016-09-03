@@ -7,8 +7,8 @@
     <ProjectGuid>{91CC7772-325C-454D-BCB1-57219F17EC26}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>G2O_Framework</RootNamespace>
-    <AssemblyName>G2O_Framework</AssemblyName>
+    <RootNamespace>GothicOnline.G2.DotNet.Squirrel</RootNamespace>
+    <AssemblyName>GothicOnline.G2.DotNet.Framework</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -48,7 +48,7 @@
     <Compile Include="IItemInstanceProvider.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="IPluginManager.cs" />
-    <Compile Include="ISquirrelApi.cs" />
+    <Compile Include="Squirrel\ISquirrelApi.cs" />
     <Compile Include="ItemEquipedEventArgs.cs" />
     <Compile Include="ChangeWeaponModeEventArgs.cs" />
     <Compile Include="ColorChangedEventArgs.cs" />
@@ -74,6 +74,14 @@
     <Compile Include="ServerInitializedEventArgs.cs" />
     <Compile Include="ServerTime.cs" />
     <Compile Include="SkillWeapon.cs" />
+    <Compile Include="Squirrel\ParamterDelegates.cs" />
+    <Compile Include="Squirrel\SqObject.cs" />
+    <Compile Include="Squirrel\SQObjectType.cs" />
+    <Compile Include="Squirrel\SqObjectValue.cs" />
+    <Compile Include="Squirrel\SqResult.cs" />
+    <Compile Include="Squirrel\SqStackInfos.cs" />
+    <Compile Include="Squirrel\SquirrelObjectTypeMask.cs" />
+    <Compile Include="Squirrel\VMState.cs" />
     <Compile Include="Talent.cs" />
     <Compile Include="UnconsciousEventArgs.cs" />
     <Compile Include="WeaponMode.cs" />

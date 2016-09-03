@@ -1,9 +1,11 @@
-﻿using System;
-using System.Runtime.InteropServices;
-// ReSharper disable UnassignedReadonlyField
+﻿// ReSharper disable UnassignedReadonlyField
 
-namespace GothicOnline.G2.DotNet.Squirrel
+namespace GothicOnline.G2.DotNet.Loader.Squirrel
 {
+    using DotNet.Squirrel.Squirrel;
+    using System;
+    using System.Runtime.InteropServices;
+
     // delegates
     #region vm
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -223,25 +225,25 @@ namespace GothicOnline.G2.DotNet.Squirrel
 
     #region  raw object handling
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate SqResult GetStackObjCallback(IntPtr v, int idx, ref Sqobject po);
+    public delegate SqResult GetStackObjCallback(IntPtr v, int idx, ref SqObject po);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void PushObjectCallback(IntPtr v, Sqobject obj);
+    public delegate void PushObjectCallback(IntPtr v, SqObject obj);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void AddRefCallback(IntPtr v, ref Sqobject po);
+    public delegate void AddRefCallback(IntPtr v, ref SqObject po);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate bool ReleaseCallback(IntPtr v, ref Sqobject po);
+    public delegate bool ReleaseCallback(IntPtr v, ref SqObject po);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void ResetObjectCallback(ref Sqobject po);
+    public delegate void ResetObjectCallback(ref SqObject po);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate string ObjToStringCallback(ref Sqobject o);
+    public delegate string ObjToStringCallback(ref SqObject o);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate bool ObjToBoolCallback(ref Sqobject o);
+    public delegate bool ObjToBoolCallback(ref SqObject o);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int ObjToIntegerCallback(ref Sqobject o);
+    public delegate int ObjToIntegerCallback(ref SqObject o);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate float ObjToFloatCallback(ref Sqobject o);
+    public delegate float ObjToFloatCallback(ref SqObject o);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate SqResult GetObjTypeTagCallback(ref Sqobject o, out IntPtr typetag);
+    public delegate SqResult GetObjTypeTagCallback(ref SqObject o, out IntPtr typetag);
     #endregion
 
     #region GC
