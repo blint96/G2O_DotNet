@@ -13,7 +13,7 @@ extern "C"
 	int EXPORT sqmodule_load(void* vm, void* api)
 	{
 		Console::WriteLine("[" + LOADER_NAME + "] Trying to load G2O_DotNet");
-		String^ file = Path::Combine(Environment::CurrentDirectory, "G2O_DotNet.dll");
+		String^ file = Path::Combine(Environment::CurrentDirectory, "GothicOnline.G2.DotNet.Loader.dll");
 		if (File::Exists(file))
 		{
 			try
@@ -40,18 +40,18 @@ extern "C"
 						}
 					}
 				}
-				Console::WriteLine("[" + LOADER_NAME + "] no G2O_DotNet entry point found.");
+				Console::WriteLine("[" + LOADER_NAME + "] no GothicOnline.G2.DotNet.Loader entry point found.");
 				return -1;
 			}
 			catch (Exception^ ex)
 			{
-				Console::WriteLine("[" + LOADER_NAME + "] G2O_DotNet could not be loaded");
+				Console::WriteLine("[" + LOADER_NAME + "] GothicOnline.G2.DotNet.Loader could not be loaded");
 				return -1;
 			}
 		}
 		else
 		{
-			Console::WriteLine("[" + LOADER_NAME + "] G2O_DotNet.dll could not be found!!");
+			Console::WriteLine("[" + LOADER_NAME + "] GothicOnline.G2.DotNet.Loader.dll could not be found!!");
 			return -1;
 		}
 		return -1;

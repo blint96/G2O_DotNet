@@ -22,9 +22,13 @@
 namespace GothicOnline.G2.DotNet.Server
 {
     using System;
+    using System.Drawing;
 
     using GothicOnline.G2.DotNet.Client;
 
+    /// <summary>
+    /// Interface for the server. Provides access to all methods that directly related to the server.
+    /// </summary>
     public interface IServer
     {
         /// <summary>
@@ -57,8 +61,18 @@ namespace GothicOnline.G2.DotNet.Server
         /// </summary>
         string World { get; set; }
 
-        void SendMessageToAll(int r, int g, int b, string message);
+        /// <summary>
+        /// Sends a message with a given color to all clients.
+        /// </summary>
+        /// <param name="color">The message color</param>
+        /// <param name="message">The text of the message</param>
+        void SendMessageToAll(Color color, string message);
 
-        void SendPacketToAll(IPacket packet, int reliability);
+        /// <summary>
+        /// Sends a data packet to all clients.
+        /// </summary>
+        /// <param name="packet">The packet that should be send to all clients.</param>
+        /// <param name="reliability">The reliability of the packet.</param>
+        void SendPacketToAll(IPacket packet, PacketReliability reliability);
     }
 }

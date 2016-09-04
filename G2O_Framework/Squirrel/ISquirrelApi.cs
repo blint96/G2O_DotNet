@@ -161,7 +161,7 @@ namespace GothicOnline.G2.DotNet.Squirrel
 
         bool SqBindEnv(IntPtr vm, int index);
 
-        bool SqCall(int parameters, bool retVal, bool raiseError);
+        bool SqCall(int parameterCount, bool retVal, bool raiseError);
 
         bool SqCall(IntPtr vm, int parameters, bool retVal, bool raiseError);
 
@@ -432,23 +432,6 @@ namespace GothicOnline.G2.DotNet.Squirrel
         bool SqGetBase(int index);
 
         bool SqGetBase(IntPtr vm, int index);
-
-        /// <summary>
-        ///     Retrieve the pointer of a blob's payload from an arbitrary position in the stack.
-        /// </summary>
-        /// <param name="index">An index in the stack.</param>
-        /// <param name="pointer">A pointer that will point to the blob's payload</param>
-        /// <returns>True if successfull, false if not.</returns>
-        bool SqGetBlob(int index, out IntPtr pointer);
-
-        /// <summary>
-        ///     Retrieve the pointer of a blob's payload from an arbitrary position in the stack.
-        /// </summary>
-        /// <param name="vm">A pointer to the target VM.</param>
-        /// <param name="index">An index in the stack.</param>
-        /// <param name="pointer">A pointer that will point to the blob's payload</param>
-        /// <returns>True if successfull, false if not.</returns>
-        bool SqGetBlob(IntPtr vm, int index, out IntPtr pointer);
 
         bool SqGetBool(int index, out bool value);
 

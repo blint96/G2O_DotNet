@@ -31,8 +31,6 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         private readonly Squirrel _Api;
 
-        private readonly string[] _InvalidFuncs = { "GetFloat", "GetBlob" };
-
         /// <summary>
         ///     Initializes a new instance of the <see cref="SquirrelApi" /> class.
         /// </summary>
@@ -40,33 +38,20 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// <param name="api">Pointer to the api struct.</param>
         public SquirrelApi(IntPtr vm, IntPtr api)
         {
-            this.Vm = vm;
-
-            // Check for function pointers with invalid value and set them to 0.
-            // They will then be marshalled to null without causing an exception.
-            foreach (FieldInfo field in typeof(Squirrel).GetFields())
+            if (vm == IntPtr.Zero)
             {
-                if (field.FieldType.IsSubclassOf(typeof(Delegate)))
-                {
-                    if (this._InvalidFuncs.Contains(field.Name))
-                    {
-                        // Set all function addresses with inavlid pointer values to 0, so the struct can be marshaled correcty.
-                        IntPtr fieldPtr = IntPtr.Add(api, Marshal.OffsetOf(typeof(Squirrel), field.Name).ToInt32());
-                        Console.WriteLine(
-                            $"Squirrel function {field.Name}(0x{Marshal.ReadInt32(fieldPtr).ToString("X")}) is not initialized correctly!");
-                        Marshal.WriteIntPtr(fieldPtr, IntPtr.Zero);
-                    }
-                }
+                throw  new ArgumentException("The pointer argument must not be IntPtr.Zero",nameof(vm));
             }
 
+            if (vm == IntPtr.Zero)
+            {
+                throw new ArgumentException("The pointer argument must not be IntPtr.Zero", nameof(api));
+            }
+
+            this.Vm = vm;
             // Marshall the _api struct.
             this._Api = (Squirrel)Marshal.PtrToStructure(api, typeof(Squirrel));
         }
-
-        /// <summary>
-        ///     Returns the version number of the squirrel _api.
-        /// </summary>
-        public int Version => this._Api.Version;
 
         /// <summary>
         ///     Gets a pointer to the squirrel vm.
@@ -275,14 +260,18 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
             throw new NotImplementedException();
         }
 
-        public bool SqCall(int parameters, bool retVal, bool raiseError)
+        public bool SqCall(int parameterCount, bool retVal, bool raiseError)
         {
-            throw new NotImplementedException();
+            return this._Api.Call(this.Vm, parameterCount, retVal, raiseError) == SqResult.SqOk;
         }
 
         public bool SqCall(IntPtr vm, int parameters, bool retVal, bool raiseError)
         {
-            throw new NotImplementedException();
+            if (vm == IntPtr.Zero)
+            {
+                throw new ArgumentException("The vm argument must not be IntPtr.Zero.", nameof(vm));
+            }
+            return this._Api.Call(vm, parameters, retVal, raiseError) == SqResult.SqOk;
         }
 
         /// <summary>
@@ -757,33 +746,6 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        ///     Retrieve the pointer of a blob's payload from an arbitrary position in the stack.
-        /// </summary>
-        /// <param name="index">An index in the stack.</param>
-        /// <param name="pointer">A pointer that will point to the blob's payload</param>
-        /// <returns>True if successfull, false if not.</returns>
-        public bool SqGetBlob(int index, out IntPtr pointer)
-        {
-            return this._Api.GetBlob(this.Vm, index, out pointer) == SqResult.SqOk;
-        }
-
-        /// <summary>
-        ///     Retrieve the pointer of a blob's payload from an arbitrary position in the stack.
-        /// </summary>
-        /// <param name="vm">A pointer to the target VM.</param>
-        /// <param name="index">An index in the stack.</param>
-        /// <param name="pointer">A pointer that will point to the blob's payload</param>
-        /// <returns>True if successfull, false if not.</returns>
-        public bool SqGetBlob(IntPtr vm, int index, out IntPtr pointer)
-        {
-            if (vm == IntPtr.Zero)
-            {
-                throw new ArgumentException("The vm argument must not be IntPtr.Zero.", nameof(vm));
-            }
-
-            return this._Api.GetBlob(vm, index, out pointer) == SqResult.SqOk;
-        }
 
         public bool SqGetBool(int index, out bool value)
         {

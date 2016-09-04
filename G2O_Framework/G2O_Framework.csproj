@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\G2O_Server\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -46,6 +46,7 @@
     <Compile Include="Character\IInventory.cs" />
     <Compile Include="Character\IItem.cs" />
     <Compile Include="Character\IItemInstanceProvider.cs" />
+    <Compile Include="Exceptions\SquirrelException.cs" />
     <Compile Include="Plugin\IPlugin.cs" />
     <Compile Include="Plugin\IPluginManager.cs" />
     <Compile Include="Server\Server.cs" />

@@ -22,30 +22,62 @@
 namespace GothicOnline.G2.DotNet.Loader.Server
 {
     using System;
+    using System.Drawing;
     using System.Runtime.InteropServices;
 
     using GothicOnline.G2.DotNet.Client;
+    using GothicOnline.G2.DotNet.Exceptions;
     using GothicOnline.G2.DotNet.Server;
     using GothicOnline.G2.DotNet.Squirrel;
 
     internal class Server : IServer
     {
-        private ISquirrelApi squirrelApi;
+        private const string stringGetPlayerRespawnTime = "getPlayerRespawnTime";
 
-        private const string sendMessageToAll = "sendMessageToAll";
-        private static readonly IntPtr stringSendMessageToAll = Marshal.StringToHGlobalAnsi(sendMessageToAll);
-        private static readonly IntPtr stringSendMessageToPlayer = Marshal.StringToHGlobalAnsi("sendMessageToPlayer");
+        private const string stringGetServerDescription = "getServerDescription";
 
-        private const string getServerDescription = "getServerDescription";
-        private static readonly IntPtr stringGetServerDescription = Marshal.StringToHGlobalAnsi(getServerDescription);
+        private const string stringGetServerWorld = "getServerWorld";
 
-        private const string setServerDescription = "setServerDescription";
-        private static readonly IntPtr stringSetServerDescription = Marshal.StringToHGlobalAnsi(setServerDescription);
+        private const string stringSendMessageToAll = "sendMessageToAll";
 
+        private const string stringSendMessageToPlayer = "sendMessageToPlayer";
 
+        private const string stringSetPlayerRespawnTime = "setPlayerRespawnTime";
 
-        private static readonly IntPtr stringSetPlayerRespawnTime = Marshal.StringToHGlobalAnsi("setPlayerRespawnTime");
-        private static readonly IntPtr stringGetPlayerRespawnTime = Marshal.StringToHGlobalAnsi("getPlayerRespawnTime");
+        private const string stringSetServerDescription = "setServerDescription";
+
+        private const string stringSetServerWorld = "setServerWorld";
+
+        private static readonly IntPtr ansiGetPlayerRespawnTime;
+
+        private static readonly IntPtr ansiGetServerDescription;
+
+        private static readonly IntPtr ansiGetServerWorld;
+
+        private static readonly IntPtr ansiSendMessageToAll;
+
+        private static readonly IntPtr ansiSendMessageToPlayer;
+
+        private static readonly IntPtr ansiSetPlayerRespawnTime;
+
+        private static readonly IntPtr ansiSetServerDescription;
+
+        private static readonly IntPtr ansiSetServerWorld;
+
+        private readonly ISquirrelApi squirrelApi;
+
+        static Server()
+        {
+            ansiSendMessageToAll = Marshal.StringToHGlobalAnsi(stringSendMessageToAll);
+            ansiSendMessageToPlayer = Marshal.StringToHGlobalAnsi(stringSendMessageToPlayer);
+            ansiGetServerDescription = Marshal.StringToHGlobalAnsi(stringGetServerDescription);
+            ansiSetServerDescription = Marshal.StringToHGlobalAnsi(stringSetServerDescription);
+            ansiSetPlayerRespawnTime = Marshal.StringToHGlobalAnsi(stringSetPlayerRespawnTime);
+            ansiSetPlayerRespawnTime = Marshal.StringToHGlobalAnsi(stringSetPlayerRespawnTime);
+            ansiGetPlayerRespawnTime = Marshal.StringToHGlobalAnsi(stringGetPlayerRespawnTime);
+            ansiGetServerWorld = Marshal.StringToHGlobalAnsi(stringGetServerWorld);
+            ansiSetServerWorld = Marshal.StringToHGlobalAnsi(stringSetServerWorld);
+        }
 
         public Server(ISquirrelApi squirrelApi)
         {
@@ -65,16 +97,30 @@ namespace GothicOnline.G2.DotNet.Loader.Server
         {
             get
             {
+                // Get the stack top index
                 int top = this.squirrelApi.SqGetTop();
-                string result;
 
-                this.squirrelApi.SqPushString(stringGetServerDescription, getServerDescription.Length);
+                // Get the function
                 this.squirrelApi.SqPushRootTable();
-                this.squirrelApi.SqGet(-1);
-                this.squirrelApi.SqCall(0, true, false);           
-                this.squirrelApi.SqGetString(1, out result);
+                this.squirrelApi.SqPushString(ansiGetServerDescription, stringGetServerDescription.Length);
+                if (!this.squirrelApi.SqGet(-2))
+                {
+                    throw new SquirrelException(
+                        $"The gothic online server function '{stringGetServerDescription}' could not be found in the root table");
+                }
 
-                // Set back top.
+                // Call the function
+                this.squirrelApi.SqPushRootTable();
+                if (!this.squirrelApi.SqCall(1, true, false))
+                {
+                    throw new SquirrelException($"The call to the '{stringGetServerDescription}' function failed");
+                }
+
+                // Get the result
+                string result;
+                this.squirrelApi.SqGetString(this.squirrelApi.SqGetTop(), out result);
+
+                // Set back top
                 this.squirrelApi.SqSetTop(top);
                 return result;
             }
@@ -85,13 +131,26 @@ namespace GothicOnline.G2.DotNet.Loader.Server
                 {
                     throw new ArgumentNullException(nameof(value));
                 }
+
+                // Get the stack top index
                 int top = this.squirrelApi.SqGetTop();
 
-                this.squirrelApi.SqPushString(stringSetServerDescription, setServerDescription.Length);
+                // Get the function
                 this.squirrelApi.SqPushRootTable();
-                this.squirrelApi.SqGet(-1);
+                this.squirrelApi.SqPushString(ansiSetServerDescription, stringSetServerDescription.Length);
+                if (!this.squirrelApi.SqGet(-2))
+                {
+                    throw new SquirrelException(
+                        $"The gothic online server function '{stringSetServerDescription}' could not be found in the root table");
+                }
+
+                // Call the function
+                this.squirrelApi.SqPushRootTable();
                 this.squirrelApi.SqPushString(value);
-                this.squirrelApi.SqCall(2, false, false);
+                if (!this.squirrelApi.SqCall(2, true, false))
+                {
+                    throw new SquirrelException($"The call to the '{stringSetServerDescription}' function failed");
+                }
 
                 // Set back top.
                 this.squirrelApi.SqSetTop(top);
@@ -102,14 +161,104 @@ namespace GothicOnline.G2.DotNet.Loader.Server
 
         public ServerTime Time { get; set; }
 
-        public string World { get; set; }
-
-        public void SendMessageToAll(int r, int g, int b, string message)
+        public string World
         {
-            throw new NotImplementedException();
+            get
+            {
+                // Get the stack top index
+                int top = this.squirrelApi.SqGetTop();
+
+                // Get the function
+                this.squirrelApi.SqPushRootTable();
+                this.squirrelApi.SqPushString(ansiGetServerWorld, stringGetServerWorld.Length);
+                if (!this.squirrelApi.SqGet(-2))
+                {
+                    throw new SquirrelException(
+                        $"The gothic online server function '{stringGetServerWorld}' could not be found in the root table");
+                }
+
+                // Call the function
+                this.squirrelApi.SqPushRootTable();
+                if (!this.squirrelApi.SqCall(1, true, false))
+                {
+                    throw new SquirrelException($"The call to the '{stringGetServerWorld}' function failed");
+                }
+
+                // Get the result
+                string result;
+                this.squirrelApi.SqGetString(this.squirrelApi.SqGetTop(), out result);
+
+                // Set back top
+                this.squirrelApi.SqSetTop(top);
+                return result;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                // Get the stack top index
+                int top = this.squirrelApi.SqGetTop();
+
+                // Get the function
+                this.squirrelApi.SqPushRootTable();
+                this.squirrelApi.SqPushString(ansiSetServerWorld, stringSetServerWorld.Length);
+                if (!this.squirrelApi.SqGet(-2))
+                {
+                    throw new SquirrelException(
+                        $"The gothic online server function '{stringSetServerWorld}' could not be found in the root table");
+                }
+
+                // Call the function
+                this.squirrelApi.SqPushRootTable();
+                this.squirrelApi.SqPushString(value);
+                if (!this.squirrelApi.SqCall(2, true, false))
+                {
+                    throw new SquirrelException($"The call to the '{stringSetServerWorld}' function failed");
+                }
+
+                // Set back top.
+                this.squirrelApi.SqSetTop(top);
+            }
         }
 
-        public void SendPacketToAll(IPacket packet, int reliability)
+        public void SendMessageToAll(Color color, string message)
+        {
+            if (string.IsNullOrEmpty(message))
+            {
+                throw new ArgumentException("Value cannot be null or empty.", nameof(message));
+            }
+
+            // Get the stack top index
+            int top = this.squirrelApi.SqGetTop();
+
+            // Get the function
+            this.squirrelApi.SqPushRootTable();
+            this.squirrelApi.SqPushString(ansiSendMessageToAll, stringSendMessageToAll.Length);
+            if (!this.squirrelApi.SqGet(-2))
+            {
+                throw new SquirrelException(
+                    $"The gothic online server function '{stringSendMessageToAll}' could not be found in the root table");
+            }
+
+            // Call the function
+            this.squirrelApi.SqPushRootTable();
+            this.squirrelApi.SqPushInteger(color.R);
+            this.squirrelApi.SqPushInteger(color.G);
+            this.squirrelApi.SqPushInteger(color.B);
+            this.squirrelApi.SqPushString(message);
+            if (!this.squirrelApi.SqCall(2, true, false))
+            {
+                throw new SquirrelException($"The call to the '{stringSendMessageToAll}' function failed");
+            }
+
+            // Set back top.
+            this.squirrelApi.SqSetTop(top);
+        }
+
+        public void SendPacketToAll(IPacket packet, PacketReliability reliability)
         {
             throw new NotImplementedException();
         }
