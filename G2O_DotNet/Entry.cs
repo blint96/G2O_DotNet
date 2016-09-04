@@ -40,6 +40,9 @@ namespace GothicOnline.G2.DotNet.Loader
                 server.Description = "Hallo";
                 Console.WriteLine(server.Description);
                 Console.WriteLine(server.World);
+                Console.WriteLine(server.RespawnTime);
+                server.RespawnTime = 1000;
+                Console.WriteLine(server.RespawnTime);
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("[G2ONet]Managed Code loaded!");
             }

@@ -1,7 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="IServer.cs" company="Colony Online Project">
 // -
-// Copyright (C) 2016  <ulian Vogel
+// Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -27,49 +27,49 @@ namespace GothicOnline.G2.DotNet.Server
     using GothicOnline.G2.DotNet.Client;
 
     /// <summary>
-    /// Interface for the server. Provides access to all methods that directly related to the server.
+    ///     Interface for the server. Provides access to all methods that directly related to the server.
     /// </summary>
     public interface IServer
     {
         /// <summary>
-        /// Invokes all registered handlers when the server gets initialized.
+        ///     Invokes all registered handlers when the server gets initialized.
         /// </summary>
         event EventHandler<ClientConnectedEventArgs> Initialize;
 
         /// <summary>
-        /// Gets the client list.
+        ///     Gets the client list.
         /// </summary>
         IClientList Clients { get; }
 
         /// <summary>
-        /// Gets or sets the server description.
+        ///     Gets or sets the server description.
         /// </summary>
         string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the respawn time.
+        ///     Gets or sets the respawn time.
         /// </summary>
         int RespawnTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the server time.
+        ///     Gets or sets the server time.
         /// </summary>
         ServerTime Time { get; set; }
 
         /// <summary>
-        /// Gets or sets the server world.
+        ///     Gets or sets the server world.
         /// </summary>
         string World { get; set; }
 
         /// <summary>
-        /// Sends a message with a given color to all clients.
+        ///     Sends a message with a given color to all clients.
         /// </summary>
         /// <param name="color">The message color</param>
         /// <param name="message">The text of the message</param>
         void SendMessageToAll(Color color, string message);
 
         /// <summary>
-        /// Sends a data packet to all clients.
+        ///     Sends a data packet to all clients.
         /// </summary>
         /// <param name="packet">The packet that should be send to all clients.</param>
         /// <param name="reliability">The reliability of the packet.</param>

@@ -1,7 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="AssemblyInfo.cs" company="Colony Online Project">
 // -
-// Copyright (C) 2016  <ulian Vogel
+// Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -23,7 +23,6 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-
 [assembly: AssemblyTitle("G2O_Framework_Loader")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
@@ -32,15 +31,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-
-
 [assembly: ComVisible(false)]
-
-
 [assembly: Guid("91cc7772-325c-454d-bcb1-57219f17ec26")]
-
-
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-
 [assembly: InternalsVisibleTo("GothicOnline.G2.DotNet.Loader")]

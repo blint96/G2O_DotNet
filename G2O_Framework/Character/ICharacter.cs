@@ -1,7 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ICharacter.cs" company="Colony Online Project">
 // -
-// Copyright (C) 2016  <ulian Vogel
+// Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -79,6 +79,8 @@ namespace GothicOnline.G2.DotNet.Character
         Color NameColor { get; set; }
 
         Point3D Position { get; set; }
+
+        int RespawnTime { get; set; }
 
         int Strength { get; set; }
 

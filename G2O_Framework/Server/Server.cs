@@ -1,7 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Server.cs" company="Colony Online Project">
 // -
-// Copyright (C) 2016  <ulian Vogel
+// Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -32,8 +32,6 @@ namespace GothicOnline.G2.DotNet.Loader.Server
 
     internal class Server : IServer
     {
-        private const string stringGetPlayerRespawnTime = "getPlayerRespawnTime";
-
         private const string stringGetServerDescription = "getServerDescription";
 
         private const string stringGetServerWorld = "getServerWorld";
@@ -42,13 +40,9 @@ namespace GothicOnline.G2.DotNet.Loader.Server
 
         private const string stringSendMessageToPlayer = "sendMessageToPlayer";
 
-        private const string stringSetPlayerRespawnTime = "setPlayerRespawnTime";
-
         private const string stringSetServerDescription = "setServerDescription";
 
         private const string stringSetServerWorld = "setServerWorld";
-
-        private static readonly IntPtr ansiGetPlayerRespawnTime;
 
         private static readonly IntPtr ansiGetServerDescription;
 
@@ -57,8 +51,6 @@ namespace GothicOnline.G2.DotNet.Loader.Server
         private static readonly IntPtr ansiSendMessageToAll;
 
         private static readonly IntPtr ansiSendMessageToPlayer;
-
-        private static readonly IntPtr ansiSetPlayerRespawnTime;
 
         private static readonly IntPtr ansiSetServerDescription;
 
@@ -72,9 +64,6 @@ namespace GothicOnline.G2.DotNet.Loader.Server
             ansiSendMessageToPlayer = Marshal.StringToHGlobalAnsi(stringSendMessageToPlayer);
             ansiGetServerDescription = Marshal.StringToHGlobalAnsi(stringGetServerDescription);
             ansiSetServerDescription = Marshal.StringToHGlobalAnsi(stringSetServerDescription);
-            ansiSetPlayerRespawnTime = Marshal.StringToHGlobalAnsi(stringSetPlayerRespawnTime);
-            ansiSetPlayerRespawnTime = Marshal.StringToHGlobalAnsi(stringSetPlayerRespawnTime);
-            ansiGetPlayerRespawnTime = Marshal.StringToHGlobalAnsi(stringGetPlayerRespawnTime);
             ansiGetServerWorld = Marshal.StringToHGlobalAnsi(stringGetServerWorld);
             ansiSetServerWorld = Marshal.StringToHGlobalAnsi(stringSetServerWorld);
         }
@@ -106,14 +95,17 @@ namespace GothicOnline.G2.DotNet.Loader.Server
                 if (!this.squirrelApi.SqGet(-2))
                 {
                     throw new SquirrelException(
-                        $"The gothic online server function '{stringGetServerDescription}' could not be found in the root table");
+                        $"The gothic online server function '{stringGetServerDescription}' could not be found in the root table", 
+                        this.squirrelApi);
                 }
 
                 // Call the function
                 this.squirrelApi.SqPushRootTable();
                 if (!this.squirrelApi.SqCall(1, true, false))
                 {
-                    throw new SquirrelException($"The call to the '{stringGetServerDescription}' function failed");
+                    throw new SquirrelException(
+                        $"The call to the '{stringGetServerDescription}' function failed", 
+                        this.squirrelApi);
                 }
 
                 // Get the result
@@ -141,7 +133,8 @@ namespace GothicOnline.G2.DotNet.Loader.Server
                 if (!this.squirrelApi.SqGet(-2))
                 {
                     throw new SquirrelException(
-                        $"The gothic online server function '{stringSetServerDescription}' could not be found in the root table");
+                        $"The gothic online server function '{stringSetServerDescription}' could not be found in the root table", 
+                        this.squirrelApi);
                 }
 
                 // Call the function
@@ -149,15 +142,15 @@ namespace GothicOnline.G2.DotNet.Loader.Server
                 this.squirrelApi.SqPushString(value);
                 if (!this.squirrelApi.SqCall(2, true, false))
                 {
-                    throw new SquirrelException($"The call to the '{stringSetServerDescription}' function failed");
+                    throw new SquirrelException(
+                        $"The call to the '{stringSetServerDescription}' function failed", 
+                        this.squirrelApi);
                 }
 
                 // Set back top.
                 this.squirrelApi.SqSetTop(top);
             }
         }
-
-        public int RespawnTime { get; set; }
 
         public ServerTime Time { get; set; }
 
@@ -174,14 +167,17 @@ namespace GothicOnline.G2.DotNet.Loader.Server
                 if (!this.squirrelApi.SqGet(-2))
                 {
                     throw new SquirrelException(
-                        $"The gothic online server function '{stringGetServerWorld}' could not be found in the root table");
+                        $"The gothic online server function '{stringGetServerWorld}' could not be found in the root table", 
+                        this.squirrelApi);
                 }
 
                 // Call the function
                 this.squirrelApi.SqPushRootTable();
                 if (!this.squirrelApi.SqCall(1, true, false))
                 {
-                    throw new SquirrelException($"The call to the '{stringGetServerWorld}' function failed");
+                    throw new SquirrelException(
+                        $"The call to the '{stringGetServerWorld}' function failed", 
+                        this.squirrelApi);
                 }
 
                 // Get the result
@@ -192,6 +188,7 @@ namespace GothicOnline.G2.DotNet.Loader.Server
                 this.squirrelApi.SqSetTop(top);
                 return result;
             }
+
             set
             {
                 if (value == null)
@@ -208,7 +205,8 @@ namespace GothicOnline.G2.DotNet.Loader.Server
                 if (!this.squirrelApi.SqGet(-2))
                 {
                     throw new SquirrelException(
-                        $"The gothic online server function '{stringSetServerWorld}' could not be found in the root table");
+                        $"The gothic online server function '{stringSetServerWorld}' could not be found in the root table", 
+                        this.squirrelApi);
                 }
 
                 // Call the function
@@ -216,7 +214,9 @@ namespace GothicOnline.G2.DotNet.Loader.Server
                 this.squirrelApi.SqPushString(value);
                 if (!this.squirrelApi.SqCall(2, true, false))
                 {
-                    throw new SquirrelException($"The call to the '{stringSetServerWorld}' function failed");
+                    throw new SquirrelException(
+                        $"The call to the '{stringSetServerWorld}' function failed", 
+                        this.squirrelApi);
                 }
 
                 // Set back top.
@@ -240,7 +240,8 @@ namespace GothicOnline.G2.DotNet.Loader.Server
             if (!this.squirrelApi.SqGet(-2))
             {
                 throw new SquirrelException(
-                    $"The gothic online server function '{stringSendMessageToAll}' could not be found in the root table");
+                    $"The gothic online server function '{stringSendMessageToAll}' could not be found in the root table", 
+                    this.squirrelApi);
             }
 
             // Call the function
@@ -251,7 +252,9 @@ namespace GothicOnline.G2.DotNet.Loader.Server
             this.squirrelApi.SqPushString(message);
             if (!this.squirrelApi.SqCall(2, true, false))
             {
-                throw new SquirrelException($"The call to the '{stringSendMessageToAll}' function failed");
+                throw new SquirrelException(
+                    $"The call to the '{stringSendMessageToAll}' function failed", 
+                    this.squirrelApi);
             }
 
             // Set back top.

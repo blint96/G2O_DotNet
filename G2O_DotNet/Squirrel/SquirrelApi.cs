@@ -1,16 +1,20 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="SquirrelApi.cs" company="Colony Online Project">
-// Copyright (C) <2016>  <Julian Vogel>
+// -
+// Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
+// -
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
 // GNU General Public License for more details.
+// -
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see<http://www.gnu.org/licenses/>.
+// -
 // </copyright>
 // <summary>
 // </summary>
@@ -18,8 +22,6 @@
 namespace GothicOnline.G2.DotNet.Loader.Squirrel
 {
     using System;
-    using System.Linq;
-    using System.Reflection;
     using System.Runtime.InteropServices;
 
     using GothicOnline.G2.DotNet.Squirrel;
@@ -40,7 +42,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         {
             if (vm == IntPtr.Zero)
             {
-                throw  new ArgumentException("The pointer argument must not be IntPtr.Zero",nameof(vm));
+                throw new ArgumentException("The pointer argument must not be IntPtr.Zero", nameof(vm));
             }
 
             if (vm == IntPtr.Zero)
@@ -49,6 +51,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
             }
 
             this.Vm = vm;
+
             // Marshall the _api struct.
             this._Api = (Squirrel)Marshal.PtrToStructure(api, typeof(Squirrel));
         }
@@ -271,6 +274,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
             {
                 throw new ArgumentException("The vm argument must not be IntPtr.Zero.", nameof(vm));
             }
+
             return this._Api.Call(vm, parameters, retVal, raiseError) == SqResult.SqOk;
         }
 
@@ -746,7 +750,6 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
             throw new NotImplementedException();
         }
 
-
         public bool SqGetBool(int index, out bool value)
         {
             throw new NotImplementedException();
@@ -869,22 +872,32 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
 
         public bool SqGetInteger(int index, out int value)
         {
-            throw new NotImplementedException();
+            return this._Api.GetInteger(this.Vm, index, out value) == SqResult.SqOk;
         }
 
         public bool SqGetInteger(IntPtr vm, int index, out int value)
         {
-            throw new NotImplementedException();
+            if (vm == IntPtr.Zero)
+            {
+                throw new ArgumentException("The vm argument must not be IntPtr.Zero.", nameof(vm));
+            }
+
+            return this._Api.GetInteger(vm, index, out value) == SqResult.SqOk;
         }
 
         public void SqGetLastError()
         {
-            throw new NotImplementedException();
+            this._Api.GetLastError(this.Vm);
         }
 
         public void SqGetLastError(IntPtr vm)
         {
-            throw new NotImplementedException();
+            if (vm == IntPtr.Zero)
+            {
+                throw new ArgumentException("The vm argument must not be IntPtr.Zero.", nameof(vm));
+            }
+
+            this._Api.GetLastError(vm);
         }
 
         public string SqGetLocal(uint level, uint index)
@@ -1471,32 +1484,47 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
 
         public void SqPushFloat(float value)
         {
-            throw new NotImplementedException();
+            this._Api.PushFloat(this.Vm, value);
         }
 
         public void SqPushFloat(IntPtr vm, float value)
         {
-            throw new NotImplementedException();
+            if (vm == IntPtr.Zero)
+            {
+                throw new ArgumentException("The vm argument must not be IntPtr.Zero.", nameof(vm));
+            }
+
+            this._Api.PushFloat(vm, value);
         }
 
         public void SqPushInteger(int value)
         {
-            throw new NotImplementedException();
+            this._Api.PushInteger(this.Vm, value);
         }
 
         public void SqPushInteger(IntPtr vm, int value)
         {
-            throw new NotImplementedException();
+            if (vm == IntPtr.Zero)
+            {
+                throw new ArgumentException("The vm argument must not be IntPtr.Zero.", nameof(vm));
+            }
+
+            this._Api.PushInteger(vm, value);
         }
 
         public void SqPushNull()
         {
-            throw new NotImplementedException();
+            this._Api.PushNull(this.Vm);
         }
 
         public void SqPushNull(IntPtr vm)
         {
-            throw new NotImplementedException();
+            if (vm == IntPtr.Zero)
+            {
+                throw new ArgumentException("The vm argument must not be IntPtr.Zero.", nameof(vm));
+            }
+
+            this._Api.PushNull(vm);
         }
 
         public void SqPushObject(SqObject obj)
@@ -1565,7 +1593,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
                 throw new ArgumentNullException(nameof(value));
             }
 
-            this._Api.PushString(this.Vm,Marshal.StringToHGlobalAnsi(value),value.Length);
+            this._Api.PushString(this.Vm, Marshal.StringToHGlobalAnsi(value), value.Length);
         }
 
         public void SqPushString(IntPtr vm, string value)
@@ -1574,6 +1602,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
             {
                 throw new ArgumentException("The vm argument must not be IntPtr.Zero.", nameof(vm));
             }
+
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
@@ -1588,6 +1617,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
             {
                 throw new ArgumentException("The value argument must not be IntPtr.Zero.", nameof(value));
             }
+
             this._Api.PushString(this.Vm, value, length);
         }
 
@@ -1597,10 +1627,12 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
             {
                 throw new ArgumentException("The vm argument must not be IntPtr.Zero.", nameof(vm));
             }
+
             if (value == IntPtr.Zero)
             {
                 throw new ArgumentException("The value argument must not be IntPtr.Zero.", nameof(value));
             }
+
             this._Api.PushString(vm, value, length);
         }
 
