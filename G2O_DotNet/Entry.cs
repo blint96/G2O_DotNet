@@ -20,6 +20,7 @@ namespace GothicOnline.G2.DotNet.Loader
     using System;
     using System.Configuration;
 
+    using GothicOnline.G2.DotNet.Character;
     using GothicOnline.G2.DotNet.Loader.Squirrel;
     using GothicOnline.G2.DotNet.Server;
     using GothicOnline.G2.DotNet.Squirrel;
@@ -35,15 +36,16 @@ namespace GothicOnline.G2.DotNet.Loader
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 ISquirrelApi api = new SquirrelApi(vm, apiPtr);
-                IServer server = new Server.Server(api);
+                IServer server = new Server(api);
                 Console.WriteLine(server.Description);
                 server.Description = "Hallo";
                 Console.WriteLine(server.Description);
                 Console.WriteLine(server.World);
-                Console.WriteLine(server.RespawnTime);
-                server.RespawnTime = 1000;
-                Console.WriteLine(server.RespawnTime);
+
+
+                server.SendMessageToAll(255, 255, 255, "Blabla");
                 Console.ForegroundColor = ConsoleColor.Green;
+             
                 Console.WriteLine("[G2ONet]Managed Code loaded!");
             }
             catch (Exception ex)

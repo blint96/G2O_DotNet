@@ -22,9 +22,9 @@
 namespace GothicOnline.G2.DotNet.Server
 {
     using System;
-    using System.Drawing;
 
     using GothicOnline.G2.DotNet.Client;
+    using System.Drawing;
 
     /// <summary>
     ///     Interface for the server. Provides access to all methods that directly related to the server.
@@ -47,11 +47,6 @@ namespace GothicOnline.G2.DotNet.Server
         string Description { get; set; }
 
         /// <summary>
-        ///     Gets or sets the respawn time.
-        /// </summary>
-        int RespawnTime { get; set; }
-
-        /// <summary>
         ///     Gets or sets the server time.
         /// </summary>
         ServerTime Time { get; set; }
@@ -67,6 +62,16 @@ namespace GothicOnline.G2.DotNet.Server
         /// <param name="color">The message color</param>
         /// <param name="message">The text of the message</param>
         void SendMessageToAll(Color color, string message);
+
+        /// <summary>
+        ///     Sends a message with a given color to all clients.
+        /// </summary>
+        /// <param name="r">Red value of the message color.</param>
+        /// <param name="g">Green value of the message color.</param>
+        /// <param name="b">Blue value of the message color.</param>
+        /// <param name="message">The text of the message</param>
+        void SendMessageToAll(int r,int g,int b, string message);
+
 
         /// <summary>
         ///     Sends a data packet to all clients.
