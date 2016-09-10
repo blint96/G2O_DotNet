@@ -87,7 +87,7 @@ namespace GothicOnline.G2.DotNet.Squirrel
         private string BuildParameterBraces()
         {
             // Get the amount of parameters.
-            int parameterCount = this.managedCallback.GetType().GetMethod("Invoke").GetParameters().Length;
+            int parameterCount = this.managedCallback.Function.GetType().GetMethod("Invoke").GetParameters().Length;
 
             // Build the parameter names "(parameter0,parameter1,...)
             StringBuilder paramBuilder = new StringBuilder();
