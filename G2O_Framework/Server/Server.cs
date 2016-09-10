@@ -23,23 +23,28 @@ namespace GothicOnline.G2.DotNet.Server
 {
     using System;
     using System.Drawing;
-    using System.Runtime.InteropServices;
 
     using GothicOnline.G2.DotNet.Client;
-    using GothicOnline.G2.DotNet.Exceptions;
     using GothicOnline.G2.DotNet.Interop;
     using GothicOnline.G2.DotNet.Squirrel;
 
     internal class Server : IServer
     {
         private static readonly AnsiString StringGetServerDescription = "getServerDescription";
+
         private static readonly AnsiString StringGetServerWorld = "getServerWorld";
+
         private static readonly AnsiString StringSendMessageToAll = "sendMessageToAll";
+
         private static readonly AnsiString StringSetServerDescription = "setServerDescription";
+
         private static readonly AnsiString StringSetServerWorld = "setServerWorld";
+
+        private G2OEventCallback InitFunction;
 
         private readonly ISquirrelApi squirrelApi;
 
+        private SqFunction OnInitializeFunction;
 
         public Server(ISquirrelApi squirrelApi)
         {
@@ -51,7 +56,25 @@ namespace GothicOnline.G2.DotNet.Server
             this.squirrelApi = squirrelApi;
         }
 
-        public event EventHandler<ClientConnectedEventArgs> Initialize;
+        public event EventHandler<ServerInitializedEventArgs> Initialize
+        {
+            add
+            {
+                if (this.InitFunction == null)
+                {
+                    this.InitFunction = new G2OEventCallback(this.squirrelApi, "onInit", new Action(() => this.OnInitialize?.Invoke(this, new ServerInitializedEventArgs(this))));
+                }
+
+                this.OnInitialize += value;
+            }
+
+            remove
+            {
+                this.OnInitialize -= value;
+            }
+        }
+
+        private event EventHandler<ServerInitializedEventArgs> OnInitialize;
 
         public IClientList Clients { get; }
 
@@ -73,7 +96,18 @@ namespace GothicOnline.G2.DotNet.Server
             }
         }
 
-        public ServerTime Time { get; set; }
+        public ServerTime Time
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         public string World
         {
@@ -95,7 +129,12 @@ namespace GothicOnline.G2.DotNet.Server
                 throw new ArgumentException("Value cannot be null or empty.", nameof(message));
             }
 
-            this.squirrelApi.CallWithParameter<int, int, int, string>(StringSendMessageToAll, color.R, color.G, color.B, message);
+            this.squirrelApi.CallWithParameter<int, int, int, string>(
+                StringSendMessageToAll,
+                color.R,
+                color.G,
+                color.B,
+                message);
         }
 
         public void SendMessageToAll(int r, int g, int b, string message)

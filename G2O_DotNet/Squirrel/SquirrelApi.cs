@@ -1168,12 +1168,17 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
 
         public void SqNewClosure(SqFunction func, uint nFreeVars)
         {
-            throw new NotImplementedException();
+            this._Api.NewClosure(this.Vm, func, nFreeVars);
         }
 
         public void SqNewClosure(IntPtr vm, SqFunction func, uint nFreeVars)
         {
-            throw new NotImplementedException();
+            if (vm == IntPtr.Zero)
+            {
+                throw new ArgumentException("The vm argument must not be IntPtr.Zero.", nameof(vm));
+            }
+
+            this._Api.NewClosure(vm, func, nFreeVars);
         }
 
         /// <summary>
@@ -2357,12 +2362,25 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
 
         public bool SqThrowError(string errorText)
         {
-            throw new NotImplementedException();
+            if (errorText == null)
+            {
+                throw new ArgumentNullException(nameof(errorText));
+            }
+          return  this._Api.ThrowError(this.Vm, errorText)== SqResult.SqOk;
         }
 
         public bool SqThrowError(IntPtr vm, string errorText)
         {
-            throw new NotImplementedException();
+            if (vm == IntPtr.Zero)
+            {
+                throw new ArgumentException("The vm argument must not be IntPtr.Zero.", nameof(vm));
+            }
+
+            if (errorText == null)
+            {
+                throw new ArgumentNullException(nameof(errorText));
+            }
+            return this._Api.ThrowError(vm, errorText) == SqResult.SqOk;
         }
 
         public bool SqToBool(int index, out bool value)

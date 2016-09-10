@@ -34,7 +34,7 @@ namespace GothicOnline.G2.DotNet.Squirrel
     public delegate void SqPrintFunction(IntPtr vm, params string[] value);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int SqFunction(IntPtr vm);
+    public delegate SqResult SqFunction(IntPtr vm);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int SqLexReadFunc(IntPtr userPtr);

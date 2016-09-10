@@ -34,7 +34,7 @@ namespace GothicOnline.G2.DotNet.Server
         /// <summary>
         ///     Invokes all registered handlers when the server gets initialized.
         /// </summary>
-        event EventHandler<ClientConnectedEventArgs> Initialize;
+        event EventHandler<ServerInitializedEventArgs> Initialize;
 
         /// <summary>
         ///     Gets the client list.

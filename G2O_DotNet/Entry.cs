@@ -41,11 +41,11 @@ namespace GothicOnline.G2.DotNet.Loader
                 server.Description = "Hallo";
                 Console.WriteLine(server.Description);
                 Console.WriteLine(server.World);
-
+                server.Initialize += Server_Initialize;
 
                 server.SendMessageToAll(255, 255, 255, "Blabla");
                 Console.ForegroundColor = ConsoleColor.Green;
-             
+
                 Console.WriteLine("[G2ONet]Managed Code loaded!");
             }
             catch (Exception ex)
@@ -56,6 +56,11 @@ namespace GothicOnline.G2.DotNet.Loader
             {
                 Console.ResetColor();
             }
+        }
+
+        private static void Server_Initialize(object sender, ServerInitializedEventArgs e)
+        {
+            Console.WriteLine("onInit was called.");
         }
     }
 }
