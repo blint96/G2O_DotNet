@@ -42,7 +42,8 @@ namespace GothicOnline.G2.DotNet.Loader
                 Console.WriteLine(server.Description);
                 Console.WriteLine(server.World);
                 server.Initialize += Server_Initialize;
-
+                server.Clients.ClientConnect += Clients_ClientConnect;
+                server.Clients.ClientDisconnect += Clients_ClientDisconnect;
                 server.SendMessageToAll(255, 255, 255, "Blabla");
                 Console.ForegroundColor = ConsoleColor.Green;
 
@@ -56,6 +57,16 @@ namespace GothicOnline.G2.DotNet.Loader
             {
                 Console.ResetColor();
             }
+        }
+
+        private static void Clients_ClientDisconnect(object sender, Client.ClientDisconnectedEventArgs e)
+        {
+            Console.WriteLine("Test client disconnected");
+        }
+
+        private static void Clients_ClientConnect(object sender, Client.ClientConnectedEventArgs e)
+        {
+            Console.WriteLine("Test client connected");
         }
 
         private static void Server_Initialize(object sender, ServerInitializedEventArgs e)

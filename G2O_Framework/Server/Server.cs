@@ -54,6 +54,7 @@ namespace GothicOnline.G2.DotNet.Server
             }
 
             this.squirrelApi = squirrelApi;
+            this.Clients= new ClientList(squirrelApi);
         }
 
         public event EventHandler<ServerInitializedEventArgs> Initialize

@@ -1130,5 +1130,87 @@ namespace GothicOnline.G2.DotNet.Squirrel
                     $"The given type argument '{typeof(TParam).Name}' is not a supported parameter of a squirrel function");
             }
         }
+
+        public static TRet Call<TRet, TParam>(this ISquirrelApi squirrelApi,AnsiString functionName ,TParam parameter)
+        {
+            if (squirrelApi == null)
+            {
+                throw new ArgumentNullException(nameof(squirrelApi));
+            }
+            if (functionName == null)
+            {
+                throw new ArgumentNullException(nameof(functionName));
+            }
+            if (parameter == null)
+            {
+                throw new ArgumentNullException(nameof(parameter));
+            }
+            // Get the stack top index
+            int top = squirrelApi.SqGetTop();
+
+            try
+            {
+                // Get the function
+                squirrelApi.SqPushRootTable();
+                squirrelApi.SqPushString(functionName.Unmanaged,functionName.Length);
+                if (!squirrelApi.SqGet(-2))
+                {
+                    throw new SquirrelException(
+                        $"The gothic online server function '{functionName}' could not be found in the root table",
+                        squirrelApi);
+                }
+
+                // Call the function
+                squirrelApi.SqPushRootTable();
+                PushValue<TParam>(squirrelApi, parameter);
+
+                if (!squirrelApi.SqCall(2, false, false))
+                {
+                    throw new SquirrelException($"The call to the '{functionName}' function failed", squirrelApi);
+                }
+
+                if (typeof(TRet) == typeof(string))
+                {
+                    string value;
+                    squirrelApi.SqGetString(squirrelApi.SqGetTop(), out value);
+                    return (TRet)(object)value;
+                }
+                else if (typeof(TRet) == typeof(int))
+                {
+                    int value;
+                    squirrelApi.SqGetInteger(squirrelApi.SqGetTop(), out value);
+                    return (TRet)(object)value;
+                }
+                else if (typeof(TRet) == typeof(float))
+                {
+                    float value;
+                    squirrelApi.SqGetFloat(squirrelApi.SqGetTop(), out value);
+                    return (TRet)(object)value;
+                }
+                else if (typeof(TRet) == typeof(bool))
+                {
+                    bool value;
+                    squirrelApi.SqGetBool(squirrelApi.SqGetTop(), out value);
+                    return (TRet)(object)value;
+                }
+                else if (typeof(TRet) == typeof(IntPtr))
+                {
+                    IntPtr value;
+                    squirrelApi.SqGetUserPointer(squirrelApi.SqGetTop(), out value);
+                    return (TRet)(object)value;
+                }
+                else
+                {
+                    throw new NotSupportedException(
+                        $"The given type argument '{typeof(TRet).Name}' is not supported as the return value of a squirrel function.");
+                }
+            }
+            finally
+            {
+                // Set back top
+                squirrelApi.SqSetTop(top);
+            }
+
+        }
     }
 }

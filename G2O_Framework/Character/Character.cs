@@ -27,25 +27,18 @@ namespace GothicOnline.G2.DotNet.Character
 
     using GothicOnline.G2.DotNet.Client;
     using GothicOnline.G2.DotNet.Exceptions;
+    using GothicOnline.G2.DotNet.Interop;
     using GothicOnline.G2.DotNet.Squirrel;
 
-    public class Character : ICharacter
+    internal class Character : ICharacter
     {
-        private const string stringGetPlayerRespawnTime = "getPlayerRespawnTime";
+        private static  readonly AnsiString StringGetPlayerRespawnTime = "getPlayerRespawnTime";
 
-        private const string stringSetPlayerRespawnTime = "setPlayerRespawnTime";
+        private static readonly AnsiString StringSetPlayerRespawnTime = "setPlayerRespawnTime";
 
-        private static readonly IntPtr ansiGetPlayerRespawnTime;
-
-        private static readonly IntPtr ansiSetPlayerRespawnTime;
 
         private readonly ISquirrelApi squirrelApi;
 
-        static Character()
-        {
-            ansiSetPlayerRespawnTime = Marshal.StringToHGlobalAnsi(stringSetPlayerRespawnTime);
-            ansiGetPlayerRespawnTime = Marshal.StringToHGlobalAnsi(stringGetPlayerRespawnTime);
-        }
 
         public Character(ISquirrelApi squirrelApi, IClient client)
         {
@@ -119,66 +112,16 @@ namespace GothicOnline.G2.DotNet.Character
         {
             get
             {
-                // Get the stack top index
-                int top = this.squirrelApi.SqGetTop();
-
-                // Get the function
-                this.squirrelApi.SqPushRootTable();
-                this.squirrelApi.SqPushString(ansiGetPlayerRespawnTime, stringGetPlayerRespawnTime.Length);
-                if (!this.squirrelApi.SqGet(-2))
-                {
-                    throw new SquirrelException(
-                        $"The gothic online server function '{stringGetPlayerRespawnTime}' could not be found in the root table", 
-                        this.squirrelApi);
-                }
-
-                // Call the function
-                this.squirrelApi.SqPushRootTable();
-                this.squirrelApi.SqPushInteger(this.Client.ClientId);
-                if (!this.squirrelApi.SqCall(2, true, false))
-                {
-                    throw new SquirrelException(
-                        $"The call to the '{stringGetPlayerRespawnTime}' function failed", 
-                        this.squirrelApi);
-                }
-
-                // Get the result
-                int result;
-                this.squirrelApi.SqGetInteger(this.squirrelApi.SqGetTop(), out result);
-
-                // Set back top
-                this.squirrelApi.SqSetTop(top);
-                return result;
+                return this.squirrelApi.Call<int, int>(StringGetPlayerRespawnTime, this.Client.ClientId);        
             }
 
             set
             {
-                // Get the stack top index
-                int top = this.squirrelApi.SqGetTop();
-
-                // Get the function
-                this.squirrelApi.SqPushRootTable();
-                this.squirrelApi.SqPushString(ansiSetPlayerRespawnTime, stringSetPlayerRespawnTime.Length);
-                if (!this.squirrelApi.SqGet(-2))
+                if (value <= 0)
                 {
-                    throw new SquirrelException(
-                        $"The gothic online server function '{stringSetPlayerRespawnTime}' could not be found in the root table", 
-                        this.squirrelApi);
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
-
-                // Call the function
-                this.squirrelApi.SqPushRootTable();
-                this.squirrelApi.SqPushInteger(this.Client.ClientId);
-                this.squirrelApi.SqPushInteger(value);
-                if (!this.squirrelApi.SqCall(2, true, false))
-                {
-                    throw new SquirrelException(
-                        $"The call to the '{stringSetPlayerRespawnTime}' function failed", 
-                        this.squirrelApi);
-                }
-
-                // Set back top.
-                this.squirrelApi.SqSetTop(top);
+                this.squirrelApi.CallWithParameter<int, int>(StringSetPlayerRespawnTime, this.Client.ClientId, value);
             }
         }
 

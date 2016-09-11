@@ -22,6 +22,7 @@
 namespace GothicOnline.G2.DotNet.Client
 {
     using System;
+    using System.Collections.Generic;
 
     public interface IClientList
     {
@@ -32,5 +33,19 @@ namespace GothicOnline.G2.DotNet.Client
         int Count { get; }
 
         int MaxSlots { get; }
+
+        /// <summary>
+        /// Gets a enumerable of all online clients.
+        /// <remarks>The order of the clients must not match their client id.</remarks>
+        /// </summary>
+        IEnumerable<IClient> Clients { get; }
+
+        /// <summary>
+        /// Gets a <see cref="IClient"/> by its client id.
+        /// <remarks>Returns null if no client with the given id is online.</remarks>
+        /// </summary>
+        /// <param name="clientId">The client id for which the client should be returned</param>
+        /// <returns></returns>
+        IClient this[int clientId] { get; }
     }
 }

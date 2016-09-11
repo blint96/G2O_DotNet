@@ -47,6 +47,8 @@
     <Compile Include="Character\IInventory.cs" />
     <Compile Include="Character\IItem.cs" />
     <Compile Include="Character\IItemInstanceProvider.cs" />
+    <Compile Include="Client\Client.cs" />
+    <Compile Include="Client\ClientList.cs" />
     <Compile Include="Exceptions\SquirrelException.cs" />
     <Compile Include="Interop\AnsiString.cs" />
     <Compile Include="Plugin\IPlugin.cs" />
