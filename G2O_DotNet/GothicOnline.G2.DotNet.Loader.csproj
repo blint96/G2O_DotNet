@@ -32,18 +32,28 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Composition.cs" />
     <Compile Include="Entry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Squirrel\SquirrelApi.cs" />
-    <Compile Include="Squirrel\Squirrel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\G2O_Framework\G2O_Framework.csproj">
-      <Project>{91cc7772-325c-454d-bcb1-57219f17ec26}</Project>
-      <Name>G2O_Framework</Name>
+    <ProjectReference Include="..\G2O.DotNet.Framework.ServerApi\GothicOnline.G2.DotNet.Framework.ServerApi.csproj">
+      <Project>{ebc933c1-6244-44bd-8b51-b572ca157e94}</Project>
+      <Name>GothicOnline.G2.DotNet.Framework.ServerApi</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\G2O.DotNet.Framework.Squirrel\GothicOnline.G2.DotNet.Framework.Squirrel.csproj">
+      <Project>{887c33bf-16f8-4cb0-b093-373a8d150b3d}</Project>
+      <Name>GothicOnline.G2.DotNet.Framework.Squirrel</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\GothicOnline.G2.DotNet.Framework.Plugin\GothicOnline.G2.DotNet.Framework.Plugin.csproj">
+      <Project>{cc607f62-31ee-42e7-9704-c4cb42cf17a3}</Project>
+      <Name>GothicOnline.G2.DotNet.Framework.Plugin</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

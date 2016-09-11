@@ -25,7 +25,9 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
     using System.Runtime.InteropServices;
 
     using GothicOnline.G2.DotNet.Squirrel;
+    using System.ComponentModel.Composition;
 
+    [Export(typeof(ISquirrelApi))]
     internal class SquirrelApi : ISquirrelApi
     {
         /// <summary>
@@ -38,7 +40,8 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         /// </summary>
         /// <param name="vm">Pointer to the default vm.</param>
         /// <param name="api">Pointer to the api struct.</param>
-        public SquirrelApi(IntPtr vm, IntPtr api)
+        [ImportingConstructor]
+        public SquirrelApi([Import("SquirrelVmHandle")] IntPtr vm, [Import("SquirrelAPIHandle")] IntPtr api)
         {
             if (vm == IntPtr.Zero)
             {
@@ -751,8 +754,8 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         }
 
         public bool SqGetBool(int index, out bool value)
-        {   
-            return this._Api.GetBool(this.Vm,index,out value) == SqResult.SqOk;
+        {
+            return this._Api.GetBool(this.Vm, index, out value) == SqResult.SqOk;
         }
 
         public bool SqGetBool(IntPtr vm, int index, out bool value)
@@ -822,8 +825,8 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
 
         public bool SqGetFloat(int index, out float value)
         {
-            SqObject obj = new SqObject();         
-            bool ok = this._Api.GetStackObj(this.Vm,index,ref obj) == SqResult.SqOk;
+            SqObject obj = new SqObject();
+            bool ok = this._Api.GetStackObj(this.Vm, index, ref obj) == SqResult.SqOk;
             value = obj.UnValue.fFloat;
             return ok;
         }
@@ -1015,7 +1018,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
 
         public SqObjectType SqGetType(int index)
         {
-           return this._Api.GetType(this.Vm, index);
+            return this._Api.GetType(this.Vm, index);
         }
 
         public SqObjectType SqGetType(IntPtr vm, int index)
@@ -1963,7 +1966,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
             if (errorHandler == null)
             {
                 throw new ArgumentNullException(
-                    nameof(errorHandler), 
+                    nameof(errorHandler),
                     $"The {nameof(errorHandler)} argument must not be null.");
             }
 
@@ -1991,7 +1994,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
             if (errorHandler == null)
             {
                 throw new ArgumentNullException(
-                    nameof(errorHandler), 
+                    nameof(errorHandler),
                     $"The {nameof(errorHandler)} argument must not be null.");
             }
 
@@ -2384,7 +2387,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
             {
                 throw new ArgumentNullException(nameof(errorText));
             }
-          return  this._Api.ThrowError(this.Vm, errorText)== SqResult.SqOk;
+            return this._Api.ThrowError(this.Vm, errorText) == SqResult.SqOk;
         }
 
         public bool SqThrowError(IntPtr vm, string errorText)

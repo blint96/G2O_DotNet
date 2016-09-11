@@ -301,7 +301,7 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
     /// Encapsulates all information about the squirrel api.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public class Squirrel
+    internal class Squirrel
     {
         /// <summary>
         /// Private constructor.
