@@ -155,10 +155,10 @@ namespace GothicOnline.G2.DotNet.Squirrel
             }
 
             object[] parameterValues = new object[this.parameterTypes.Length];
-            for (int i = 1; i <= this.parameterTypes.Length; i++)
+            for (int i = 0; i < this.parameterTypes.Length; i++)
             {
-                SqObjectType type = this.squirrelApi.SqGetType(i);
-
+                SqObjectType type = this.squirrelApi.SqGetType(i+2);
+                
                 // String
                 if (this.parameterTypes[i].ParameterType == typeof(string) && type != SqObjectType.OtString)
                 {
@@ -167,11 +167,11 @@ namespace GothicOnline.G2.DotNet.Squirrel
                     this.squirrelApi.SqThrowError(error);
                     return SqResult.SqError;
                 }
-                else
+                else if(this.parameterTypes[i].ParameterType == typeof(string))
                 {
                     string value;
                     this.squirrelApi.SqGetString(i, out value);
-                    parameterValues[i - 1] = value;
+                    parameterValues[i] = value;
                 }
 
                 // Int
@@ -182,11 +182,11 @@ namespace GothicOnline.G2.DotNet.Squirrel
                     this.squirrelApi.SqThrowError(error);
                     return SqResult.SqError;
                 }
-                else
+                else if (this.parameterTypes[i].ParameterType == typeof(int))
                 {
                     int value;
                     this.squirrelApi.SqGetInteger(i, out value);
-                    parameterValues[i - 1] = value;
+                    parameterValues[i] = value;
                 }
 
                 // Float
@@ -197,11 +197,11 @@ namespace GothicOnline.G2.DotNet.Squirrel
                     this.squirrelApi.SqThrowError(error);
                     return SqResult.SqError;
                 }
-                else
+                else if(this.parameterTypes[i].ParameterType == typeof(float))
                 {
                     float value;
                     this.squirrelApi.SqGetFloat(i, out value);
-                    parameterValues[i - 1] = value;
+                    parameterValues[i] = value;
                 }
 
                 // Bool
@@ -212,14 +212,14 @@ namespace GothicOnline.G2.DotNet.Squirrel
                     this.squirrelApi.SqThrowError(error);
                     return SqResult.SqError;
                 }
-                else
+                else if(this.parameterTypes[i].ParameterType == typeof(bool))
                 {
                     bool value;
                     this.squirrelApi.SqGetBool(i, out value);
-                    parameterValues[i - 1] = value;
+                    parameterValues[i] = value;
                 }
 
-                // Bool
+                // Userpointer
                 if (this.parameterTypes[i].ParameterType == typeof(IntPtr) && type != SqObjectType.OtBool)
                 {
                     string error =
@@ -227,11 +227,11 @@ namespace GothicOnline.G2.DotNet.Squirrel
                     this.squirrelApi.SqThrowError(error);
                     return SqResult.SqError;
                 }
-                else
+                else if(this.parameterTypes[i].ParameterType == typeof(IntPtr))
                 {
                     IntPtr value;
                     this.squirrelApi.SqGetUserPointer(i, out value);
-                    parameterValues[i - 1] = value;
+                    parameterValues[i] = value;
                 }
             }
 

@@ -134,7 +134,7 @@ namespace GothicOnline.G2.DotNet.Client
             this.Count--;
             var client = this.clients[pid];
             this.clients[pid] = null;
-            this.OnClientConnect?.Invoke(this, new ClientConnectedEventArgs(client));
+            this.OnClientDisconnect?.Invoke(this, new ClientDisconnectedEventArgs(client,(DisconnectReason)reason));
         }
     }
 }

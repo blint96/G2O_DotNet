@@ -67,7 +67,7 @@ namespace GothicOnline.G2.DotNet.Squirrel
             this.managedCallback = new SquirrelFunction(squirrelApi, $"G2ONet_{eventName}_{Random.Next()}", callback);
 
             // Build, compile and register the a proxy function inside the squirrel vm that calls the managed callback.
-            string proxyFunctionName = $"G2O_onInit_{Random.Next()}";
+            string proxyFunctionName = $"G2O_{eventName}_{Random.Next()}";
             var parameterBraces = this.BuildParameterBraces();
             StringBuilder codeBuilder = new StringBuilder();
             codeBuilder.AppendLine($"function {proxyFunctionName}{parameterBraces}");

@@ -751,13 +751,17 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
         }
 
         public bool SqGetBool(int index, out bool value)
-        {
-            throw new NotImplementedException();
+        {   
+            return this._Api.GetBool(this.Vm,index,out value) == SqResult.SqOk;
         }
 
         public bool SqGetBool(IntPtr vm, int index, out bool value)
         {
-            throw new NotImplementedException();
+            if (vm == IntPtr.Zero)
+            {
+                throw new ArgumentException("The vm argument must not be IntPtr.Zero.", nameof(vm));
+            }
+            return this._Api.GetBool(vm, index, out value) == SqResult.SqOk;
         }
 
         public bool SqGetClass(int index)
@@ -818,12 +822,22 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
 
         public bool SqGetFloat(int index, out float value)
         {
-            throw new NotImplementedException();
+            SqObject obj = new SqObject();         
+            bool ok = this._Api.GetStackObj(this.Vm,index,ref obj) == SqResult.SqOk;
+            value = obj.UnValue.fFloat;
+            return ok;
         }
 
         public bool SqGetFloat(IntPtr vm, int index, out float value)
         {
-            throw new NotImplementedException();
+            if (vm == IntPtr.Zero)
+            {
+                throw new ArgumentException("The vm argument must not be IntPtr.Zero.", nameof(vm));
+            }
+            SqObject obj = new SqObject();
+            bool ok = this._Api.GetStackObj(vm, index, ref obj) == SqResult.SqOk;
+            value = obj.UnValue.fFloat;
+            return ok;
         }
 
         /// <summary>
@@ -1001,12 +1015,16 @@ namespace GothicOnline.G2.DotNet.Loader.Squirrel
 
         public SqObjectType SqGetType(int index)
         {
-            throw new NotImplementedException();
+           return this._Api.GetType(this.Vm, index);
         }
 
         public SqObjectType SqGetType(IntPtr vm, int index)
         {
-            throw new NotImplementedException();
+            if (vm == IntPtr.Zero)
+            {
+                throw new ArgumentException("The vm argument must not be IntPtr.Zero.", nameof(vm));
+            }
+            return this._Api.GetType(vm, index);
         }
 
         public bool SqGetTypeTag(int index, out IntPtr typeTag)
