@@ -113,7 +113,7 @@ namespace GothicOnline.G2.DotNet.Character
         {
             get
             {
-                return this.squirrelApi.Call<int, int>(StringGetPlayerRespawnTime, this.Client.ClientId);        
+                return this.squirrelApi.Call<int>(StringGetPlayerRespawnTime, this.Client.ClientId);        
             }
 
             set
@@ -122,7 +122,7 @@ namespace GothicOnline.G2.DotNet.Character
                 {
                     throw new ArgumentOutOfRangeException(nameof(value));
                 }
-                this.squirrelApi.CallWithParameter<int, int>(StringSetPlayerRespawnTime, this.Client.ClientId, value);
+                this.squirrelApi.Call(StringSetPlayerRespawnTime, this.Client.ClientId, value);
             }
         }
 

@@ -86,7 +86,7 @@ namespace GothicOnline.G2.DotNet.Server
         {
             get
             {
-                return this.squirrelApi.CallWithReturn<string>(StringGetServerDescription);
+                return this.squirrelApi.Call<string>(StringGetServerDescription);
             }
 
             set
@@ -96,7 +96,7 @@ namespace GothicOnline.G2.DotNet.Server
                     throw new ArgumentNullException(nameof(value));
                 }
 
-                this.squirrelApi.CallWithParameter<string>(StringSetServerDescription, value);
+                this.squirrelApi.Call(StringSetServerDescription, value);
             }
         }
 
@@ -117,12 +117,12 @@ namespace GothicOnline.G2.DotNet.Server
         {
             get
             {
-                return this.squirrelApi.CallWithReturn<string>(StringGetServerWorld);
+                return this.squirrelApi.Call<string>(StringGetServerWorld);
             }
 
             set
             {
-                this.squirrelApi.CallWithParameter<string>(StringSetServerWorld, value);
+                this.squirrelApi.Call(StringSetServerWorld, value);
             }
         }
 
@@ -133,12 +133,7 @@ namespace GothicOnline.G2.DotNet.Server
                 throw new ArgumentException("Value cannot be null or empty.", nameof(message));
             }
 
-            this.squirrelApi.CallWithParameter<int, int, int, string>(
-                StringSendMessageToAll,
-                color.R,
-                color.G,
-                color.B,
-                message);
+            this.squirrelApi.Call( StringSendMessageToAll,color.R,color.G,color.B,message);
         }
 
         public void SendMessageToAll(int r, int g, int b, string message)
@@ -148,7 +143,7 @@ namespace GothicOnline.G2.DotNet.Server
                 throw new ArgumentException("Value cannot be null or empty.", nameof(message));
             }
 
-            this.squirrelApi.CallWithParameter<int, int, int, string>(StringSendMessageToAll, r, g, b, message);
+            this.squirrelApi.Call(StringSendMessageToAll, r, g, b, message);
         }
 
         public void SendPacketToAll(IPacket packet, PacketReliability reliability)

@@ -107,7 +107,7 @@ namespace GothicOnline.G2.DotNet.Client
 
         public int Count { get; private set; }
 
-        public int MaxSlots => this.squirrelApi.CallWithReturn<int>(StringGetMaxSlots);
+        public int MaxSlots => this.squirrelApi.Call<int>(StringGetMaxSlots);
 
         public IClient this[int clientId]
         {

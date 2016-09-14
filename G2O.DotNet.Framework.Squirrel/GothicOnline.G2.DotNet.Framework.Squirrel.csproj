@@ -55,11 +55,11 @@
     <Compile Include="SqStackInfos.cs" />
     <Compile Include="Squirrel.cs" />
     <Compile Include="SquirrelApi.cs" />
-    <Compile Include="SquirrelCallHelper.cs" />
-    <Compile Include="SquirrelCompilerHelper.cs" />
+    <Compile Include="Extensions\SquirrelCallHelper.cs" />
+    <Compile Include="Extensions\SquirrelCompilerHelper.cs" />
     <Compile Include="SquirrelFunction.cs" />
     <Compile Include="SquirrelObjectTypeMask.cs" />
-    <Compile Include="SquirrelSqRegisterFunctionHelper.cs" />
+    <Compile Include="Extensions\SquirrelSqRegisterFunctionHelper.cs" />
     <Compile Include="VMState.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
