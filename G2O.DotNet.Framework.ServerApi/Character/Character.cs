@@ -22,26 +22,136 @@
 namespace GothicOnline.G2.DotNet.Character
 {
     using System;
+    using System.ComponentModel;
     using System.Drawing;
-    using System.Runtime.InteropServices;
 
     using GothicOnline.G2.DotNet.Client;
-    using GothicOnline.G2.DotNet.Exceptions;
     using GothicOnline.G2.DotNet.Interop;
+    using GothicOnline.G2.DotNet.Server;
     using GothicOnline.G2.DotNet.Squirrel;
-    using Squirrel;
 
-    internal class Character : ICharacter,IDisposable
+    internal class Character : ICharacter, IDisposable
     {
+        // getAniId(int pid)
+        private static readonly AnsiString StringGetAniId = "getAniId";
+
+        private static readonly AnsiString StringGetPlayerAngle = "getPlayerAngle";
+
+        /*
+         * setPlayerColor(int id, int r, int g, int b)
+            getPlayerColor(int id)
+         */
+        private static readonly AnsiString StringGetPlayerColor = "getPlayerColor";
+
+        private static readonly AnsiString StringGetPlayerDexterity = "getPlayerDexterity";
+
+        // getPlayerFocus(int id)
+        private static readonly AnsiString StringGetPlayerFocus = "getPlayerFocus";
+
+        /*
+         * setPlayerHealth(int id, int hp)
+            getPlayerHealth(int id)
+         */
+        private static readonly AnsiString StringGetPlayerHealth = "getPlayerHealth";
+
+        private static readonly AnsiString StringGetPlayerMaxHealth = "getPlayerMaxHealth";
+
+        private static readonly AnsiString StringGetPlayerName = "getPlayerName";
+
+        private static readonly AnsiString StringGetPlayerPosition = "getPlayerPosition";
+
         private static readonly AnsiString StringGetPlayerRespawnTime = "getPlayerRespawnTime";
+
+        // getPlayerSkillWeapon(int id)
+        private static readonly AnsiString StringGetPlayerSkillWeapon = "getPlayerSkillWeapon";
+
+        private static readonly AnsiString StringGetPlayerStrength = "getPlayerStrength";
+
+        // getPlayerTalent(id)
+        private static readonly AnsiString StringGetPlayerTalent = "getPlayerTalent";
+
+        private static readonly AnsiString StringGetPlayerWeaponMode = "getPlayerWeaponMode";
+
+        private static readonly AnsiString StringIsPlayerDead = "isPlayerDead";
+
+        private static readonly AnsiString StringIsPlayerSpawned = "isPlayerSpawned";
+
+        private static readonly AnsiString StringIsPlayerUnconscious = "isPlayerUnconscious";
+
+        // playAniId(int pid, int id)
+        private static readonly AnsiString StringPlayAniId = "playAniId";
+
+        /*
+         * setPlayerAngle(int id, int angle)
+            getPlayerAngle(int id)
+         */
+        private static readonly AnsiString StringSetPlayerAngle = "setPlayerAngle";
+
+        private static readonly AnsiString StringSetPlayerColor = "setPlayerColor";
+
+        /*
+         * setPlayerDexterity(int id, int dex)
+            getPlayerDexterity(int id)
+         */
+        private static readonly AnsiString StringSetPlayerDexterity = "setPlayerDexterity";
+
+        private static readonly AnsiString StringSetPlayerHealth = "setPlayerHealth";
+
+        /*
+         * setPlayerMaxHealth(int id, int maxHp)
+getPlayerMaxHealth(int id)
+         */
+        private static readonly AnsiString StringSetPlayerMaxHealth = "setPlayerMaxHealth";
+
+        /*setPlayerName(int id, string name)
+         getPlayerName(int id)*/
+        private static readonly AnsiString StringSetPlayerName = "setPlayerName";
+
+        /*
+         * 
+         * setPlayerPosition(int id, int x, int y, int z)
+getPlayerPosition(int id)*/
+        private static readonly AnsiString StringSetPlayerPosition = "setPlayerPosition";
 
         private static readonly AnsiString StringSetPlayerRespawnTime = "setPlayerRespawnTime";
 
+        // setPlayerSkillWeapon(int id, int skill_id, int value)
+        private static readonly AnsiString StringSetPlayerSkillWeapon = "setPlayerSkillWeapon";
+
+        /*
+         * setPlayerStrength(int id, int str)
+            getPlayerStrength(int id)
+         */
+        private static readonly AnsiString StringSetPlayerStrength = "setPlayerStrength";
+
+        // setPlayerTalent(int id, int talent_id, int value)
+        private static readonly AnsiString StringSetPlayerTalent = "setPlayerTalent";
+
+        /*
+         * setPlayerWeaponMode(int id, int wm)
+            getPlayerWeaponMode(int id)
+         */
+        private static readonly AnsiString StringSetPlayerWeaponMode = "setPlayerWeaponMode";
+
+        // spawnPlayer(int id)
+        private static readonly AnsiString StringSpawnPlayer = "setPlayspawnPlayererTalent";
+
+        // stopAni(int pid)
+        private static readonly AnsiString StringStopAni = "stopAni";
+
+        // unspawnPlayer(int id)
+        private static readonly AnsiString StringUnspawnPlayer = "unspawnPlayer";
+
+        private readonly IServer server;
 
         private readonly ISquirrelApi squirrelApi;
 
+        /// <summary>
+        ///     Indicates whether this object is disposed or not.
+        /// </summary>
+        private bool disposed;
 
-        public Character(ISquirrelApi squirrelApi, IClient client)
+        public Character(ISquirrelApi squirrelApi, IClient client, IServer server)
         {
             if (squirrelApi == null)
             {
@@ -53,143 +163,196 @@ namespace GothicOnline.G2.DotNet.Character
                 throw new ArgumentNullException(nameof(client));
             }
 
+            if (server == null)
+            {
+                throw new ArgumentNullException(nameof(server));
+            }
+
             this.squirrelApi = squirrelApi;
+            this.server = server;
             this.Client = client;
         }
 
-        //onPlayerEquipArmor(int pid, string instance)
+        // onPlayerEquipArmor(int pid, string instance)
         public event EventHandler<ItemEquipedEventArgs> ArmorEquiped;
 
-        //onPlayerDead(int killer_id, int id)
+        // onPlayerDead(int killer_id, int id)
         public event EventHandler<DeadEventArgs> Died;
 
-        //onPlayerChangeFocus(int pid, int oldFocusId, int currFocusId)
+        // onPlayerChangeFocus(int pid, int oldFocusId, int currFocusId)
         public event EventHandler<FocusChangedEventArgs> FocusChanged;
 
-        //onPlayerEquipHandItem(int pid, int hand, string instance)
+        // onPlayerEquipHandItem(int pid, int hand, string instance)
         public event EventHandler<HandItemEquipedEventArgs> HandItemEquiped;
 
-        //onPlayerChangeHealth(int id, int oldHp, int currHp)
+        // onPlayerChangeHealth(int id, int oldHp, int currHp)
         public event EventHandler<HealthChangedEventArgs> HealthChanged;
 
-        //onPlayerEquipHelmet(int pid, string instance)
+        // onPlayerEquipHelmet(int pid, string instance)
         public event EventHandler<ItemEquipedEventArgs> HelmetEquiped;
 
-        //onPlayerHit(int killer_id, int id, int dmg, int type)
+        // onPlayerHit(int killer_id, int id, int dmg, int type)
         public event EventHandler<HitEventArgs> Hit;
 
-        //onPlayerChangeMaxHealth(int id, int oldMaxHp, int currMaxHp)
+        // onPlayerChangeMaxHealth(int id, int oldMaxHp, int currMaxHp)
         public event EventHandler<MaxHealthChangedEventArgs> MaxHealthChanged;
 
-        //onPlayerEquipMeleeWeapon(int pid, string instance)
+        // onPlayerEquipMeleeWeapon(int pid, string instance)
         public event EventHandler<ItemEquipedEventArgs> MeleeWeaponEquiped;
 
-        //onPlayerEquipRangedWeapon(int pid, string instance)
+        // onPlayerEquipRangedWeapon(int pid, string instance)
         public event EventHandler<ItemEquipedEventArgs> RangedEquiped;
 
-        //onPlayerRespawn(int id)
+        // onPlayerRespawn(int id)
         public event EventHandler<RespawnEventArgs> Respawned;
 
-
-        //onPlayerEquipShield(int pid, string instance)
+        // onPlayerEquipShield(int pid, string instance)
         public event EventHandler<ItemEquipedEventArgs> ShieldEquiped;
 
-        //onPlayerUnconscious(int killer_id, int id)
+        // onPlayerUnconscious(int killer_id, int id)
         public event EventHandler<UnconsciousEventArgs> Unconscious;
 
-        /*
-         * setPlayerAngle(int id, int angle)
-            getPlayerAngle(int id)
-         */
-
-        private static readonly AnsiString StringSetPlayerAngle = "getsetPlayerAnglePlayerHealth";
-        private static readonly AnsiString StringGetPlayerAngle = "getPlayerAngle";
         public float Angle
         {
             get
             {
-                 return this.squirrelApi.Call<int>(StringGetPlayerAngle, this.Client.ClientId);
+                return this.squirrelApi.Call<int>(StringGetPlayerAngle, this.Client.ClientId);
             }
+
             set
             {
-                //Normalize the angle.
+                // Normalize the angle.
                 value %= 360;
-                this.squirrelApi.Call(StringSetPlayerAngle, this.Client.ClientId,value);
+                this.squirrelApi.Call(StringSetPlayerAngle, this.Client.ClientId, value);
             }
         }
 
         public IClient Client { get; }
-        /*
-         * setPlayerDexterity(int id, int dex)
-            getPlayerDexterity(int id)
-         */
-        public int Dexterity { get; set; }
 
-        //getPlayerFocus(int id)
-        public ICharacter Focus { get; }
-
-        /*
-         * setPlayerHealth(int id, int hp)
-            getPlayerHealth(int id)
-         */
-
-        private static readonly AnsiString StringGetPlayerHealth = "getPlayerHealth";
-        private static readonly AnsiString StringSetPlayerHealth = "setPlayerHealth";
-        public int Health
+        public int Dexterity
         {
             get
             {
-              return this.squirrelApi.Call<int>(StringGetPlayerHealth, this.Client.ClientId);
+                return this.squirrelApi.Call<int>(StringGetPlayerDexterity, this.Client.ClientId);
             }
+
             set
             {
                 if (value < 0)
                 {
                     throw new ArgumentOutOfRangeException(nameof(value));
                 }
-                this.squirrelApi.Call<int>(StringSetPlayerHealth, this.Client.ClientId,value);
+
+                this.squirrelApi.Call(StringSetPlayerDexterity, this.Client.ClientId, value);
+            }
+        }
+
+        public ICharacter Focus
+        {
+            get
+            {
+                int focusId = this.squirrelApi.Call<int>(StringGetPlayerFocus, this.Client.ClientId);
+                if (focusId >= 0)
+                {
+                    return this.server.Clients[focusId].PlayerCharacter;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public int Health
+        {
+            get
+            {
+                return this.squirrelApi.Call<int>(StringGetPlayerHealth, this.Client.ClientId);
+            }
+
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                }
+
+                this.squirrelApi.Call(StringSetPlayerHealth, this.Client.ClientId, value);
             }
         }
 
         public IInventory Inventory { get; }
 
-        private static readonly AnsiString StringIsPlayerDead = "isPlayerDead";
-
-        //isPlayerDead(int id)
+        // isPlayerDead(int id)
         public bool IsDead => this.squirrelApi.Call<bool>(StringIsPlayerDead, this.Client.ClientId);
 
-
-        private static readonly AnsiString StringIsPlayerSpawned = "isPlayerSpawned";
-        //isPlayerSpawned(int id)
+        // isPlayerSpawned(int id)
         public bool IsSpawned => this.squirrelApi.Call<bool>(StringIsPlayerSpawned, this.Client.ClientId);
 
-        private static readonly AnsiString StringIsPlayerUnconscious = "isPlayerUnconscious";
-
-        //isPlayerUnconscious(int id)
+        // isPlayerUnconscious(int id)
         public bool IsUnconscious => this.squirrelApi.Call<bool>(StringIsPlayerUnconscious, this.Client.ClientId);
 
-        /*
-         * setPlayerMaxHealth(int id, int maxHp)
-getPlayerMaxHealth(int id)
-         */
-        public int MaxHealth { get; set; }
+        public int MaxHealth
+        {
+            get
+            {
+                return this.squirrelApi.Call<int>(StringGetPlayerMaxHealth, this.Client.ClientId);
+            }
 
-        /*setPlayerName(int id, string name)
-         getPlayerName(int id)*/
-        public string Name { get; set; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                }
 
-        /*
-         * setPlayerColor(int id, int r, int g, int b)
-            getPlayerColor(int id)
-         */
-        public Color NameColor { get; set; }
+                this.squirrelApi.Call(StringSetPlayerMaxHealth, this.Client.ClientId, value);
+            }
+        }
 
-        /*
-         * 
-         * setPlayerPosition(int id, int x, int y, int z)
-getPlayerPosition(int id)*/
-        public Point3D Position { get; set; }
+        public string Name
+        {
+            get
+            {
+                return this.squirrelApi.Call<string>(StringGetPlayerName, this.Client.ClientId);
+            }
 
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentException("Value cannot be null or empty.", nameof(value));
+                }
+
+                this.squirrelApi.Call(StringSetPlayerName, this.Client.ClientId, value);
+            }
+        }
+
+        public Color NameColor
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                this.squirrelApi.Call(StringSetPlayerColor, this.Client.ClientId, value.R, value.G, value.B);
+            }
+        }
+
+        public Point3D Position
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                this.squirrelApi.Call(StringSetPlayerPosition, this.Client.ClientId, value.X, value.Y, value.Z);
+            }
+        }
 
         public int RespawnTime
         {
@@ -200,86 +363,50 @@ getPlayerPosition(int id)*/
 
             set
             {
-                if (value <= 0)
+                if (value < 0)
                 {
                     throw new ArgumentOutOfRangeException(nameof(value));
                 }
+
                 this.squirrelApi.Call(StringSetPlayerRespawnTime, this.Client.ClientId, value);
             }
         }
 
-        /*
-         * setPlayerStrength(int id, int str)
-            getPlayerStrength(int id)
-         */
-        public int Strength { get; set; }
-
-        /*
-         * setPlayerWeaponMode(int id, int wm)
-            getPlayerWeaponMode(int id)
-         */
-        public int WeaponMode { get; set; }
-
-
-        //getAniId(int pid)
-        public int GetAniId()
+        public int Strength
         {
-            throw new NotImplementedException();
+            get
+            {
+                return this.squirrelApi.Call<int>(StringGetPlayerStrength, this.Client.ClientId);
+            }
+
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                }
+
+                this.squirrelApi.Call(StringSetPlayerStrength, this.Client.ClientId, value);
+            }
         }
 
-
-        //getPlayerSkillWeapon(int id)
-        public int GetSkillWeapon(SkillWeapon skill)
+        public WeaponMode WeaponMode
         {
-            throw new NotImplementedException();
-        }
+            get
+            {
+                return (WeaponMode)this.squirrelApi.Call<int>(StringGetPlayerWeaponMode, this.Client.ClientId);
+            }
 
-        //getPlayerTalent(id)
-        public int GetTalent(Talent talent)
-        {
-            throw new NotImplementedException();
-        }
+            set
+            {
+                if (!Enum.IsDefined(typeof(WeaponMode), value))
+                {
+                    throw new InvalidEnumArgumentException(nameof(value), (int)value, typeof(WeaponMode));
+                }
 
-        //playAniId(int pid, int id)
-        public int PlayAniId(int aniId)
-        {
-            throw new NotImplementedException();
+                this.squirrelApi.Call(StringSetPlayerWeaponMode, this.Client.ClientId, (int)value);
+            }
         }
-
-        //setPlayerSkillWeapon(int id, int skill_id, int value)
-        public void SetSkillWeapon(SkillWeapon skill, int value)
-        {
-            throw new NotImplementedException();
-        }
-
-        //setPlayerTalent(int id, int talent_id, int value)
-        public void SetTalent(Talent talent, int value)
-        {
-            throw new NotImplementedException();
-        }
-
-        //spawnPlayer(int id)
-        public void Spawn()
-        {
-            throw new NotImplementedException();
-        }
-
-        //stopAni(int pid)
-        public void StopAniId()
-        {
-            throw new NotImplementedException();
-        }
-
-        //unspawnPlayer(int id)
-        public void UnspawnPlayer()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Indicates whether this object is disposed or not.
-        /// </summary>
-        private bool disposed;
 
         public void Dispose()
         {
@@ -287,6 +414,86 @@ getPlayerPosition(int id)*/
             {
                 this.disposed = true;
             }
+        }
+
+        public int GetAniId()
+        {
+            return this.squirrelApi.Call<int>(StringGetAniId, this.Client.ClientId);
+        }
+
+        public int GetSkillWeapon(SkillWeapon skill)
+        {
+            if (!Enum.IsDefined(typeof(SkillWeapon), skill))
+            {
+                throw new InvalidEnumArgumentException(nameof(skill), (int)skill, typeof(SkillWeapon));
+            }
+
+            return this.squirrelApi.Call<int>(StringGetPlayerSkillWeapon, this.Client.ClientId, (int)skill);
+        }
+
+        public int GetTalent(Talent talent)
+        {
+            if (!Enum.IsDefined(typeof(Talent), talent))
+            {
+                throw new InvalidEnumArgumentException(nameof(talent), (int)talent, typeof(Talent));
+            }
+
+            return this.squirrelApi.Call<int>(StringGetPlayerTalent, this.Client.ClientId, (int)talent);
+        }
+
+        public void PlayAniId(int aniId)
+        {
+            if (aniId < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(aniId));
+            }
+
+            this.squirrelApi.Call(StringPlayAniId, this.Client.ClientId, aniId);
+        }
+
+        public void SetSkillWeapon(SkillWeapon skill, int value)
+        {
+            if (!Enum.IsDefined(typeof(SkillWeapon), skill))
+            {
+                throw new InvalidEnumArgumentException(nameof(skill), (int)skill, typeof(SkillWeapon));
+            }
+
+            if (value < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value));
+            }
+
+            this.squirrelApi.Call(StringSetPlayerSkillWeapon, this.Client.ClientId, (int)skill, value);
+        }
+
+        public void SetTalent(Talent talent, int value)
+        {
+            if (!Enum.IsDefined(typeof(Talent), talent))
+            {
+                throw new InvalidEnumArgumentException(nameof(talent), (int)talent, typeof(Talent));
+            }
+
+            if (value < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value));
+            }
+
+            this.squirrelApi.Call(StringSetPlayerTalent, this.Client.ClientId, (int)talent, value);
+        }
+
+        public void Spawn()
+        {
+            this.squirrelApi.Call(StringSpawnPlayer, this.Client.ClientId);
+        }
+
+        public void StopAllAnimations()
+        {
+            this.squirrelApi.Call(StringStopAni, this.Client.ClientId);
+        }
+
+        public void UnspawnPlayer()
+        {
+            this.squirrelApi.Call(StringUnspawnPlayer, this.Client.ClientId);
         }
     }
 }

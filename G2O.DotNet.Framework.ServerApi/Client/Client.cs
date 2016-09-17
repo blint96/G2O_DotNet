@@ -1,6 +1,7 @@
 ﻿namespace GothicOnline.G2.DotNet.ServerApi.Client
 {
     using System;
+    using System.IO;
     using System.Net;
     using System.Net.NetworkInformation;
 
@@ -31,7 +32,6 @@
         private static readonly AnsiString StringSendPlayerMessageToAll = "sendPlayerMessageToAll";
         private static readonly AnsiString StringSendPlayerMessageToPlayer = "sendPlayerMessageToPlayer";
 
-
         public Client(ISquirrelApi squirrelApi, int clientId, IServer server)
         {
             if (squirrelApi == null)
@@ -53,6 +53,8 @@
             this.IpAddress = IPAddress.Parse(squirrelApi.Call<string>(StringGetPlayerIP, clientId));
             this.MacAddress = PhysicalAddress.Parse(squirrelApi.Call<string>(StringGetPlayerMacAddr, clientId));
             this.Serial = squirrelApi.Call<string>(StringGetPlayerSerial, clientId);
+            this.PlayerCharacter = new Character(squirrelApi,this,server);
+            this.Nickname = this.PlayerCharacter.Name;
         }
 
         public int ClientId { get; }
@@ -60,7 +62,7 @@
         //getPlayerIP(int pid)
         public IPAddress IpAddress { get; }
 
-        public bool IsConnected { get; }
+        public bool IsConnected => this.disposed;
 
         //getPlayerMacAddr(int pid)
         public PhysicalAddress MacAddress { get; }
@@ -111,8 +113,8 @@
             if (!this.disposed)
             {
                 this.disposed = true;
-                Disconnect = null;
-                PacketReceived = null;
+                this.Disconnect = null;
+                this.PacketReceived = null;
             }
         }
 
@@ -120,5 +122,25 @@
         /// Indicates whether this object is disposed or not.
         /// </summary>
         private bool disposed;
+
+        internal void OnDisconnect(ClientDisconnectedEventArgs e)
+        {
+            this.Disconnect?.Invoke(this, e);
+        }
+
+        internal void OnPacketReceived(PacketReceivedEventArgs e)
+        {
+            this.PacketReceived?.Invoke(this, e);
+        }
+
+        internal void OnCommandReceived(CommandReceivedEventArgs e)
+        {
+            this.CommandReceived?.Invoke(this, e);
+        }
+
+        internal void OnMessageReceived(MessageReceivedEventArgs e)
+        {
+            this.MessageReceived?.Invoke(this, e);
+        }
     }
 }

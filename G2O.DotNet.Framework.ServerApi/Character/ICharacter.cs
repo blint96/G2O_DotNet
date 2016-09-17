@@ -84,7 +84,7 @@ namespace GothicOnline.G2.DotNet.Character
 
         int Strength { get; set; }
 
-        int WeaponMode { get; set; }
+        WeaponMode WeaponMode { get; set; }
 
         int GetAniId();
 
@@ -92,7 +92,7 @@ namespace GothicOnline.G2.DotNet.Character
 
         int GetTalent(Talent talent);
 
-        int PlayAniId(int aniId);
+        void PlayAniId(int aniId);
 
         void SetSkillWeapon(SkillWeapon skill, int value);
 
@@ -100,7 +100,7 @@ namespace GothicOnline.G2.DotNet.Character
 
         void Spawn();
 
-        void StopAniId();
+        void StopAllAnimations();
 
         void UnspawnPlayer();
     }
