@@ -26,6 +26,7 @@ namespace GothicOnline.G2.DotNet.Client
     using System.Linq;
 
     using GothicOnline.G2.DotNet.Interop;
+    using GothicOnline.G2.DotNet.ServerApi.Client;
     using GothicOnline.G2.DotNet.Squirrel;
 
     internal class ClientList : IClientList

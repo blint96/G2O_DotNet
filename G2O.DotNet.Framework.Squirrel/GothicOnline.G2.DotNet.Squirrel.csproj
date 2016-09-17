@@ -7,8 +7,8 @@
     <ProjectGuid>{887C33BF-16F8-4CB0-B093-373A8D150B3D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GothicOnline.G2.DotNet.Framework.Squirrel</RootNamespace>
-    <AssemblyName>GothicOnline.G2.DotNet.Framework.Squirrel</AssemblyName>
+    <RootNamespace>GothicOnline.G2.DotNet.Squirrel</RootNamespace>
+    <AssemblyName>GothicOnline.G2.DotNet.Squirrel</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

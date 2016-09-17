@@ -27,12 +27,17 @@ namespace GothicOnline.G2.DotNet.Client
 
     using GothicOnline.G2.DotNet.Character;
     using GothicOnline.G2.DotNet.Server;
+    using GothicOnline.G2.DotNet.ServerApi.Client;
 
     public interface IClient
     {
         event EventHandler<ClientDisconnectedEventArgs> Disconnect;
 
         event EventHandler<PacketReceivedEventArgs> PacketReceived;
+
+        event EventHandler<CommandReceivedEventArgs> CommandReceived;
+
+        event EventHandler<MessageReceivedEventArgs> MessageReceived;
 
         int ClientId { get; }
 
@@ -48,6 +53,8 @@ namespace GothicOnline.G2.DotNet.Client
         string Nickname { get; }
 
         ICharacter PlayerCharacter { get; }
+
+        string Serial { get; }
 
         void SendMessage(int r, int g, int b, string message);
 

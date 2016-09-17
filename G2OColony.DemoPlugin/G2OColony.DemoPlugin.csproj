@@ -46,14 +46,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\G2O.DotNet.Framework.ServerApi\GothicOnline.G2.DotNet.Framework.ServerApi.csproj">
+    <ProjectReference Include="..\G2O.DotNet.Framework.ServerApi\GothicOnline.G2.DotNet.ServerApi.csproj">
       <Project>{ebc933c1-6244-44bd-8b51-b572ca157e94}</Project>
-      <Name>GothicOnline.G2.DotNet.Framework.ServerApi</Name>
+      <Name>GothicOnline.G2.DotNet.ServerApi</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\GothicOnline.G2.DotNet.Framework.Plugin\GothicOnline.G2.DotNet.Framework.Plugin.csproj">
+    <ProjectReference Include="..\GothicOnline.G2.DotNet.Framework.Plugin\GothicOnline.G2.DotNet.Plugin.csproj">
       <Project>{cc607f62-31ee-42e7-9704-c4cb42cf17a3}</Project>
-      <Name>GothicOnline.G2.DotNet.Framework.Plugin</Name>
+      <Name>GothicOnline.G2.DotNet.Plugin</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>

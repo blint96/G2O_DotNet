@@ -7,8 +7,8 @@
     <ProjectGuid>{CC607F62-31EE-42E7-9704-C4CB42CF17A3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GothicOnline.G2.DotNet.Framework.Plugin</RootNamespace>
-    <AssemblyName>GothicOnline.G2.DotNet.Framework.Plugin</AssemblyName>
+    <RootNamespace>GothicOnline.G2.DotNet.Plugin</RootNamespace>
+    <AssemblyName>GothicOnline.G2.DotNet.Plugin</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
