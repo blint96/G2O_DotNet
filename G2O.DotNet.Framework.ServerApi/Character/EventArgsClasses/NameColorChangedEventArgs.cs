@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="FocusChangedEventArgs.cs" company="Colony Online Project">
+// <copyright file="NameColorChangedEventArgs.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,28 +19,23 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Character
+namespace GothicOnline.G2.DotNet.ServerApi
 {
     using System;
 
-    public class FocusChangedEventArgs : EventArgs
+    public class NameColorChangedEventArgs : EventArgs
     {
-        public FocusChangedEventArgs(ICharacter character, ICharacter oldFocus, ICharacter newFocus)
+        public NameColorChangedEventArgs(int r, int g, int b)
         {
-            if (character == null)
-            {
-                throw new ArgumentNullException(nameof(character));
-            }
-
-            this.Character = character;
-            this.OldFocus = oldFocus;
-            this.NewFocus = newFocus;
+            this.R = r;
+            this.G = g;
+            this.B = b;
         }
 
-        public ICharacter Character { get; }
+        public int B { get; }
 
-        public ICharacter NewFocus { get; }
+        public int G { get; }
 
-        public ICharacter OldFocus { get; }
+        public int R { get; }
     }
 }

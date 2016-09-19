@@ -19,12 +19,12 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Server
+namespace GothicOnline.G2.DotNet.ServerApi.Server
 {
     using System;
-
-    using GothicOnline.G2.DotNet.Client;
     using System.Drawing;
+
+    using GothicOnline.G2.DotNet.ServerApi.Client;
 
     /// <summary>
     ///     Interface for the server. Provides access to all methods that directly related to the server.

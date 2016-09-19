@@ -19,14 +19,13 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Client
+namespace GothicOnline.G2.DotNet.ServerApi.Client
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
     using GothicOnline.G2.DotNet.Interop;
-    using GothicOnline.G2.DotNet.ServerApi.Client;
     using GothicOnline.G2.DotNet.Squirrel;
 
     internal class ClientList : IClientList
@@ -37,9 +36,6 @@ namespace GothicOnline.G2.DotNet.Client
 
         private readonly ISquirrelApi squirrelApi;
 
-        private G2OEventCallback clientConnectCallback;
-
-        private G2OEventCallback clientDisconnectCallback;
 
         public ClientList(ISquirrelApi squirrelApi)
         {
@@ -50,54 +46,15 @@ namespace GothicOnline.G2.DotNet.Client
 
             this.squirrelApi = squirrelApi;
             this.clients = new IClient[this.MaxSlots];
+            //Register connect and disconnect handlers so the count value can be updated internally.
+            this.ClientConnect += (sender,args)=> this.Count++;
+            this.ClientDisconnect += (sender, args) => this.Count--;
         }
 
-        public event EventHandler<ClientConnectedEventArgs> ClientConnect
-        {
-            add
-            {
-                if (this.clientConnectCallback == null)
-                {
-                    this.clientConnectCallback = new G2OEventCallback(
-                        this.squirrelApi,
-                        "onPlayerJoin", 
-                        new Action<int>(this.ClientConnectFunction));
-                }
+        public event EventHandler<ClientConnectedEventArgs> ClientConnect;
 
-                this.OnClientConnect += value;
-            }
-
-            remove
-            {
-                this.OnClientConnect -= value;
-            }
-        }
-
-        public event EventHandler<ClientDisconnectedEventArgs> ClientDisconnect
-        {
-            add
-            {
-                if (this.clientDisconnectCallback == null)
-                {
-                    this.clientDisconnectCallback = new G2OEventCallback(
-                        this.squirrelApi, 
-                        "onPlayerDisconnect", 
-                        new Action<int,int>(this.ClientDisconnectFunction));
-                }
-
-                this.OnClientDisconnect += value;
-            }
-
-            remove
-            {
-                this.OnClientDisconnect -= value;
-            }
-        }
-
-        private event EventHandler<ClientConnectedEventArgs> OnClientConnect;
-
-        private event EventHandler<ClientDisconnectedEventArgs> OnClientDisconnect;
-
+        public event EventHandler<ClientDisconnectedEventArgs> ClientDisconnect;
+      
         public IEnumerable<IClient> Clients
         {
             get
@@ -123,19 +80,14 @@ namespace GothicOnline.G2.DotNet.Client
             }
         }
 
-        private void ClientConnectFunction(int pid)
+        internal void OnClientConnect(ClientConnectedEventArgs e)
         {
-            this.Count++;
-            this.clients[pid] = new Client(this.squirrelApi, pid);
-            this.OnClientConnect?.Invoke(this, new ClientConnectedEventArgs(this.clients[pid]));
+            this.ClientConnect?.Invoke(this, e);
         }
 
-        private void ClientDisconnectFunction(int pid,int reason)
+        internal void OnClientDisconnect(ClientDisconnectedEventArgs e)
         {
-            this.Count--;
-            var client = this.clients[pid];
-            this.clients[pid] = null;
-            this.OnClientDisconnect?.Invoke(this, new ClientDisconnectedEventArgs(client,(DisconnectReason)reason));
+            this.ClientDisconnect?.Invoke(this, e);
         }
     }
 }

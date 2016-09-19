@@ -18,15 +18,6 @@
 namespace GothicOnline.G2.DotNet.Loader
 {
     using System;
-    using System.ComponentModel.Composition;
-    using System.ComponentModel.Composition.Hosting;
-    using System.Configuration;
-    using System.IO;
-
-    using GothicOnline.G2.DotNet.Character;
-    using GothicOnline.G2.DotNet.Loader.Squirrel;
-    using GothicOnline.G2.DotNet.Server;
-    using GothicOnline.G2.DotNet.Squirrel;
 
     class Entry
     {
@@ -38,53 +29,26 @@ namespace GothicOnline.G2.DotNet.Loader
         {
             try
             {
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine("[G2ONet]Managed Code loaded!");
+
+                //Instantiate the lazy loaded plugins.
+                Console.ForegroundColor = ConsoleColor.Green;
                 Composition composition = new Composition(vm, apiPtr);
                 foreach (var plugin in composition.Plugins)
                 {
                     Console.WriteLine($"[G2ONet]Plugin {plugin.Value.GetType().Name} loaded");
                 }
-
-                //Console.ForegroundColor = ConsoleColor.Red;
-                //ISquirrelApi api = new SquirrelApi(vm, apiPtr);
-                //IServer server = new Server(api);
-                //Console.WriteLine(server.Description);
-                //server.Description = "Hallo";
-                //Console.WriteLine(server.Description);
-                //Console.WriteLine(server.World);
-                //server.Initialize += Server_Initialize;
-                //server.Clients.ClientConnect += Clients_ClientConnect;
-                //server.Clients.ClientDisconnect += Clients_ClientDisconnect;
-                //server.SendMessageToAll(255, 255, 255, "Blabla");
-                //Console.ForegroundColor = ConsoleColor.Green;
-
-
-
-                Console.WriteLine("[G2ONet]Managed Code loaded!");
             }
             catch (Exception ex)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(ex);
             }
             finally
             {
                 Console.ResetColor();
             }
-        }
-
-
-        private static void Clients_ClientDisconnect(object sender, Client.ClientDisconnectedEventArgs e)
-        {
-            Console.WriteLine("Test client disconnected");
-        }
-
-        private static void Clients_ClientConnect(object sender, Client.ClientConnectedEventArgs e)
-        {
-            Console.WriteLine("Test client connected");
-        }
-
-        private static void Server_Initialize(object sender, ServerInitializedEventArgs e)
-        {
-            Console.WriteLine("onInit was called.");
         }
     }
 }

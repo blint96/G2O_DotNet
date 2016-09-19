@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ChangeWeaponModeEventArgs.cs" company="Colony Online Project">
+// <copyright file="HealthChangedEventArgs.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,16 +19,20 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Character
+namespace GothicOnline.G2.DotNet.ServerApi.Character
 {
     using System;
 
-    public class ChangeWeaponModeEventArgs : EventArgs
+    public class HealthChangedEventArgs : EventArgs
     {
-        public ICharacter Character { get; }
+        public HealthChangedEventArgs(int oldHp, int newHp)
+        {
+            this.OldHp = oldHp;
+            this.NewHp = newHp;
+        }
 
-        public int NewWeaponMode { get; }
+        public int NewHp { get; }
 
-        public int OldWeaponMode { get; }
+        public int OldHp { get; }
     }
 }

@@ -19,15 +19,15 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Character
+namespace GothicOnline.G2.DotNet.ServerApi.Character
 {
     using System;
     using System.ComponentModel;
     using System.Drawing;
 
-    using GothicOnline.G2.DotNet.Client;
     using GothicOnline.G2.DotNet.Interop;
-    using GothicOnline.G2.DotNet.Server;
+    using GothicOnline.G2.DotNet.ServerApi.Client;
+    using GothicOnline.G2.DotNet.ServerApi.Server;
     using GothicOnline.G2.DotNet.Squirrel;
 
     internal class Character : ICharacter, IDisposable
@@ -201,16 +201,20 @@ getPlayerPosition(int id)*/
         public event EventHandler<ItemEquipedEventArgs> MeleeWeaponEquiped;
 
         // onPlayerEquipRangedWeapon(int pid, string instance)
-        public event EventHandler<ItemEquipedEventArgs> RangedEquiped;
+        public event EventHandler<ItemEquipedEventArgs> RangedWeaponEquiped;
 
         // onPlayerRespawn(int id)
-        public event EventHandler<RespawnEventArgs> Respawned;
+        public event EventHandler<EventArgs> Respawned;
 
         // onPlayerEquipShield(int pid, string instance)
         public event EventHandler<ItemEquipedEventArgs> ShieldEquiped;
 
         // onPlayerUnconscious(int killer_id, int id)
         public event EventHandler<UnconsciousEventArgs> Unconscious;
+
+        public event EventHandler<ChangeWeaponModeEventArgs> WeaponModeChanged;
+
+        public event EventHandler<NameColorChangedEventArgs> NameColorChanged;
 
         public float Angle
         {
@@ -494,6 +498,81 @@ getPlayerPosition(int id)*/
         public void UnspawnPlayer()
         {
             this.squirrelApi.Call(StringUnspawnPlayer, this.Client.ClientId);
+        }
+
+       internal void OnArmorEquiped(ItemEquipedEventArgs e)
+        {
+            this.ArmorEquiped?.Invoke(this, e);
+        }
+
+        internal void OnDied(DeadEventArgs e)
+        {
+            this.Died?.Invoke(this, e);
+        }
+
+        internal void OnFocusChanged(FocusChangedEventArgs e)
+        {
+            this.FocusChanged?.Invoke(this, e);
+        }
+
+        internal void OnHandItemEquiped(HandItemEquipedEventArgs e)
+        {
+            this.HandItemEquiped?.Invoke(this, e);
+        }
+
+        internal void OnHealthChanged(HealthChangedEventArgs e)
+        {
+            this.HealthChanged?.Invoke(this, e);
+        }
+
+        internal void OnHelmetEquiped(ItemEquipedEventArgs e)
+        {
+            this.HelmetEquiped?.Invoke(this, e);
+        }
+
+        internal void OnHit(HitEventArgs e)
+        {
+            this.Hit?.Invoke(this, e);
+        }
+
+        internal void OnMaxHealthChanged(MaxHealthChangedEventArgs e)
+        {
+            this.MaxHealthChanged?.Invoke(this, e);
+        }
+
+        internal void OnMeleeWeaponEquiped(ItemEquipedEventArgs e)
+        {
+            this.MeleeWeaponEquiped?.Invoke(this, e);
+        }
+
+        internal void OnRespawned()
+        {
+            this.Respawned?.Invoke(this, new EventArgs());
+        }
+
+        internal void OnRangedWeaponEquiped(ItemEquipedEventArgs e)
+        {
+            this.RangedWeaponEquiped?.Invoke(this, e);
+        }
+
+        internal void OnShieldEquiped(ItemEquipedEventArgs e)
+        {
+            this.ShieldEquiped?.Invoke(this, e);
+        }
+
+        internal void OnUnconscious(UnconsciousEventArgs e)
+        {
+            this.Unconscious?.Invoke(this, e);
+        }
+
+        internal  void OnWeaponModeChanged(ChangeWeaponModeEventArgs e)
+        {
+            this.WeaponModeChanged?.Invoke(this, e);
+        }
+
+        internal void OnNameColorChanged(NameColorChangedEventArgs e)
+        {
+            this.NameColorChanged?.Invoke(this, e);
         }
     }
 }

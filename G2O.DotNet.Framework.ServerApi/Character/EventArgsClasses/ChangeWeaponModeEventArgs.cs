@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DeadEventArgs.cs" company="Colony Online Project">
+// <copyright file="ChangeWeaponModeEventArgs.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,35 +19,20 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Character
+namespace GothicOnline.G2.DotNet.ServerApi.Character
 {
     using System;
 
-    public class DeadEventArgs : EventArgs
+    public class ChangeWeaponModeEventArgs : System.EventArgs
     {
-        public DeadEventArgs(ICharacter character, ICharacter killer)
+        public ChangeWeaponModeEventArgs(int newWeaponMode, int oldWeaponMode)
         {
-            if (character == null)
-            {
-                throw new ArgumentNullException(nameof(character));
-            }
-
-            if (killer == null)
-            {
-                throw new ArgumentNullException(nameof(killer));
-            }
-
-            this.Character = character;
-            this.Killer = killer;
+            this.NewWeaponMode = newWeaponMode;
+            this.OldWeaponMode = oldWeaponMode;
         }
 
-        public DeadEventArgs(ICharacter character)
-        {
-            this.Character = character;
-        }
+        public int NewWeaponMode { get; }
 
-        public ICharacter Character { get; }
-
-        public ICharacter Killer { get; }
+        public int OldWeaponMode { get; }
     }
 }

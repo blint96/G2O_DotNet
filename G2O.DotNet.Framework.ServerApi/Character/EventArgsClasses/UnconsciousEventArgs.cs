@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="HealthChangedEventArgs.cs" company="Colony Online Project">
+// <copyright file="UnconsciousEventArgs.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,28 +19,25 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Character
+namespace GothicOnline.G2.DotNet.ServerApi.Character
 {
     using System;
 
-    public class HealthChangedEventArgs : EventArgs
+    public class UnconsciousEventArgs : EventArgs
     {
-        public HealthChangedEventArgs(ICharacter character, int oldHp, int newHp)
+        public UnconsciousEventArgs(ICharacter attacker)
         {
-            if (character == null)
+            if (attacker == null)
             {
-                throw new ArgumentNullException(nameof(character));
+                throw new ArgumentNullException(nameof(attacker));
             }
 
-            this.Character = character;
-            this.OldHp = oldHp;
-            this.NewHp = newHp;
+            this.Attacker = attacker;
         }
 
-        public ICharacter Character { get; }
-
-        public int NewHp { get; }
-
-        public int OldHp { get; }
+        /// <summary>
+        /// Gets the <see cref="ICharacter"/> that attacked the now unconscious <see cref="ICharacter"/>.
+        /// </summary>
+        public ICharacter Attacker { get; }
     }
 }

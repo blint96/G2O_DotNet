@@ -19,12 +19,13 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Character
+namespace GothicOnline.G2.DotNet.ServerApi
 {
     using System;
     using System.Drawing;
 
-    using GothicOnline.G2.DotNet.Client;
+    using GothicOnline.G2.DotNet.ServerApi.Character;
+    using GothicOnline.G2.DotNet.ServerApi.Client;
 
     public interface ICharacter
     {
@@ -46,13 +47,17 @@ namespace GothicOnline.G2.DotNet.Character
 
         event EventHandler<ItemEquipedEventArgs> MeleeWeaponEquiped;
 
-        event EventHandler<ItemEquipedEventArgs> RangedEquiped;
+        event EventHandler<ItemEquipedEventArgs> RangedWeaponEquiped;
 
-        event EventHandler<RespawnEventArgs> Respawned;
+        event EventHandler<System.EventArgs> Respawned;
 
         event EventHandler<ItemEquipedEventArgs> ShieldEquiped;
 
         event EventHandler<UnconsciousEventArgs> Unconscious;
+
+        event EventHandler<ChangeWeaponModeEventArgs> WeaponModeChanged;
+
+        event EventHandler<NameColorChangedEventArgs> NameColorChanged;
 
         float Angle { get; set; }
 

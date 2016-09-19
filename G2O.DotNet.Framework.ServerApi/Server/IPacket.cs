@@ -19,7 +19,7 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Server
+namespace GothicOnline.G2.DotNet.ServerApi.Server
 {
     public interface IPacket
     {

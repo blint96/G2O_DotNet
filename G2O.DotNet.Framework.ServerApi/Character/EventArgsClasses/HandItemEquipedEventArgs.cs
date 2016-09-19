@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Class1.cs" company="Colony Online Project">
+// <copyright file="HandItemEquipedEventArgs.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,26 +19,24 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace G2OColony.DemoPlugin
+namespace GothicOnline.G2.DotNet.ServerApi.Character
 {
     using System;
-    using System.ComponentModel.Composition;
+    using System.ComponentModel;
 
-    using GothicOnline.G2.DotNet.Framework.Plugin;
-    using GothicOnline.G2.DotNet.Server;
-
-    [Export(typeof(IPlugin))]
-    public class DemoPlugin : IPlugin
+    public class HandItemEquipedEventArgs : ItemEquipedEventArgs
     {
-        [ImportingConstructor]
-        public DemoPlugin([Import]IServer server)
+        public HandItemEquipedEventArgs(string instance, Hand hand)
+            : base(instance)
         {
-            Console.WriteLine("DemoPlugin loaded");
+            if (!Enum.IsDefined(typeof(Hand), hand))
+            {
+                throw new InvalidEnumArgumentException(nameof(hand), (int)hand, typeof(Hand));
+            }
+
+            this.Hand = hand;
         }
 
-        public void ServerShutdown()
-        {
-            Console.WriteLine("Shuting down demo plugin");
-        }
+        public Hand Hand { get; }
     }
 }

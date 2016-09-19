@@ -19,7 +19,7 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet
+namespace GothicOnline.G2.DotNet.ServerApi
 {
     using System;
 

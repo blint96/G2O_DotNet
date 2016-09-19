@@ -19,12 +19,12 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Character
+namespace GothicOnline.G2.DotNet.ServerApi.Character
 {
     public interface IItem
     {
         int Amount { get; }
 
-        IItemInstance Instance { get; }
+        string Instance { get; }
     }
 }

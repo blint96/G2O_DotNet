@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="HitEventArgs.cs" company="Colony Online Project">
+// <copyright file="ItemEquipedEventArgs.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,35 +19,22 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Character
+namespace GothicOnline.G2.DotNet.ServerApi.Character
 {
     using System;
 
-    public class HitEventArgs : EventArgs
+    public class ItemEquipedEventArgs : EventArgs
     {
-        public HitEventArgs(ICharacter character, ICharacter attacker)
+        public ItemEquipedEventArgs(string instance)
         {
-            if (character == null)
-            {
-                throw new ArgumentNullException(nameof(character));
-            }
 
-            if (attacker == null)
+            if (instance == null)
             {
-                throw new ArgumentNullException(nameof(attacker));
+                throw new ArgumentNullException(nameof(instance));
             }
-
-            this.Character = character;
-            this.Attacker = attacker;
+            this.Instance = instance;
         }
 
-        public HitEventArgs(ICharacter character)
-        {
-            this.Character = character;
-        }
-
-        public ICharacter Attacker { get; }
-
-        public ICharacter Character { get; }
+        public string Instance { get; }
     }
 }

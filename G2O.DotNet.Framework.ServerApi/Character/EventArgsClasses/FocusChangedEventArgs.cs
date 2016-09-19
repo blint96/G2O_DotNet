@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UnconsciousEventArgs.cs" company="Colony Online Project">
+// <copyright file="FocusChangedEventArgs.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,35 +19,21 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Character
+namespace GothicOnline.G2.DotNet.ServerApi.Character
 {
     using System;
 
-    public class UnconsciousEventArgs : EventArgs
+    public class FocusChangedEventArgs : EventArgs
     {
-        public UnconsciousEventArgs(ICharacter character, ICharacter attacker)
+        public FocusChangedEventArgs(ICharacter oldFocus, ICharacter newFocus)
         {
-            if (character == null)
-            {
-                throw new ArgumentNullException(nameof(character));
-            }
-
-            if (attacker == null)
-            {
-                throw new ArgumentNullException(nameof(attacker));
-            }
-
-            this.Character = character;
-            this.Attacker = attacker;
+            this.OldFocus = oldFocus;
+            this.NewFocus = newFocus;
         }
 
-        public UnconsciousEventArgs(ICharacter character)
-        {
-            this.Character = character;
-        }
 
-        public ICharacter Attacker { get; }
+        public ICharacter NewFocus { get; }
 
-        public ICharacter Character { get; }
+        public ICharacter OldFocus { get; }
     }
 }

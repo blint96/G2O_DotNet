@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IItemInstanceProvider.cs" company="Colony Online Project">
+// <copyright file="ColorChangedEventArgs.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,10 +19,18 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Character
+namespace GothicOnline.G2.DotNet.ServerApi.Character
 {
-    public interface IItemInstanceProvider
+    using System;
+    using System.Drawing;
+
+    public class ColorChangedEventArgs : EventArgs
     {
-        IItemInstance GetItemInstance(string instance);
+        public ColorChangedEventArgs(Color newColor)
+        {
+            this.NewColor = newColor;
+        }
+
+        public Color NewColor { get; }
     }
 }

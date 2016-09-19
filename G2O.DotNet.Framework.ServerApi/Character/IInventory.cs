@@ -19,7 +19,7 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Character
+namespace GothicOnline.G2.DotNet.ServerApi.Character
 {
     using System.Collections.Generic;
 
@@ -27,14 +27,14 @@ namespace GothicOnline.G2.DotNet.Character
     {
         IEnumerable<IItem> Items { get; }
 
-        void AddItem(IItemInstance itemInstance, int amount);
+        void AddItem(string itemInstance, int amount);
 
         void Clear();
 
-        IItem GetItem(IItemInstance itemInstance);
+        IItem GetItem(string itemInstance);
 
-        void HasItem(IItemInstance itemInstance);
+        void HasItem(string itemInstance);
 
-        void RemoveItem(IItemInstance itemInstance, int amount);
+        void RemoveItem(string itemInstance, int amount);
     }
 }

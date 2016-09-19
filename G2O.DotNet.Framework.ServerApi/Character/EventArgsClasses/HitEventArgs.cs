@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="HandItemEquipedEventArgs.cs" company="Colony Online Project">
+// <copyright file="HitEventArgs.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,24 +19,41 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Character
+namespace GothicOnline.G2.DotNet.ServerApi.Character
 {
     using System;
-    using System.ComponentModel;
 
-    public class HandItemEquipedEventArgs : ItemEquipedEventArgs
+    public class HitEventArgs : EventArgs
     {
-        public HandItemEquipedEventArgs(ICharacter character, IItemInstance instance, Hand hand)
-            : base(character, instance)
+        public HitEventArgs(ICharacter attacker, int damage, int type)
         {
-            if (!Enum.IsDefined(typeof(Hand), hand))
+          if (attacker == null)
             {
-                throw new InvalidEnumArgumentException(nameof(hand), (int)hand, typeof(Hand));
+                throw new ArgumentNullException(nameof(attacker));
+            }
+            if (damage <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(damage));
+            }
+            if (type < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(type));
             }
 
-            this.Hand = hand;
+            this.Attacker = attacker;
+            this.Damage = damage;
+            this.Type = type;
         }
 
-        public Hand Hand { get; }
+        public HitEventArgs(int damage, int type)
+        {
+            this.Damage = damage;
+            this.Type = type;
+        }
+
+        public ICharacter Attacker { get; }
+
+        public int Damage { get; }
+        public int Type { get; }
     }
 }

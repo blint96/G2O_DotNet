@@ -19,15 +19,14 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Client
+namespace GothicOnline.G2.DotNet.ServerApi.Client
 {
     using System;
     using System.Net;
     using System.Net.NetworkInformation;
 
-    using GothicOnline.G2.DotNet.Character;
-    using GothicOnline.G2.DotNet.Server;
-    using GothicOnline.G2.DotNet.ServerApi.Client;
+    using GothicOnline.G2.DotNet.ServerApi.Character;
+    using GothicOnline.G2.DotNet.ServerApi.Server;
 
     public interface IClient
     {

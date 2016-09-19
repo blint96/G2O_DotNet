@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ItemEquipedEventArgs.cs" company="Colony Online Project">
+// <copyright file="MaxHealthChangedEventArgs.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,30 +19,20 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Character
+namespace GothicOnline.G2.DotNet.ServerApi.Character
 {
     using System;
 
-    public class ItemEquipedEventArgs : EventArgs
+    public class MaxHealthChangedEventArgs : EventArgs
     {
-        public ItemEquipedEventArgs(ICharacter character, IItemInstance instance)
+        public MaxHealthChangedEventArgs(int oldMaxHp, int newMaxHp)
         {
-            if (character == null)
-            {
-                throw new ArgumentNullException(nameof(character));
-            }
-
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
-
-            this.Character = character;
-            this.Instance = instance;
+            this.OldMaxHp = oldMaxHp;
+            this.NewMaxHp = newMaxHp;
         }
 
-        public ICharacter Character { get; }
+        public int NewMaxHp { get; }
 
-        public IItemInstance Instance { get; }
+        public int OldMaxHp { get; }
     }
 }

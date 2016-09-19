@@ -29,7 +29,7 @@ namespace GothicOnline.G2.DotNet.Loader
     using System.Reflection;
 
     using GothicOnline.G2.DotNet.Framework.Plugin;
-    using GothicOnline.G2.DotNet.Server;
+    using GothicOnline.G2.DotNet.ServerApi.Server;
     using GothicOnline.G2.DotNet.Squirrel;
 
     internal class Composition

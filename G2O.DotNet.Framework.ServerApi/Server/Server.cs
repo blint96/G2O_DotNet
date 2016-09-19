@@ -19,14 +19,14 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Server
+namespace GothicOnline.G2.DotNet.ServerApi.Server
 {
     using System;
     using System.ComponentModel.Composition;
     using System.Drawing;
 
-    using GothicOnline.G2.DotNet.Client;
     using GothicOnline.G2.DotNet.Interop;
+    using GothicOnline.G2.DotNet.ServerApi.Client;
     using GothicOnline.G2.DotNet.Squirrel;
 
     [Export(typeof(IServer))]
@@ -42,11 +42,11 @@ namespace GothicOnline.G2.DotNet.Server
 
         private static readonly AnsiString StringSetServerWorld = "setServerWorld";
 
-        private G2OEventCallback InitFunction;
+        private G2OEventCallback initFunction;
 
         private readonly ISquirrelApi squirrelApi;
 
-        private SqFunction OnInitializeFunction;
+        private readonly ServerEventListener serverEventListener;
 
         [ImportingConstructor]
         public Server([Import]ISquirrelApi squirrelApi)
@@ -57,28 +57,13 @@ namespace GothicOnline.G2.DotNet.Server
             }
 
             this.squirrelApi = squirrelApi;
-            this.Clients= new ClientList(squirrelApi);
+            this.Clients = new ClientList(squirrelApi);
+            this.serverEventListener = new ServerEventListener(squirrelApi, this);
         }
 
-        public event EventHandler<ServerInitializedEventArgs> Initialize
-        {
-            add
-            {
-                if (this.InitFunction == null)
-                {
-                    this.InitFunction = new G2OEventCallback(this.squirrelApi, "onInit", new Action(() => this.OnInitialize?.Invoke(this, new ServerInitializedEventArgs(this))));
-                }
+        public event EventHandler<ServerInitializedEventArgs> Initialize;
 
-                this.OnInitialize += value;
-            }
 
-            remove
-            {
-                this.OnInitialize -= value;
-            }
-        }
-
-        private event EventHandler<ServerInitializedEventArgs> OnInitialize;
 
         public IClientList Clients { get; }
 
@@ -133,7 +118,7 @@ namespace GothicOnline.G2.DotNet.Server
                 throw new ArgumentException("Value cannot be null or empty.", nameof(message));
             }
 
-            this.squirrelApi.Call( StringSendMessageToAll,color.R,color.G,color.B,message);
+            this.squirrelApi.Call(StringSendMessageToAll, color.R, color.G, color.B, message);
         }
 
         public void SendMessageToAll(int r, int g, int b, string message)
@@ -149,6 +134,11 @@ namespace GothicOnline.G2.DotNet.Server
         public void SendPacketToAll(IPacket packet, PacketReliability reliability)
         {
             throw new NotImplementedException();
+        }
+
+        internal void OnInitialize(ServerInitializedEventArgs e)
+        {
+            this.Initialize?.Invoke(this, e);
         }
     }
 }

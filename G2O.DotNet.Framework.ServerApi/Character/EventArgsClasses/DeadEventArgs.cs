@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RespawnEventArgs.cs" company="Colony Online Project">
+// <copyright file="DeadEventArgs.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,22 +19,24 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Character
+namespace GothicOnline.G2.DotNet.ServerApi.Character
 {
     using System;
 
-    public class RespawnEventArgs : EventArgs
+    public class DeadEventArgs : EventArgs
     {
-        public RespawnEventArgs(ICharacter character)
+        public DeadEventArgs(ICharacter killer)
         {
-            if (character == null)
+            if (killer == null)
             {
-                throw new ArgumentNullException(nameof(character));
+                throw new ArgumentNullException(nameof(killer));
             }
 
-            this.Character = character;
+            this.Killer = killer;
         }
 
         public ICharacter Character { get; }
+
+        public ICharacter Killer { get; }
     }
 }

@@ -19,7 +19,7 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Client
+namespace GothicOnline.G2.DotNet.ServerApi.Client
 {
     public enum DisconnectReason
     {

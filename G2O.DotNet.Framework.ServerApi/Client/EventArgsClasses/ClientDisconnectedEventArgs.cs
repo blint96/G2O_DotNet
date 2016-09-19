@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IItemInstance.cs" company="Colony Online Project">
+// <copyright file="ClientDisconnectedEventArgs.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,10 +19,31 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Character
+namespace GothicOnline.G2.DotNet.ServerApi.Client
 {
-    public interface IItemInstance
+    using System;
+    using System.ComponentModel;
+
+    public class ClientDisconnectedEventArgs : EventArgs
     {
-        string Instance { get; }
+        public ClientDisconnectedEventArgs(IClient client, DisconnectReason reason)
+        {
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
+
+            if (!Enum.IsDefined(typeof(DisconnectReason), reason))
+            {
+                throw new InvalidEnumArgumentException(nameof(reason), (int)reason, typeof(DisconnectReason));
+            }
+
+            this.Client = client;
+            this.Reason = reason;
+        }
+
+        public IClient Client { get; }
+
+        public DisconnectReason Reason { get; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MaxHealthChangedEventArgs.cs" company="Colony Online Project">
+// <copyright file="Class1.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,28 +19,26 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Character
+namespace G2OColony.DemoPlugin
 {
     using System;
+    using System.ComponentModel.Composition;
 
-    public class MaxHealthChangedEventArgs : EventArgs
+    using GothicOnline.G2.DotNet.Framework.Plugin;
+    using GothicOnline.G2.DotNet.ServerApi.Server;
+
+    [Export(typeof(IPlugin))]
+    public class DemoPlugin : IPlugin
     {
-        public MaxHealthChangedEventArgs(ICharacter character, int oldMaxHp, int newMaxHp)
+        [ImportingConstructor]
+        public DemoPlugin([Import]IServer server)
         {
-            if (character == null)
-            {
-                throw new ArgumentNullException(nameof(character));
-            }
-
-            this.Character = character;
-            this.OldMaxHp = oldMaxHp;
-            this.NewMaxHp = newMaxHp;
+            Console.WriteLine("DemoPlugin loaded");
         }
 
-        public ICharacter Character { get; }
-
-        public int NewMaxHp { get; }
-
-        public int OldMaxHp { get; }
+        public void ServerShutdown()
+        {
+            Console.WriteLine("Shuting down demo plugin");
+        }
     }
 }
