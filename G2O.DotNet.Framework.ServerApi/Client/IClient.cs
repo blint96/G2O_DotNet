@@ -44,7 +44,7 @@ namespace GothicOnline.G2.DotNet.ServerApi.Client
 
         bool IsConnected { get; }
 
-        PhysicalAddress MacAddress { get; }
+        string MacAddress { get; }
 
         /// <summary>
         ///     Gets the nickname that was specified by the user before connecting.

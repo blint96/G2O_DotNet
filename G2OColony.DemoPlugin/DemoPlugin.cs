@@ -33,7 +33,25 @@ namespace G2OColony.DemoPlugin
         [ImportingConstructor]
         public DemoPlugin([Import]IServer server)
         {
+            server.Initialize += this.ServerInitialize;
+            server.Clients.ClientConnect += Clients_ClientConnect;
+        }
+
+        private void Clients_ClientConnect(object sender, GothicOnline.G2.DotNet.ServerApi.Client.ClientConnectedEventArgs e)
+        {
+            e.NewClient.CommandReceived += this.NewClient_CommandReceived;
+        }
+
+        private void NewClient_CommandReceived(object sender, GothicOnline.G2.DotNet.ServerApi.Client.CommandReceivedEventArgs e)
+        {
+          Console.WriteLine($"Command was send {e.Command}");
+        }
+
+        private void ServerInitialize(object sender, ServerInitializedEventArgs e)
+        {
             Console.WriteLine("DemoPlugin loaded");
+            Console.WriteLine(e.Server.Description);
+            Console.WriteLine(e.Server.Time);
         }
 
         public void ServerShutdown()

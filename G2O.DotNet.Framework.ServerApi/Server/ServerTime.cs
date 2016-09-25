@@ -93,5 +93,10 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
                 return hashCode;
             }
         }
+
+        public override string ToString()
+        {
+            return $"{this.Hour}:{this.Minute}(Day:{this.Day})";
+        }
     }
 }

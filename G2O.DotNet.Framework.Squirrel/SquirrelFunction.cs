@@ -171,7 +171,8 @@ namespace GothicOnline.G2.DotNet.Squirrel
                 {
                     string value;
                     this.squirrelApi.SqGetString(i, out value);
-                    parameterValues[i] = value;
+                    //Never return null for string values. If the value is empty or not available return string.empty
+                    parameterValues[i] = value?? string.Empty;
                 }
 
                 // Int

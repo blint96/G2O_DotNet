@@ -19,7 +19,7 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Exceptions
+namespace GothicOnline.G2.DotNet.Squirrel.Exceptions
 {
     using System;
     using System.Runtime.Serialization;
@@ -47,6 +47,8 @@ namespace GothicOnline.G2.DotNet.Exceptions
             }
 
             this.api = api;
+            this.api.SqGetLastError();
+            this.InitLastErrorProperty();
         }
 
         /// <summary>
@@ -63,6 +65,7 @@ namespace GothicOnline.G2.DotNet.Exceptions
             }
 
             this.api = api;
+            this.InitLastErrorProperty();
         }
 
         /// <summary>
@@ -82,6 +85,7 @@ namespace GothicOnline.G2.DotNet.Exceptions
             }
 
             this.api = api;
+            this.InitLastErrorProperty();
         }
 
         /// <summary>
@@ -94,25 +98,29 @@ namespace GothicOnline.G2.DotNet.Exceptions
         {
         }
 
+        /// <summary>
+        ///     Gets a text that describes the last squirrel error that occurred. This error is most likely the cause for this
+        ///     exception.
+        ///     <remarks>Can return null.</remarks>
+        /// </summary>
+        public string SquirrelLastError { get; private set; }
+
+        /// <summary>
+        ///     Returns a string representation of the exception.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
-            if (this.api != null)
-            {
-                this.api.SqGetLastError();
-                string lastError;
-                if (this.api.SqGetString(this.api.SqGetTop(), out lastError))
-                {
-                    return $"{base.ToString()}{Environment.NewLine}Last squirrel error: {lastError}";
-                }
-                else
-                {
-                    return $"{base.ToString()}{Environment.NewLine}Last squirrel error: null";
-                }
-            }
-            else
-            {
-                return base.ToString();
-            }
+            return $"{this.Message}{Environment.NewLine}'Last Squirrel error:{this.SquirrelLastError ?? "null"}'";
+        }
+
+        /// <summary>
+        ///     Initializes the 'SquirrelLastError' property.
+        /// </summary>
+        private void InitLastErrorProperty()
+        {
+            string lastError;
+            this.SquirrelLastError = this.api.SqGetString(this.api.SqGetTop(), out lastError) ? lastError : "null";
         }
     }
 }

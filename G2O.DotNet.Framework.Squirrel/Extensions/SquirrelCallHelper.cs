@@ -25,8 +25,8 @@ namespace GothicOnline.G2.DotNet.Squirrel
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
 
-    using GothicOnline.G2.DotNet.Exceptions;
     using GothicOnline.G2.DotNet.Interop;
+    using GothicOnline.G2.DotNet.Squirrel.Exceptions;
 
     public static class SquirrelCallHelper
     {
@@ -104,7 +104,7 @@ namespace GothicOnline.G2.DotNet.Squirrel
                     squirrelApi.PushValue(parameter);
                 }
 
-                if (!squirrelApi.SqCall(parameters.Length+1, false, false))
+                if (!squirrelApi.SqCall(parameters.Length+1, true, false))
                 {
                     throw new SquirrelException($"The call to the '{functionName}' function failed", squirrelApi);
                 }
@@ -188,7 +188,7 @@ namespace GothicOnline.G2.DotNet.Squirrel
                     squirrelApi.PushValue(parameter);
                 }
 
-                if (!squirrelApi.SqCall(parameters.Length + 1, false, false))
+                if (!squirrelApi.SqCall(parameters.Length + 1, true, false))
                 {
                     throw new SquirrelException($"The call to the '{functionName}' function failed", squirrelApi);
                 }
@@ -276,7 +276,7 @@ namespace GothicOnline.G2.DotNet.Squirrel
                     squirrelApi.PushValue(parameter);
                 }
 
-                if (!squirrelApi.SqCall(parameters.Length + 1, false, false))
+                if (!squirrelApi.SqCall(parameters.Length + 1, true, false))
                 {
                     throw new SquirrelException($"The call to the '{functionName}' function failed", squirrelApi);
                 }

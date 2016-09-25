@@ -26,6 +26,7 @@ namespace GothicOnline.G2.DotNet.ServerApi.Client
     using System.Linq;
 
     using GothicOnline.G2.DotNet.Interop;
+    using GothicOnline.G2.DotNet.ServerApi.Server;
     using GothicOnline.G2.DotNet.Squirrel;
 
     internal class ClientList : IClientList
@@ -36,15 +37,21 @@ namespace GothicOnline.G2.DotNet.ServerApi.Client
 
         private readonly ISquirrelApi squirrelApi;
 
+        private readonly IServer server;
 
-        public ClientList(ISquirrelApi squirrelApi)
+        public ClientList(ISquirrelApi squirrelApi,IServer server)
         {
             if (squirrelApi == null)
             {
                 throw new ArgumentNullException(nameof(squirrelApi));
             }
+            if (server == null)
+            {
+                throw new ArgumentNullException(nameof(server));
+            }
 
             this.squirrelApi = squirrelApi;
+            this.server = server;
             this.clients = new IClient[this.MaxSlots];
             //Register connect and disconnect handlers so the count value can be updated internally.
             this.ClientConnect += (sender,args)=> this.Count++;
@@ -71,7 +78,7 @@ namespace GothicOnline.G2.DotNet.ServerApi.Client
         {
             get
             {
-                if (clientId <= 0 || clientId > this.clients.Length)
+                if (clientId < 0 || clientId > this.clients.Length)
                 {
                     throw new ArgumentOutOfRangeException(nameof(clientId));
                 }
@@ -80,13 +87,16 @@ namespace GothicOnline.G2.DotNet.ServerApi.Client
             }
         }
 
-        internal void OnClientConnect(ClientConnectedEventArgs e)
+        internal void OnClientConnect(int pid)
         {
-            this.ClientConnect?.Invoke(this, e);
+            var newClient = new Client(this.squirrelApi, pid, this.server);
+            this.clients[pid] = newClient;
+            this.ClientConnect?.Invoke(this, new ClientConnectedEventArgs(newClient));
         }
 
         internal void OnClientDisconnect(ClientDisconnectedEventArgs e)
         {
+            this.clients[e.Client.ClientId] = null;
             this.ClientDisconnect?.Invoke(this, e);
         }
     }

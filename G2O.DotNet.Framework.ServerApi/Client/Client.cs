@@ -73,7 +73,7 @@ namespace GothicOnline.G2.DotNet.ServerApi.Client
             this.ClientId = clientId;
 
             this.IpAddress = IPAddress.Parse(squirrelApi.Call<string>(StringGetPlayerIP, clientId));
-            this.MacAddress = PhysicalAddress.Parse(squirrelApi.Call<string>(StringGetPlayerMacAddr, clientId));
+            this.MacAddress = squirrelApi.Call<string>(StringGetPlayerMacAddr, clientId);
             this.Serial = squirrelApi.Call<string>(StringGetPlayerSerial, clientId);
             this.PlayerCharacter = new Character(squirrelApi, this, server);
             this.Nickname = this.PlayerCharacter.Name;
@@ -95,7 +95,7 @@ namespace GothicOnline.G2.DotNet.ServerApi.Client
         public bool IsConnected => this.disposed;
 
         // getPlayerMacAddr(int pid)
-        public PhysicalAddress MacAddress { get; }
+        public string MacAddress { get; }
 
         public string Nickname { get; }
 

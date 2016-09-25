@@ -30,6 +30,6 @@ namespace GothicOnline.G2.DotNet.ServerApi.Client
             this.NewClient = newClient;
         }
 
-        private IClient NewClient { get; }
+        public IClient NewClient { get; }
     }
 }
