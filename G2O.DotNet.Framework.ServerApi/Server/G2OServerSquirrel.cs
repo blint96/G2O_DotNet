@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Server.cs" company="Colony Online Project">
+// <copyright file="G2OServerSquirrel.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -31,8 +31,11 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
     using GothicOnline.G2.DotNet.Squirrel;
     using GothicOnline.G2.DotNet.Squirrel.Exceptions;
 
+    /// <summary>
+    /// Implementation of the G2O server api using the squirrel api to access the functions.
+    /// </summary>
     [Export(typeof(IServer))]
-    internal class Server : IServer
+    internal class G2OServerSquirrel : IServer
     {
         private static readonly AnsiString StringGetServerDescription = "getServerDescription";
 
@@ -56,7 +59,7 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
         private readonly ServerEventListener serverEventListener;
 
         [ImportingConstructor]
-        public Server([Import]ISquirrelApi squirrelApi)
+        public G2OServerSquirrel([Import]ISquirrelApi squirrelApi)
         {
             if (squirrelApi == null)
             {

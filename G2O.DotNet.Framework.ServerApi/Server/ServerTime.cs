@@ -23,8 +23,17 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
 {
     using System;
 
-    public class ServerTime : IEquatable<ServerTime>
+    /// <summary>
+    ///     A struct for storing the server time(game time)
+    /// </summary>
+    public struct ServerTime : IEquatable<ServerTime>
     {
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ServerTime" /> struct.
+        /// </summary>
+        /// <param name="hour">The hours value of the time.</param>
+        /// <param name="minute">The minutes value of the time.</param>
+        /// <param name="day">The days value of the time.</param>
         public ServerTime(int hour, int minute, int day)
         {
             this.Hour = hour;
@@ -32,47 +41,66 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
             this.Day = day;
         }
 
-        public int Day { get; set; }
+        /// <summary>
+        ///     Gets the days value of the <see cref="ServerTime" />.
+        /// </summary>
+        public int Day { get; }
 
-        public int Hour { get; set; }
+        /// <summary>
+        ///     Gets the hours value of the <see cref="ServerTime" />.
+        /// </summary>
+        public int Hour { get; }
 
-        public int Minute { get; set; }
+        /// <summary>
+        ///     Gets the minutes value of the <see cref="ServerTime" />.
+        /// </summary>
+        public int Minute { get; }
 
+        /// <summary>
+        ///     Compares two server times for equality.
+        /// </summary>
+        /// <param name="left">left operant.</param>
+        /// <param name="right">right operant.</param>
+        /// <returns>True if both instances have the same values.</returns>
         public static bool operator ==(ServerTime left, ServerTime right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        ///     Compares two server times for inequality.
+        /// </summary>
+        /// <param name="left">left operant.</param>
+        /// <param name="right">right operant.</param>
+        /// <returns>True if both instances do not have the same values.</returns>
         public static bool operator !=(ServerTime left, ServerTime right)
         {
             return !Equals(left, right);
         }
 
+        /// <summary>
+        ///     Compares two server times for inequality.
+        /// </summary>
+        /// <param name="other">
+        ///     The other instance of <see cref="ServerTime" /> that should be compared to this instance of
+        ///     <see cref="ServerTime" />.
+        /// </param>
+        /// <returns>True if both instances have the same values.</returns>
         public bool Equals(ServerTime other)
         {
-            if (ReferenceEquals(null, other))
-            {
-                return false;
-            }
-
-            if (ReferenceEquals(this, other))
-            {
-                return true;
-            }
-
             return this.Hour == other.Hour && this.Minute == other.Minute && this.Day == other.Day;
         }
 
+        /// <summary>
+        ///     Compares a <see cref="object" /> to this instance of <see cref="ServerTime" />.
+        /// </summary>
+        /// <param name="obj">The object that should be compared to the <see cref="ServerTime" /> instance.</param>
+        /// <returns>True if both objects are <see cref="ServerTime" /> instances and have equal values.</returns>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
             {
                 return false;
-            }
-
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
             }
 
             if (obj.GetType() != this.GetType())
@@ -83,6 +111,10 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
             return this.Equals((ServerTime)obj);
         }
 
+        /// <summary>
+        ///     Calculates the hashcode for the <see cref="ServerTime" /> instance.
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             unchecked
@@ -94,6 +126,10 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
             }
         }
 
+        /// <summary>
+        ///     Returns the string representation of the <see cref="ServerTime" /> instance.
+        /// </summary>
+        /// <returns>The string representation of the <see cref="ServerTime" /> instance</returns>
         public override string ToString()
         {
             return $"{this.Hour}:{this.Minute}(Day:{this.Day})";

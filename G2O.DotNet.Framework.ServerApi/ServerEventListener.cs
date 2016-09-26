@@ -30,7 +30,7 @@ namespace GothicOnline.G2.DotNet.ServerApi
 
     internal class ServerEventListener
     {
-        private readonly Server.Server server;
+        private readonly Server.G2OServerSquirrel g2OServerSquirrel;
 
         private readonly ISquirrelApi squirrelApi;
 
@@ -76,20 +76,20 @@ namespace GothicOnline.G2.DotNet.ServerApi
 
         private G2OEventCallback onPlayerUnconsciousFunction;
 
-        public ServerEventListener(ISquirrelApi squirrelApi, Server.Server server)
+        public ServerEventListener(ISquirrelApi squirrelApi, Server.G2OServerSquirrel g2OServerSquirrel)
         {
             if (squirrelApi == null)
             {
                 throw new ArgumentNullException(nameof(squirrelApi));
             }
 
-            if (server == null)
+            if (g2OServerSquirrel == null)
             {
-                throw new ArgumentNullException(nameof(server));
+                throw new ArgumentNullException(nameof(g2OServerSquirrel));
             }
 
             this.squirrelApi = squirrelApi;
-            this.server = server;
+            this.g2OServerSquirrel = g2OServerSquirrel;
 
             this.onInitFunction = new G2OEventCallback(this.squirrelApi, "onInit", new Action(this.OnInit));
 
@@ -174,7 +174,7 @@ namespace GothicOnline.G2.DotNet.ServerApi
 
         void OnInit()
         {
-            this.server.OnInitialize(new ServerInitializedEventArgs(this.server));
+            this.g2OServerSquirrel.OnInitialize(new ServerInitializedEventArgs(this.g2OServerSquirrel));
         }
 
         void OnPacket(int id, IntPtr packet)
@@ -183,53 +183,53 @@ namespace GothicOnline.G2.DotNet.ServerApi
 
         void OnPlayerChangeColor(int pid, int r, int g, int b)
         {
-            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[pid].PlayerCharacter as Character.PlayerCharacter;
+            PlayerCharacter realPlayerCharacter = this.g2OServerSquirrel.Clients[pid].PlayerCharacter as PlayerCharacter;
             realPlayerCharacter?.OnNameColorChanged(new NameColorChangedEventArgs(r, g, b));
         }
 
         void OnPlayerChangeFocus(int pid, int oldFocusId, int currFocusId)
         {
-            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[pid].PlayerCharacter as Character.PlayerCharacter;
+            PlayerCharacter realPlayerCharacter = this.g2OServerSquirrel.Clients[pid].PlayerCharacter as PlayerCharacter;
             realPlayerCharacter?.OnFocusChanged(
                 new FocusChangedEventArgs(
-                    this.server.Clients[oldFocusId].PlayerCharacter, 
-                    this.server.Clients[currFocusId].PlayerCharacter));
+                    this.g2OServerSquirrel.Clients[oldFocusId].PlayerCharacter, 
+                    this.g2OServerSquirrel.Clients[currFocusId].PlayerCharacter));
         }
 
         void OnPlayerChangeHealth(int id, int oldHp, int currHp)
         {
-            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[id].PlayerCharacter as Character.PlayerCharacter;
+            PlayerCharacter realPlayerCharacter = this.g2OServerSquirrel.Clients[id].PlayerCharacter as PlayerCharacter;
             realPlayerCharacter?.OnHealthChanged(new HealthChangedEventArgs(oldHp, currHp));
         }
 
         void OnPlayerChangeMaxHealth(int id, int oldMaxHp, int currMaxHp)
         {
-            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[id].PlayerCharacter as Character.PlayerCharacter;
+            PlayerCharacter realPlayerCharacter = this.g2OServerSquirrel.Clients[id].PlayerCharacter as PlayerCharacter;
             realPlayerCharacter?.OnMaxHealthChanged(new MaxHealthChangedEventArgs(oldMaxHp, currMaxHp));
         }
 
         void OnPlayerChangeWeaponMode(int pid, int oldWm, int currWm)
         {
-            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[pid].PlayerCharacter as Character.PlayerCharacter;
+            PlayerCharacter realPlayerCharacter = this.g2OServerSquirrel.Clients[pid].PlayerCharacter as PlayerCharacter;
             realPlayerCharacter?.OnWeaponModeChanged(new ChangeWeaponModeEventArgs(currWm, oldWm));
         }
 
         void OnPlayerCommand(int id, string cmd, string parameters)
         {
-            Client.Client client=   this.server.Clients[id] as Client.Client;
+            Client.Client client=   this.g2OServerSquirrel.Clients[id] as Client.Client;
             client?.OnCommandReceived(new CommandReceivedEventArgs(cmd,parameters));
         }
 
         void OnPlayerDead(int killerId, int id)
         {
-            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[id].PlayerCharacter as Character.PlayerCharacter;
-            realPlayerCharacter?.OnDied(new DeadEventArgs(this.server.Clients[killerId].PlayerCharacter));
+            PlayerCharacter realPlayerCharacter = this.g2OServerSquirrel.Clients[id].PlayerCharacter as PlayerCharacter;
+            realPlayerCharacter?.OnDied(new DeadEventArgs(this.g2OServerSquirrel.Clients[killerId].PlayerCharacter));
         }
 
         void OnPlayerDisconnect(int id, int reason)
         {
-            ClientList clientList = this.server.Clients as ClientList;
-            IClient client = this.server.Clients[id];
+            ClientList clientList = this.g2OServerSquirrel.Clients as ClientList;
+            IClient client = this.g2OServerSquirrel.Clients[id];
             clientList?.OnClientDisconnect(new ClientDisconnectedEventArgs(client, (DisconnectReason)reason));
             Client.Client realClient = client as Client.Client;
             realClient?.OnDisconnect(new ClientDisconnectedEventArgs(client, (DisconnectReason)reason));
@@ -237,68 +237,68 @@ namespace GothicOnline.G2.DotNet.ServerApi
 
         void OnPlayerEquipArmor(int pid, string instance)
         {
-            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[pid].PlayerCharacter as Character.PlayerCharacter;
+            PlayerCharacter realPlayerCharacter = this.g2OServerSquirrel.Clients[pid].PlayerCharacter as PlayerCharacter;
             realPlayerCharacter?.OnArmorEquiped(new ItemEquipedEventArgs(instance));
         }
 
         void OnPlayerEquipHandItem(int pid, int hand, string instance)
         {
-            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[pid].PlayerCharacter as Character.PlayerCharacter;
+            PlayerCharacter realPlayerCharacter = this.g2OServerSquirrel.Clients[pid].PlayerCharacter as PlayerCharacter;
             realPlayerCharacter?.OnHandItemEquiped(new HandItemEquipedEventArgs(instance, (Hand)hand));
         }
 
         void OnPlayerEquipHelmet(int pid, string instance)
         {
-            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[pid].PlayerCharacter as Character.PlayerCharacter;
+            PlayerCharacter realPlayerCharacter = this.g2OServerSquirrel.Clients[pid].PlayerCharacter as PlayerCharacter;
             realPlayerCharacter?.OnHelmetEquiped(new ItemEquipedEventArgs(instance));
         }
 
         void OnPlayerEquipMeleeWeapon(int pid, string instance)
         {
-            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[pid].PlayerCharacter as Character.PlayerCharacter;
+            PlayerCharacter realPlayerCharacter = this.g2OServerSquirrel.Clients[pid].PlayerCharacter as PlayerCharacter;
             realPlayerCharacter?.OnMeleeWeaponEquiped(new ItemEquipedEventArgs(instance));
         }
 
         void OnPlayerEquipRangedWeapon(int pid, string instance)
         {
-            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[pid].PlayerCharacter as Character.PlayerCharacter;
+            PlayerCharacter realPlayerCharacter = this.g2OServerSquirrel.Clients[pid].PlayerCharacter as PlayerCharacter;
             realPlayerCharacter?.OnRangedWeaponEquiped(new ItemEquipedEventArgs(instance));
         }
 
         void OnPlayerEquipShield(int pid, string instance)
         {
-            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[pid].PlayerCharacter as Character.PlayerCharacter;
+            PlayerCharacter realPlayerCharacter = this.g2OServerSquirrel.Clients[pid].PlayerCharacter as PlayerCharacter;
             realPlayerCharacter?.OnShieldEquiped(new ItemEquipedEventArgs(instance));
         }
 
         void OnPlayerHit(int killerId, int id, int dmg, int type)
         {
-            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[id].PlayerCharacter as Character.PlayerCharacter;
-            realPlayerCharacter?.OnHit(new HitEventArgs(this.server.Clients[killerId].PlayerCharacter, dmg, type));
+            PlayerCharacter realPlayerCharacter = this.g2OServerSquirrel.Clients[id].PlayerCharacter as PlayerCharacter;
+            realPlayerCharacter?.OnHit(new HitEventArgs(this.g2OServerSquirrel.Clients[killerId].PlayerCharacter, dmg, type));
         }
 
         void OnPlayerJoin(int id)
         {
-            ClientList clientList = this.server.Clients as ClientList;
+            ClientList clientList = this.g2OServerSquirrel.Clients as ClientList;
             clientList?.OnClientConnect(id);
         }
 
         void OnPlayerMessage(int id, string message)
         {
-            Client.Client realCharacter = this.server.Clients[id] as Client.Client;
+            Client.Client realCharacter = this.g2OServerSquirrel.Clients[id] as Client.Client;
             realCharacter?.OnMessageReceived(new MessageReceivedEventArgs(message));
         }
 
         void OnPlayerRespawn(int id)
         {
-            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[id].PlayerCharacter as Character.PlayerCharacter;
+            PlayerCharacter realPlayerCharacter = this.g2OServerSquirrel.Clients[id].PlayerCharacter as PlayerCharacter;
             realPlayerCharacter?.OnRespawned();
         }
 
         void OnPlayerUnconscious(int killerId, int id)
         {
-            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[id].PlayerCharacter as Character.PlayerCharacter;
-            realPlayerCharacter?.OnUnconscious(new UnconsciousEventArgs(this.server.Clients[killerId].PlayerCharacter));
+            PlayerCharacter realPlayerCharacter = this.g2OServerSquirrel.Clients[id].PlayerCharacter as PlayerCharacter;
+            realPlayerCharacter?.OnUnconscious(new UnconsciousEventArgs(this.g2OServerSquirrel.Clients[killerId].PlayerCharacter));
         }
     }
 }

@@ -70,8 +70,7 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
         /// <param name="g">Green value of the message color.</param>
         /// <param name="b">Blue value of the message color.</param>
         /// <param name="message">The text of the message</param>
-        void SendMessageToAll(int r,int g,int b, string message);
-
+        void SendMessageToAll(int r, int g, int b, string message);
 
         /// <summary>
         ///     Sends a data packet to all clients.

@@ -77,7 +77,7 @@
     <Compile Include="Server\IServer.cs" />
     <Compile Include="Server\PacketReceivedEventArgs.cs" />
     <Compile Include="Server\PacketReliability.cs" />
-    <Compile Include="Server\Server.cs" />
+    <Compile Include="Server\G2OServerSquirrel.cs" />
     <Compile Include="Server\ServerInitializedEventArgs.cs" />
     <Compile Include="Server\ServerTime.cs" />
   </ItemGroup>

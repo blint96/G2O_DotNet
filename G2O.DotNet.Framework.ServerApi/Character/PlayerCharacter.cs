@@ -19,13 +19,14 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.ServerApi.Character
+namespace GothicOnline.G2.DotNet.ServerApi
 {
     using System;
     using System.ComponentModel;
     using System.Drawing;
 
     using GothicOnline.G2.DotNet.Interop;
+    using GothicOnline.G2.DotNet.ServerApi.Character;
     using GothicOnline.G2.DotNet.ServerApi.Client;
     using GothicOnline.G2.DotNet.ServerApi.Server;
     using GothicOnline.G2.DotNet.Squirrel;
