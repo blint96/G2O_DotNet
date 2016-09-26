@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Character.cs" company="Colony Online Project">
+// <copyright file="PlayerCharacter.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -29,8 +29,9 @@ namespace GothicOnline.G2.DotNet.ServerApi.Character
     using GothicOnline.G2.DotNet.ServerApi.Client;
     using GothicOnline.G2.DotNet.ServerApi.Server;
     using GothicOnline.G2.DotNet.Squirrel;
+    using GothicOnline.G2.DotNet.Squirrel.Exceptions;
 
-    internal class Character : ICharacter, IDisposable
+    internal class PlayerCharacter : ICharacter, IDisposable
     {
         // getAniId(int pid)
         private static readonly AnsiString StringGetAniId = "getAniId";
@@ -142,6 +143,19 @@ getPlayerPosition(int id)*/
         // unspawnPlayer(int id)
         private static readonly AnsiString StringUnspawnPlayer = "unspawnPlayer";
 
+        /// <summary>
+        /// Key for the player position on the Z axis in the return table of the getPlayerPosition function.
+        /// </summary>
+        private static readonly AnsiString StringX = "x";
+        /// <summary>
+        /// Key for the player position on the Y axis in the return table of the getPlayerPosition function.
+        /// </summary>
+        private static readonly AnsiString StringY = "y";
+        /// <summary>
+        /// Key for the player position on the Z axis in the return table of the getPlayerPosition function.
+        /// </summary>
+        private static readonly AnsiString StringZ = "z";
+
         private readonly IServer server;
 
         private readonly ISquirrelApi squirrelApi;
@@ -151,7 +165,7 @@ getPlayerPosition(int id)*/
         /// </summary>
         private bool disposed;
 
-        public Character(ISquirrelApi squirrelApi, IClient client, IServer server)
+        public PlayerCharacter(ISquirrelApi squirrelApi, IClient client, IServer server)
         {
             if (squirrelApi == null)
             {
@@ -349,7 +363,66 @@ getPlayerPosition(int id)*/
         {
             get
             {
-                throw new NotImplementedException();
+                int top = this.squirrelApi.SqGetTop();
+                try
+                {
+                    this.squirrelApi.SqPushRootTable();
+                    this.squirrelApi.SqPushString(StringGetPlayerPosition.Unmanaged, StringGetPlayerPosition.Length);
+                    if (!this.squirrelApi.SqGet(-2))
+                    {
+                        throw new SquirrelException(
+                            $"The gothic online server function '{StringGetPlayerPosition}' could not be found in the root table",
+                            this.squirrelApi);
+                    }
+
+                    // Call the function
+                    this.squirrelApi.SqPushRootTable();
+                    this.squirrelApi.SqPushInteger(this.Client.ClientId);
+                    if (!this.squirrelApi.SqCall(2, true, false))
+                    {
+                        throw new SquirrelException($"The call to the '{StringGetPlayerPosition}' function failed", this.squirrelApi);
+                    }
+                    int resultTop = this.squirrelApi.SqGetTop();
+
+                    //Position x
+                    this.squirrelApi.SqPushString(StringX.Unmanaged, StringX.Length);
+                    if (!this.squirrelApi.SqGet(resultTop))
+                    {
+                        throw new SquirrelException(
+                            $"Could not get the {StringX} value from the result of the '{StringGetPlayerPosition}' function",
+                            this.squirrelApi);
+                    }
+                    float posX;
+                    this.squirrelApi.SqGetFloat(this.squirrelApi.SqGetTop(), out posX);
+
+                    //Position Y
+                    this.squirrelApi.SqPushString(StringY.Unmanaged, StringY.Length);
+                    if (!this.squirrelApi.SqGet(resultTop))
+                    {
+                        throw new SquirrelException(
+                            $"Could not get the {StringY} value from the result of the '{StringGetPlayerPosition}' function",
+                            this.squirrelApi);
+                    }
+                    float posY;
+                    this.squirrelApi.SqGetFloat(this.squirrelApi.SqGetTop(), out posY);
+
+                    //Position Z
+                    this.squirrelApi.SqPushString(StringZ.Unmanaged, StringZ.Length);
+                    if (!this.squirrelApi.SqGet(resultTop))
+                    {
+                        throw new SquirrelException(
+                            $"Could not get the {StringZ} value from the result of the '{StringGetPlayerPosition}' function",
+                            this.squirrelApi);
+                    }
+                    float posZ;
+                    this.squirrelApi.SqGetFloat(this.squirrelApi.SqGetTop(), out posZ);
+                    return new Point3D(posX, posY, posZ);
+                }
+                finally
+                {
+                    //Reset the stack top if a exception occures.
+                    this.squirrelApi.SqSetTop(top);
+                }
             }
 
             set

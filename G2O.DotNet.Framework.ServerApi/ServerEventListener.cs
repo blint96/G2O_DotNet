@@ -183,14 +183,14 @@ namespace GothicOnline.G2.DotNet.ServerApi
 
         void OnPlayerChangeColor(int pid, int r, int g, int b)
         {
-            Character.Character realCharacter = this.server.Clients[pid].PlayerCharacter as Character.Character;
-            realCharacter?.OnNameColorChanged(new NameColorChangedEventArgs(r, g, b));
+            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[pid].PlayerCharacter as Character.PlayerCharacter;
+            realPlayerCharacter?.OnNameColorChanged(new NameColorChangedEventArgs(r, g, b));
         }
 
         void OnPlayerChangeFocus(int pid, int oldFocusId, int currFocusId)
         {
-            Character.Character realCharacter = this.server.Clients[pid].PlayerCharacter as Character.Character;
-            realCharacter?.OnFocusChanged(
+            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[pid].PlayerCharacter as Character.PlayerCharacter;
+            realPlayerCharacter?.OnFocusChanged(
                 new FocusChangedEventArgs(
                     this.server.Clients[oldFocusId].PlayerCharacter, 
                     this.server.Clients[currFocusId].PlayerCharacter));
@@ -198,30 +198,32 @@ namespace GothicOnline.G2.DotNet.ServerApi
 
         void OnPlayerChangeHealth(int id, int oldHp, int currHp)
         {
-            Character.Character realCharacter = this.server.Clients[id].PlayerCharacter as Character.Character;
-            realCharacter?.OnHealthChanged(new HealthChangedEventArgs(oldHp, currHp));
+            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[id].PlayerCharacter as Character.PlayerCharacter;
+            realPlayerCharacter?.OnHealthChanged(new HealthChangedEventArgs(oldHp, currHp));
         }
 
         void OnPlayerChangeMaxHealth(int id, int oldMaxHp, int currMaxHp)
         {
-            Character.Character realCharacter = this.server.Clients[id].PlayerCharacter as Character.Character;
-            realCharacter?.OnMaxHealthChanged(new MaxHealthChangedEventArgs(oldMaxHp, currMaxHp));
+            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[id].PlayerCharacter as Character.PlayerCharacter;
+            realPlayerCharacter?.OnMaxHealthChanged(new MaxHealthChangedEventArgs(oldMaxHp, currMaxHp));
         }
 
         void OnPlayerChangeWeaponMode(int pid, int oldWm, int currWm)
         {
-            Character.Character realCharacter = this.server.Clients[pid].PlayerCharacter as Character.Character;
-            realCharacter?.OnWeaponModeChanged(new ChangeWeaponModeEventArgs(currWm, oldWm));
+            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[pid].PlayerCharacter as Character.PlayerCharacter;
+            realPlayerCharacter?.OnWeaponModeChanged(new ChangeWeaponModeEventArgs(currWm, oldWm));
         }
 
         void OnPlayerCommand(int id, string cmd, string parameters)
         {
+            Client.Client client=   this.server.Clients[id] as Client.Client;
+            client?.OnCommandReceived(new CommandReceivedEventArgs(cmd,parameters));
         }
 
         void OnPlayerDead(int killerId, int id)
         {
-            Character.Character realCharacter = this.server.Clients[id].PlayerCharacter as Character.Character;
-            realCharacter?.OnDied(new DeadEventArgs(this.server.Clients[killerId].PlayerCharacter));
+            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[id].PlayerCharacter as Character.PlayerCharacter;
+            realPlayerCharacter?.OnDied(new DeadEventArgs(this.server.Clients[killerId].PlayerCharacter));
         }
 
         void OnPlayerDisconnect(int id, int reason)
@@ -235,44 +237,44 @@ namespace GothicOnline.G2.DotNet.ServerApi
 
         void OnPlayerEquipArmor(int pid, string instance)
         {
-            Character.Character realCharacter = this.server.Clients[pid].PlayerCharacter as Character.Character;
-            realCharacter?.OnArmorEquiped(new ItemEquipedEventArgs(instance));
+            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[pid].PlayerCharacter as Character.PlayerCharacter;
+            realPlayerCharacter?.OnArmorEquiped(new ItemEquipedEventArgs(instance));
         }
 
         void OnPlayerEquipHandItem(int pid, int hand, string instance)
         {
-            Character.Character realCharacter = this.server.Clients[pid].PlayerCharacter as Character.Character;
-            realCharacter?.OnHandItemEquiped(new HandItemEquipedEventArgs(instance, (Hand)hand));
+            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[pid].PlayerCharacter as Character.PlayerCharacter;
+            realPlayerCharacter?.OnHandItemEquiped(new HandItemEquipedEventArgs(instance, (Hand)hand));
         }
 
         void OnPlayerEquipHelmet(int pid, string instance)
         {
-            Character.Character realCharacter = this.server.Clients[pid].PlayerCharacter as Character.Character;
-            realCharacter?.OnHelmetEquiped(new ItemEquipedEventArgs(instance));
+            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[pid].PlayerCharacter as Character.PlayerCharacter;
+            realPlayerCharacter?.OnHelmetEquiped(new ItemEquipedEventArgs(instance));
         }
 
         void OnPlayerEquipMeleeWeapon(int pid, string instance)
         {
-            Character.Character realCharacter = this.server.Clients[pid].PlayerCharacter as Character.Character;
-            realCharacter?.OnMeleeWeaponEquiped(new ItemEquipedEventArgs(instance));
+            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[pid].PlayerCharacter as Character.PlayerCharacter;
+            realPlayerCharacter?.OnMeleeWeaponEquiped(new ItemEquipedEventArgs(instance));
         }
 
         void OnPlayerEquipRangedWeapon(int pid, string instance)
         {
-            Character.Character realCharacter = this.server.Clients[pid].PlayerCharacter as Character.Character;
-            realCharacter?.OnRangedWeaponEquiped(new ItemEquipedEventArgs(instance));
+            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[pid].PlayerCharacter as Character.PlayerCharacter;
+            realPlayerCharacter?.OnRangedWeaponEquiped(new ItemEquipedEventArgs(instance));
         }
 
         void OnPlayerEquipShield(int pid, string instance)
         {
-            Character.Character realCharacter = this.server.Clients[pid].PlayerCharacter as Character.Character;
-            realCharacter?.OnShieldEquiped(new ItemEquipedEventArgs(instance));
+            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[pid].PlayerCharacter as Character.PlayerCharacter;
+            realPlayerCharacter?.OnShieldEquiped(new ItemEquipedEventArgs(instance));
         }
 
         void OnPlayerHit(int killerId, int id, int dmg, int type)
         {
-            Character.Character realCharacter = this.server.Clients[id].PlayerCharacter as Character.Character;
-            realCharacter?.OnHit(new HitEventArgs(this.server.Clients[killerId].PlayerCharacter, dmg, type));
+            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[id].PlayerCharacter as Character.PlayerCharacter;
+            realPlayerCharacter?.OnHit(new HitEventArgs(this.server.Clients[killerId].PlayerCharacter, dmg, type));
         }
 
         void OnPlayerJoin(int id)
@@ -289,14 +291,14 @@ namespace GothicOnline.G2.DotNet.ServerApi
 
         void OnPlayerRespawn(int id)
         {
-            Character.Character realCharacter = this.server.Clients[id].PlayerCharacter as Character.Character;
-            realCharacter?.OnRespawned();
+            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[id].PlayerCharacter as Character.PlayerCharacter;
+            realPlayerCharacter?.OnRespawned();
         }
 
         void OnPlayerUnconscious(int killerId, int id)
         {
-            Character.Character realCharacter = this.server.Clients[id].PlayerCharacter as Character.Character;
-            realCharacter?.OnUnconscious(new UnconsciousEventArgs(this.server.Clients[killerId].PlayerCharacter));
+            Character.PlayerCharacter realPlayerCharacter = this.server.Clients[id].PlayerCharacter as Character.PlayerCharacter;
+            realPlayerCharacter?.OnUnconscious(new UnconsciousEventArgs(this.server.Clients[killerId].PlayerCharacter));
         }
     }
 }

@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Character\EventArgsClasses\ChangeWeaponModeEventArgs.cs" />
-    <Compile Include="Character\Character.cs" />
+    <Compile Include="Character\PlayerCharacter.cs" />
     <Compile Include="Character\EventArgsClasses\ColorChangedEventArgs.cs" />
     <Compile Include="Character\EventArgsClasses\DeadEventArgs.cs" />
     <Compile Include="Character\EventArgsClasses\FocusChangedEventArgs.cs" />

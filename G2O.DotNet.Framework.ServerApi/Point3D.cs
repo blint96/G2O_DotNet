@@ -22,6 +22,7 @@
 namespace GothicOnline.G2.DotNet.ServerApi
 {
     using System;
+    using System.Globalization;
 
     public struct Point3D : IEquatable<Point3D>
     {
@@ -73,6 +74,12 @@ namespace GothicOnline.G2.DotNet.ServerApi
         public static bool operator !=(Point3D left, Point3D right)
         {
             return !left.Equals(right);
+        }
+
+        public override string ToString()
+        {
+            return
+                $"{this.X.ToString(CultureInfo.InvariantCulture)}|{this.Y.ToString(CultureInfo.InvariantCulture)}|{this.Z.ToString(CultureInfo.InvariantCulture)}";
         }
     }
 }

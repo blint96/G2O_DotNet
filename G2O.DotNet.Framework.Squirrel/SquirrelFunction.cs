@@ -157,7 +157,8 @@ namespace GothicOnline.G2.DotNet.Squirrel
             object[] parameterValues = new object[this.parameterTypes.Length];
             for (int i = 0; i < this.parameterTypes.Length; i++)
             {
-                SqObjectType type = this.squirrelApi.SqGetType(i+2);
+                int stackIndex = i + 2;
+                SqObjectType type = this.squirrelApi.SqGetType(stackIndex);
                 
                 // String
                 if (this.parameterTypes[i].ParameterType == typeof(string) && type != SqObjectType.OtString)
@@ -170,7 +171,7 @@ namespace GothicOnline.G2.DotNet.Squirrel
                 else if(this.parameterTypes[i].ParameterType == typeof(string))
                 {
                     string value;
-                    this.squirrelApi.SqGetString(i, out value);
+                    this.squirrelApi.SqGetString(stackIndex, out value);
                     //Never return null for string values. If the value is empty or not available return string.empty
                     parameterValues[i] = value?? string.Empty;
                 }
@@ -186,7 +187,7 @@ namespace GothicOnline.G2.DotNet.Squirrel
                 else if (this.parameterTypes[i].ParameterType == typeof(int))
                 {
                     int value;
-                    this.squirrelApi.SqGetInteger(i, out value);
+                    this.squirrelApi.SqGetInteger(stackIndex, out value);
                     parameterValues[i] = value;
                 }
 
@@ -201,7 +202,7 @@ namespace GothicOnline.G2.DotNet.Squirrel
                 else if(this.parameterTypes[i].ParameterType == typeof(float))
                 {
                     float value;
-                    this.squirrelApi.SqGetFloat(i, out value);
+                    this.squirrelApi.SqGetFloat(stackIndex, out value);
                     parameterValues[i] = value;
                 }
 
@@ -216,7 +217,7 @@ namespace GothicOnline.G2.DotNet.Squirrel
                 else if(this.parameterTypes[i].ParameterType == typeof(bool))
                 {
                     bool value;
-                    this.squirrelApi.SqGetBool(i, out value);
+                    this.squirrelApi.SqGetBool(stackIndex, out value);
                     parameterValues[i] = value;
                 }
 
@@ -231,7 +232,7 @@ namespace GothicOnline.G2.DotNet.Squirrel
                 else if(this.parameterTypes[i].ParameterType == typeof(IntPtr))
                 {
                     IntPtr value;
-                    this.squirrelApi.SqGetUserPointer(i, out value);
+                    this.squirrelApi.SqGetUserPointer(stackIndex, out value);
                     parameterValues[i] = value;
                 }
             }

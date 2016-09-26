@@ -23,8 +23,11 @@ namespace G2OColony.DemoPlugin
 {
     using System;
     using System.ComponentModel.Composition;
+    using System.Runtime.Remoting.Channels;
 
     using GothicOnline.G2.DotNet.Framework.Plugin;
+    using GothicOnline.G2.DotNet.ServerApi;
+    using GothicOnline.G2.DotNet.ServerApi.Client;
     using GothicOnline.G2.DotNet.ServerApi.Server;
 
     [Export(typeof(IPlugin))]
@@ -44,7 +47,17 @@ namespace G2OColony.DemoPlugin
 
         private void NewClient_CommandReceived(object sender, GothicOnline.G2.DotNet.ServerApi.Client.CommandReceivedEventArgs e)
         {
-          Console.WriteLine($"Command was send {e.Command}");
+            Console.WriteLine($"Command was send {e.Command}");
+            if (e.Command == "tele")
+            {
+                var client = sender as IClient;
+                client.PlayerCharacter.Position = new Point3D(0, 0, 0);
+            }
+            if (e.Command == "mypos")
+            {
+                var client = sender as IClient;
+                client?.SendMessage(255, 255, 255, client.PlayerCharacter.Position.ToString());
+            }
         }
 
         private void ServerInitialize(object sender, ServerInitializedEventArgs e)
