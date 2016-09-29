@@ -17,6 +17,7 @@
 // -
 // </copyright>
 // <summary>
+// The interface for the classes that implement the object oriented wrapper of the character specific functions of the G2O server api.
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
 namespace GothicOnline.G2.DotNet.ServerApi
@@ -27,6 +28,9 @@ namespace GothicOnline.G2.DotNet.ServerApi
     using GothicOnline.G2.DotNet.ServerApi.Character;
     using GothicOnline.G2.DotNet.ServerApi.Client;
 
+    /// <summary>
+    /// The interface for the classes that implement the object oriented wrapper of the character specific functions of the G2O server api.
+    /// </summary>
     public interface ICharacter
     {
         event EventHandler<ItemEquipedEventArgs> ArmorEquiped;
@@ -59,10 +63,24 @@ namespace GothicOnline.G2.DotNet.ServerApi
 
         event EventHandler<NameColorChangedEventArgs> NameColorChanged;
 
+        event EventHandler<CharacterWorldChangedEventArgs> OnCharacterWorldChanged;
+
+        event EventHandler<CharacterWorldChangedEventArgs> OnCharacterJoinWorld;
+
+        /// <summary>
+        /// Gets or set the angle of the character in the game world.
+        /// </summary>
         float Angle { get; set; }
 
+        /// <summary>
+        /// Gets the client two which the <see cref="ICharacter"/> belongs to.
+        /// <remarks>Returns null if this is not a client(player) character.</remarks>
+        /// </summary>
         IClient Client { get; }
 
+        /// <summary>
+        /// Gets or sets the Dexterity value of the <see cref="ICharacter"/>.
+        /// </summary>
         int Dexterity { get; set; }
 
         ICharacter Focus { get; }
@@ -108,5 +126,14 @@ namespace GothicOnline.G2.DotNet.ServerApi
         void StopAllAnimations();
 
         void UnspawnPlayer();
+
+        /// <summary>
+        /// Gets or sets the world that the <see cref="PlayerCharacter"/> is in.
+        /// </summary>
+        string CharacterWorld { get; set; }
+
+        void EquipItem(string itemInstance);
+
+        void UnequipItem(string itemInstance);
     }
 }

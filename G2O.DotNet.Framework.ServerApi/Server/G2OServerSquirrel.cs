@@ -24,7 +24,6 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
     using System;
     using System.ComponentModel.Composition;
     using System.Drawing;
-    using System.Security.Cryptography;
 
     using GothicOnline.G2.DotNet.Interop;
     using GothicOnline.G2.DotNet.ServerApi.Client;
@@ -32,34 +31,79 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
     using GothicOnline.G2.DotNet.Squirrel.Exceptions;
 
     /// <summary>
-    /// Implementation of the G2O server api using the squirrel api to access the functions.
+    ///     Implementation of the G2O server api using the squirrel api to access the functions.
+    ///     <remarks>This is a MEF component.</remarks>
     /// </summary>
     [Export(typeof(IServer))]
     internal class G2OServerSquirrel : IServer
     {
-        private static readonly AnsiString StringGetServerDescription = "getServerDescription";
-
-        private static readonly AnsiString StringGetServerWorld = "getServerWorld";
-
-        private static readonly AnsiString StringSendMessageToAll = "sendMessageToAll";
-
-        private static readonly AnsiString StringSetServerDescription = "setServerDescription";
-
-        private static readonly AnsiString StringSetServerWorld = "setServerWorld";
-
-        private static readonly AnsiString StringSetTime = "setTime";
-        private static readonly AnsiString StringGetTime = "getTime";
-
-        private static readonly AnsiString StringHour = "hour";
-        private static readonly AnsiString StringMinute = "min";
+        /// <summary>
+        ///     Stores the ansi version of the string "day"
+        /// </summary>
         private static readonly AnsiString StringDay = "day";
 
-        private readonly ISquirrelApi squirrelApi;
+        /// <summary>
+        ///     Stores the ansi version of the string "getServerDescription"
+        /// </summary>
+        private static readonly AnsiString StringGetServerDescription = "getServerDescription";
 
+        /// <summary>
+        ///     Stores the ansi version of the string "getServerWorld"
+        /// </summary>
+        private static readonly AnsiString StringGetServerWorld = "getServerWorld";
+
+        /// <summary>
+        ///     Stores the ansi version of the string "getTime"
+        /// </summary>
+        private static readonly AnsiString StringGetTime = "getTime";
+
+        /// <summary>
+        ///     Stores the ansi version of the string "hour"
+        /// </summary>
+        private static readonly AnsiString StringHour = "hour";
+
+        /// <summary>
+        ///     Stores the ansi version of the string "min"
+        /// </summary>
+        private static readonly AnsiString StringMinute = "min";
+
+        /// <summary>
+        ///     Stores the ansi version of the string "sendMessageToAll"
+        /// </summary>
+        private static readonly AnsiString StringSendMessageToAll = "sendMessageToAll";
+
+        /// <summary>
+        ///     Stores the ansi version of the string "setServerDescription"
+        /// </summary>
+        private static readonly AnsiString StringSetServerDescription = "setServerDescription";
+
+        /// <summary>
+        ///     Stores the ansi version of the string "setServerWorld"
+        /// </summary>
+        private static readonly AnsiString StringSetServerWorld = "setServerWorld";
+
+        /// <summary>
+        ///     Stores the ansi version of the string "setTime"
+        /// </summary>
+        private static readonly AnsiString StringSetTime = "setTime";
+
+        /// <summary>
+        ///     Instance of the <see cref="ServerEventListener" /> class that encapsulates the listening to the server events.
+        /// </summary>
         private readonly ServerEventListener serverEventListener;
 
+        /// <summary>
+        ///     The instance of the squirrel api that is used to call the G2O server functions.
+        /// </summary>
+        private readonly ISquirrelApi squirrelApi;
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="G2OServerSquirrel" /> class.
+        ///     <remarks>This is a MEF importing constructor.</remarks>
+        /// </summary>
+        /// <param name="squirrelApi">The instance of the squirrel api that should be used to call the G2O server functions.</param>
         [ImportingConstructor]
-        public G2OServerSquirrel([Import]ISquirrelApi squirrelApi)
+        public G2OServerSquirrel([Import] ISquirrelApi squirrelApi)
         {
             if (squirrelApi == null)
             {
@@ -67,16 +111,23 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
             }
 
             this.squirrelApi = squirrelApi;
-            this.Clients = new ClientList(squirrelApi,this);
+            this.Clients = new ClientList(squirrelApi, this);
             this.serverEventListener = new ServerEventListener(squirrelApi, this);
         }
 
+        /// <summary>
+        ///     Invokes all registered handlers when the server wants to initializes all logic scripts and modules.
+        /// </summary>
         public event EventHandler<ServerInitializedEventArgs> Initialize;
 
-
-
+        /// <summary>
+        ///     Gets the client list.
+        /// </summary>
         public IClientList Clients { get; }
 
+        /// <summary>
+        ///     Gets or sets the server description.
+        /// </summary>
         public string Description
         {
             get
@@ -90,10 +141,14 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
                 {
                     throw new ArgumentNullException(nameof(value));
                 }
+
                 this.squirrelApi.Call(StringSetServerDescription, value);
             }
         }
 
+        /// <summary>
+        ///     Gets or sets the server time.
+        /// </summary>
         public ServerTime Time
         {
             get
@@ -106,7 +161,7 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
                     if (!this.squirrelApi.SqGet(-2))
                     {
                         throw new SquirrelException(
-                            $"The gothic online server function '{StringGetTime}' could not be found in the root table",
+                            $"The gothic online server function '{StringGetTime}' could not be found in the root table", 
                             this.squirrelApi);
                     }
 
@@ -114,47 +169,53 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
                     this.squirrelApi.SqPushRootTable();
                     if (!this.squirrelApi.SqCall(1, true, false))
                     {
-                        throw new SquirrelException($"The call to the '{StringGetTime}' function failed", this.squirrelApi);
+                        throw new SquirrelException(
+                            $"The call to the '{StringGetTime}' function failed", 
+                            this.squirrelApi);
                     }
+
                     int resultTop = this.squirrelApi.SqGetTop();
 
-                    //Hours
+                    // Hours
                     this.squirrelApi.SqPushString(StringHour.Unmanaged, StringHour.Length);
                     if (!this.squirrelApi.SqGet(resultTop))
                     {
                         throw new SquirrelException(
-                            $"Could not get the {StringHour} value from the result of the '{StringGetTime}' function",
+                            $"Could not get the {StringHour} value from the result of the '{StringGetTime}' function", 
                             this.squirrelApi);
                     }
+
                     int hours;
                     this.squirrelApi.SqGetInteger(this.squirrelApi.SqGetTop(), out hours);
 
-                    //Minutes
+                    // Minutes
                     this.squirrelApi.SqPushString(StringMinute.Unmanaged, StringMinute.Length);
                     if (!this.squirrelApi.SqGet(resultTop))
                     {
                         throw new SquirrelException(
-                            $"Could not get the {StringMinute} value from the result of the '{StringGetTime}' function",
+                            $"Could not get the {StringMinute} value from the result of the '{StringGetTime}' function", 
                             this.squirrelApi);
                     }
+
                     int minutes;
                     this.squirrelApi.SqGetInteger(this.squirrelApi.SqGetTop(), out minutes);
 
-                    //Days
+                    // Days
                     this.squirrelApi.SqPushString(StringDay.Unmanaged, StringDay.Length);
                     if (!this.squirrelApi.SqGet(resultTop))
                     {
                         throw new SquirrelException(
-                            $"Could not get the {StringDay} value from the result of the '{StringGetTime}' function",
+                            $"Could not get the {StringDay} value from the result of the '{StringGetTime}' function", 
                             this.squirrelApi);
                     }
+
                     int days;
                     this.squirrelApi.SqGetInteger(this.squirrelApi.SqGetTop(), out days);
                     return new ServerTime(hours, minutes, days);
                 }
                 finally
                 {
-                    //Reset the stack top if a exception occures.
+                    // Reset the stack top if a exception occures.
                     this.squirrelApi.SqSetTop(top);
                 }
             }
@@ -165,6 +226,9 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
             }
         }
 
+        /// <summary>
+        ///     Gets or sets the server world.
+        /// </summary>
         public string World
         {
             get
@@ -178,6 +242,11 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
             }
         }
 
+        /// <summary>
+        ///     Sends a message with a given color to all clients.
+        /// </summary>
+        /// <param name="color">The message color</param>
+        /// <param name="message">The text of the message</param>
         public void SendMessageToAll(Color color, string message)
         {
             if (string.IsNullOrEmpty(message))
@@ -188,6 +257,13 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
             this.squirrelApi.Call(StringSendMessageToAll, color.R, color.G, color.B, message);
         }
 
+        /// <summary>
+        ///     Sends a message with a given color to all clients.
+        /// </summary>
+        /// <param name="r">Red value of the message color.</param>
+        /// <param name="g">Green value of the message color.</param>
+        /// <param name="b">Blue value of the message color.</param>
+        /// <param name="message">The text of the message</param>
         public void SendMessageToAll(int r, int g, int b, string message)
         {
             if (string.IsNullOrEmpty(message))
@@ -198,11 +274,20 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
             this.squirrelApi.Call(StringSendMessageToAll, r, g, b, message);
         }
 
+        /// <summary>
+        ///     Sends a data packet to all clients.
+        /// </summary>
+        /// <param name="packet">The packet that should be send to all clients.</param>
+        /// <param name="reliability">The reliability of the packet.</param>
         public void SendPacketToAll(IPacket packet, PacketReliability reliability)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        ///     Invokes the <see cref="Initialize" /> event.
+        /// </summary>
+        /// <param name="e">The instance of the <see cref="ServerInitializedEventArgs" /> class.</param>
         internal void OnInitialize(ServerInitializedEventArgs e)
         {
             this.Initialize?.Invoke(this, e);

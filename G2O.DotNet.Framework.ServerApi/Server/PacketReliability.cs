@@ -17,10 +17,14 @@
 // -
 // </copyright>
 // <summary>
+// Defines the available packet reliability levels.
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
 namespace GothicOnline.G2.DotNet.ServerApi.Server
 {
+    /// <summary>
+    /// Defines the available packet reliability levels.
+    /// </summary>
     public enum PacketReliability
     {
         /// <summary>

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PacketReceivedEventArgs.cs" company="Colony Online Project">
+// <copyright file="CharacterWorldChangedEventArgs.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -17,35 +17,35 @@
 // -
 // </copyright>
 // <summary>
-// EventArgs class for the packet received event.
+// EventArgs class for the CharacterWorldChanged event.
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.ServerApi.Server
+namespace GothicOnline.G2.DotNet.ServerApi
 {
     using System;
 
     /// <summary>
-    /// <see cref="EventArgs"/> class for the packet received event.
+    ///     <see cref="EventArgs" /> class for the CharacterWorldChanged event.
     /// </summary>
-    public class PacketReceivedEventArgs : EventArgs
+    public class CharacterWorldChangedEventArgs : EventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PacketReceivedEventArgs"/> class.
+        ///     Initializes a new instance of the <see cref="CharacterWorldChangedEventArgs" /> class.
         /// </summary>
-        /// <param name="packet">The <see cref="IPacket"/> that was received.</param>
-        public PacketReceivedEventArgs(IPacket packet)
+        /// <param name="newWorld">The world to which the <see cref="ICharacter" /> has changed.</param>
+        public CharacterWorldChangedEventArgs(string newWorld)
         {
-            if (packet == null)
+            if (string.IsNullOrEmpty(newWorld))
             {
-                throw new ArgumentNullException(nameof(packet));
+                throw new ArgumentException("Value cannot be null or empty.", nameof(newWorld));
             }
 
-            this.Packet = packet;
+            this.NewWorld = newWorld;
         }
 
         /// <summary>
-        /// Gets the <see cref="IPacket"/> that was received.
+        ///     Gets the world to which the <see cref="ICharacter" /> has changed.
         /// </summary>
-        public IPacket Packet { get; }
+        public string NewWorld { get; }
     }
 }

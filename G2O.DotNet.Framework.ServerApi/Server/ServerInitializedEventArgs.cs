@@ -23,8 +23,15 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
 {
     using System;
 
+    /// <summary>
+    ///     <see cref="EventArgs" /> class for the Server initialized event.
+    /// </summary>
     public class ServerInitializedEventArgs : EventArgs
     {
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ServerInitializedEventArgs" /> class.
+        /// </summary>
+        /// <param name="server">The <see cref="IServer" /> that was initialized.</param>
         public ServerInitializedEventArgs(IServer server)
         {
             if (server == null)
@@ -35,6 +42,9 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
             this.Server = server;
         }
 
+        /// <summary>
+        ///     Gets the <see cref="IServer" /> that was initialized.
+        /// </summary>
         public IServer Server { get; }
     }
 }

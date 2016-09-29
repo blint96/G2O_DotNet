@@ -60,5 +60,13 @@ namespace GothicOnline.G2.DotNet.ServerApi.Client
         void SendMessageToAll(int r, int g, int b, string message);
 
         void SendMessageToClient(IClient receiver, int r, int g, int b, string message);
+
+        void Kick(string reason);
+
+        void Ban(string reason,int duration);
+
+        int Ping { get; }
+
+
     }
 }
