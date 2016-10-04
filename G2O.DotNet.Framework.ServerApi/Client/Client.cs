@@ -75,7 +75,7 @@ namespace GothicOnline.G2.DotNet.ServerApi.Client
             this.IpAddress = IPAddress.Parse(squirrelApi.Call<string>(StringGetPlayerIP, clientId));
             this.MacAddress = squirrelApi.Call<string>(StringGetPlayerMacAddr, clientId);
             this.Serial = squirrelApi.Call<string>(StringGetPlayerSerial, clientId);
-            this.PlayerCharacter = new PlayerCharacter(squirrelApi, this, server);
+            this.PlayerCharacter = new PlayerCharacterSquirrel(squirrelApi, this, server);
             this.Nickname = this.PlayerCharacter.Name;
         }
 

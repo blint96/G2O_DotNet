@@ -44,7 +44,7 @@
   <ItemGroup>
     <Compile Include="Character\EventArgsClasses\ChangeWeaponModeEventArgs.cs" />
     <Compile Include="Character\EventArgsClasses\CharacterWorldChangedEventArgs.cs" />
-    <Compile Include="Character\PlayerCharacter.cs" />
+    <Compile Include="Character\PlayerCharacterSquirrel.cs" />
     <Compile Include="Character\EventArgsClasses\ColorChangedEventArgs.cs" />
     <Compile Include="Character\EventArgsClasses\DeadEventArgs.cs" />
     <Compile Include="Character\EventArgsClasses\FocusChangedEventArgs.cs" />

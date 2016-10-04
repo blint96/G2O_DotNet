@@ -17,7 +17,6 @@
 // -
 // </copyright>
 // <summary>
-// The interface for classes that allow the manipulation of game characters.
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
 namespace GothicOnline.G2.DotNet.ServerApi
@@ -38,6 +37,16 @@ namespace GothicOnline.G2.DotNet.ServerApi
         ///     Calls all registered handlers when this <see cref="ICharacter" /> equips a body armor.
         /// </summary>
         event EventHandler<ItemEquipedEventArgs> ArmorEquiped;
+
+        /// <summary>
+        ///     Calls all registered handlers when this <see cref="ICharacter" /> joins a game world.
+        /// </summary>
+        event EventHandler<CharacterWorldChangedEventArgs> CharacterJoinWorld;
+
+        /// <summary>
+        ///     Calls all registered handlers when this <see cref="ICharacter" /> changes the game world that it is in.
+        /// </summary>
+        event EventHandler<CharacterWorldChangedEventArgs> CharacterWorldChanged;
 
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> dies.
@@ -86,16 +95,6 @@ namespace GothicOnline.G2.DotNet.ServerApi
         event EventHandler<NameColorChangedEventArgs> NameColorChanged;
 
         /// <summary>
-        ///     Calls all registered handlers when this <see cref="ICharacter" /> joins a game world.
-        /// </summary>
-        event EventHandler<CharacterWorldChangedEventArgs> OnCharacterJoinWorld;
-
-        /// <summary>
-        ///     Calls all registered handlers when this <see cref="ICharacter" /> changes the game world that it is in.
-        /// </summary>
-        event EventHandler<CharacterWorldChangedEventArgs> OnCharacterWorldChanged;
-
-        /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> equips a ranged weapon
         /// </summary>
         event EventHandler<ItemEquipedEventArgs> RangedWeaponEquiped;
@@ -126,7 +125,7 @@ namespace GothicOnline.G2.DotNet.ServerApi
         float Angle { get; set; }
 
         /// <summary>
-        ///     Gets or sets the world that the <see cref="PlayerCharacter" /> is in.
+        ///     Gets or sets the world that the <see cref="PlayerCharacterSquirrel" /> is in.
         /// </summary>
         string CharacterWorld { get; set; }
 
