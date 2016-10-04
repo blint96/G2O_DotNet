@@ -17,26 +17,52 @@
 // -
 // </copyright>
 // <summary>
+// Defines the weapon modes.
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.ServerApi.Character
+namespace GothicOnline.G2.DotNet.ServerApi
 {
+    /// <summary>
+    /// Defines the weapon modes.
+    /// </summary>
     public enum WeaponMode
     {
+        /// <summary>
+        /// No weapon mode.
+        /// </summary>
         NpcWeaponNone, 
 
+        /// <summary>
+        /// Weapon mode unarmed.
+        /// </summary>
         NpcWeaponFist, 
+
 
         NpcWeaponDag, 
 
+        /// <summary>
+        /// Weapon mode for one handed weapons
+        /// </summary>
         NpcWeapon_1Hs, 
 
+        /// <summary>
+        /// Weapon mode for two handed weapons.
+        /// </summary>
         NpcWeapon_2Hs, 
 
+        /// <summary>
+        /// Weapon mode for bows.
+        /// </summary>
         NpcWeaponBow, 
 
+        /// <summary>
+        /// Weapon mode for crossbows.
+        /// </summary>
         NpcWeaponCbow, 
 
+        /// <summary>
+        /// Weapon mode for magic.
+        /// </summary>
         NpcWeaponMag, 
 
         NpcWeaponMax

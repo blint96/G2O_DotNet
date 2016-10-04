@@ -17,24 +17,49 @@
 // -
 // </copyright>
 // <summary>
+// Defines the character talent types.
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.ServerApi.Character
+namespace GothicOnline.G2.DotNet.ServerApi
 {
+    /// <summary>
+    /// Defines the <see cref="ICharacter"/> talent types.
+    /// </summary>
     public enum Talent
     {
+        /// <summary>
+        /// The sneaking talent.
+        /// </summary>
         TalentSneak, 
 
+        /// <summary>
+        /// The lock picking talent.
+        /// </summary>
         TalentPickLocks, 
 
+        /// <summary>
+        /// The pickpocket talent.
+        /// </summary>
         TalentPickpocket, 
 
+        /// <summary>
+        /// The rune crafting talent.
+        /// </summary>
         TalentRunes, 
 
+        /// <summary>
+        /// The alchemy talent.
+        /// </summary>
         TalentAlchemy, 
 
+        /// <summary>
+        /// The smith talent.
+        /// </summary>
         TalentSmith, 
 
+        /// <summary>
+        /// The animal trophy talent.
+        /// </summary>
         TalentTrophy
     }
 }
