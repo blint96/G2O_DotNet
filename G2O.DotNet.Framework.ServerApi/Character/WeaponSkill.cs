@@ -17,18 +17,34 @@
 // -
 // </copyright>
 // <summary>
+// Defines the weapon skill types.
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.ServerApi.Character
+namespace GothicOnline.G2.DotNet.ServerApi
 {
+    /// <summary>
+    /// Defines the weapon skill types.
+    /// </summary>
     public enum WeaponSkill
     {
-        Weapon_1H, 
+        /// <summary>
+        /// The weapon skill for one handed weapons.
+        /// </summary>
+        Weapon_1H,
 
-        Weapon_2H, 
+        /// <summary>
+        /// The weapon skill for two handed weapons.
+        /// </summary>
+        Weapon_2H,
 
-        WeaponBow, 
+        /// <summary>
+        /// The weapon skill for bows.
+        /// </summary>
+        WeaponBow,
 
+        /// <summary>
+        /// The weapon skill for crossbows.
+        /// </summary>
         WeaponCbow
     }
 }
