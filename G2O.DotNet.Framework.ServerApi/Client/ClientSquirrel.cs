@@ -17,6 +17,7 @@
 // -
 // </copyright>
 // <summary>
+// Implementation of the IClient interface using the ISquirrelApi.
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
 namespace GothicOnline.G2.DotNet.ServerApi.Client
