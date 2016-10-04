@@ -62,7 +62,7 @@
     <Compile Include="Character\Talent.cs" />
     <Compile Include="Character\EventArgsClasses\UnconsciousEventArgs.cs" />
     <Compile Include="Character\WeaponMode.cs" />
-    <Compile Include="Client\Client.cs" />
+    <Compile Include="Client\ClientSquirrel.cs" />
     <Compile Include="Client\EventArgsClasses\ClientConnectedEventArgs.cs" />
     <Compile Include="Client\EventArgsClasses\ClientDisconnectedEventArgs.cs" />
     <Compile Include="Client\ClientList.cs" />

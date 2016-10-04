@@ -89,7 +89,7 @@ namespace GothicOnline.G2.DotNet.ServerApi.Client
 
         internal void OnClientConnect(int pid)
         {
-            var newClient = new Client(this.squirrelApi, pid, this.server);
+            var newClient = new ClientSquirrel(this.squirrelApi, pid, this.server);
             this.clients[pid] = newClient;
             this.ClientConnect?.Invoke(this, new ClientConnectedEventArgs(newClient));
         }

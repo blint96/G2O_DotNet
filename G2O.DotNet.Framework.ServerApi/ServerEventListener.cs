@@ -216,8 +216,8 @@ namespace GothicOnline.G2.DotNet.ServerApi
 
         void OnPlayerCommand(int id, string cmd, string parameters)
         {
-            Client.Client client=   this.g2OServerSquirrel.Clients[id] as Client.Client;
-            client?.OnCommandReceived(new CommandReceivedEventArgs(cmd,parameters));
+            Client.ClientSquirrel clientSquirrel=   this.g2OServerSquirrel.Clients[id] as Client.ClientSquirrel;
+            clientSquirrel?.OnCommandReceived(new CommandReceivedEventArgs(cmd,parameters));
         }
 
         void OnPlayerDead(int killerId, int id)
@@ -231,8 +231,8 @@ namespace GothicOnline.G2.DotNet.ServerApi
             ClientList clientList = this.g2OServerSquirrel.Clients as ClientList;
             IClient client = this.g2OServerSquirrel.Clients[id];
             clientList?.OnClientDisconnect(new ClientDisconnectedEventArgs(client, (DisconnectReason)reason));
-            Client.Client realClient = client as Client.Client;
-            realClient?.OnDisconnect(new ClientDisconnectedEventArgs(client, (DisconnectReason)reason));
+            Client.ClientSquirrel realClientSquirrel = client as Client.ClientSquirrel;
+            realClientSquirrel?.OnDisconnect(new ClientDisconnectedEventArgs(client, (DisconnectReason)reason));
         }
 
         void OnPlayerEquipArmor(int pid, string instance)
@@ -285,7 +285,7 @@ namespace GothicOnline.G2.DotNet.ServerApi
 
         void OnPlayerMessage(int id, string message)
         {
-            Client.Client realCharacter = this.g2OServerSquirrel.Clients[id] as Client.Client;
+            Client.ClientSquirrel realCharacter = this.g2OServerSquirrel.Clients[id] as Client.ClientSquirrel;
             realCharacter?.OnMessageReceived(new MessageReceivedEventArgs(message));
         }
 
