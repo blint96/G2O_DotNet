@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SkillWeapon.cs" company="Colony Online Project">
+// <copyright file="WeaponSkill.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 //  -------------------------------------------------------------------------------------------------------------------
 namespace GothicOnline.G2.DotNet.ServerApi.Character
 {
-    public enum SkillWeapon
+    public enum WeaponSkill
     {
         Weapon_1H, 
 

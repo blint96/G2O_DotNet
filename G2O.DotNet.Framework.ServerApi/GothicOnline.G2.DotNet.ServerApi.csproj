@@ -58,7 +58,7 @@
     <Compile Include="Character\IItem.cs" />
     <Compile Include="Character\EventArgsClasses\ItemEquipedEventArgs.cs" />
     <Compile Include="Character\EventArgsClasses\MaxHealthChangedEventArgs.cs" />
-    <Compile Include="Character\SkillWeapon.cs" />
+    <Compile Include="Character\WeaponSkill.cs" />
     <Compile Include="Character\Talent.cs" />
     <Compile Include="Character\EventArgsClasses\UnconsciousEventArgs.cs" />
     <Compile Include="Character\WeaponMode.cs" />

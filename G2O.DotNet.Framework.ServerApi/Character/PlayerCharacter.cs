@@ -499,14 +499,14 @@ getPlayerPosition(int id)*/
             return this.squirrelApi.Call<int>(StringGetAniId, this.Client.ClientId);
         }
 
-        public int GetSkillWeapon(SkillWeapon skill)
+        public int GetSkillWeapon(WeaponSkill weaponSkill)
         {
-            if (!Enum.IsDefined(typeof(SkillWeapon), skill))
+            if (!Enum.IsDefined(typeof(WeaponSkill), weaponSkill))
             {
-                throw new InvalidEnumArgumentException(nameof(skill), (int)skill, typeof(SkillWeapon));
+                throw new InvalidEnumArgumentException(nameof(weaponSkill), (int)weaponSkill, typeof(WeaponSkill));
             }
 
-            return this.squirrelApi.Call<int>(StringGetPlayerSkillWeapon, this.Client.ClientId, (int)skill);
+            return this.squirrelApi.Call<int>(StringGetPlayerSkillWeapon, this.Client.ClientId, (int)weaponSkill);
         }
 
         public int GetTalent(Talent talent)
@@ -529,11 +529,11 @@ getPlayerPosition(int id)*/
             this.squirrelApi.Call(StringPlayAniId, this.Client.ClientId, aniId);
         }
 
-        public void SetSkillWeapon(SkillWeapon skill, int value)
+        public void SetSkillWeapon(WeaponSkill weaponSkill, int value)
         {
-            if (!Enum.IsDefined(typeof(SkillWeapon), skill))
+            if (!Enum.IsDefined(typeof(WeaponSkill), weaponSkill))
             {
-                throw new InvalidEnumArgumentException(nameof(skill), (int)skill, typeof(SkillWeapon));
+                throw new InvalidEnumArgumentException(nameof(weaponSkill), (int)weaponSkill, typeof(WeaponSkill));
             }
 
             if (value < 0)
@@ -541,7 +541,7 @@ getPlayerPosition(int id)*/
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
 
-            this.squirrelApi.Call(StringSetPlayerSkillWeapon, this.Client.ClientId, (int)skill, value);
+            this.squirrelApi.Call(StringSetPlayerSkillWeapon, this.Client.ClientId, (int)weaponSkill, value);
         }
 
         public void SetTalent(Talent talent, int value)
