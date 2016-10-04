@@ -88,9 +88,9 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
         private static readonly AnsiString StringSetTime = "setTime";
 
         /// <summary>
-        ///     Instance of the <see cref="ServerEventListener" /> class that encapsulates the listening to the server events.
+        ///     Instance of the <see cref="ServerEventListenerSquirrel" /> class that encapsulates the listening to the server events.
         /// </summary>
-        private readonly ServerEventListener serverEventListener;
+        private readonly ServerEventListenerSquirrel serverEventListenerSquirrel;
 
         /// <summary>
         ///     The instance of the squirrel api that is used to call the G2O server functions.
@@ -112,7 +112,7 @@ namespace GothicOnline.G2.DotNet.ServerApi.Server
 
             this.squirrelApi = squirrelApi;
             this.Clients = new ClientList(squirrelApi, this);
-            this.serverEventListener = new ServerEventListener(squirrelApi, this);
+            this.serverEventListenerSquirrel = new ServerEventListenerSquirrel(squirrelApi, this);
         }
 
         /// <summary>

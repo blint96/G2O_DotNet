@@ -279,7 +279,7 @@ namespace GothicOnline.G2.DotNet.ServerApi
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> joins a game world.
         /// </summary>
-        public event EventHandler<CharacterWorldChangedEventArgs> CharacterJoinWorld;
+        public event EventHandler<CharacterWorldChangedEventArgs> CharacterEnterWorld;
 
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> changes the game world that it is in.
@@ -831,14 +831,14 @@ namespace GothicOnline.G2.DotNet.ServerApi
         }
 
         /// <summary>
-        ///     Invokes the <see cref="CharacterJoinWorld" /> event.
+        ///     Invokes the <see cref="CharacterEnterWorld" /> event.
         /// </summary>
         /// <param name="e">
         ///     <see cref="CharacterWorldChangedEventArgs" />
         /// </param>
-        internal void OnCharacterJoinWorld(CharacterWorldChangedEventArgs e)
+        internal void OnCharacterEnterWorld(CharacterWorldChangedEventArgs e)
         {
-            this.CharacterJoinWorld?.Invoke(this, e);
+            this.CharacterEnterWorld?.Invoke(this, e);
         }
 
         /// <summary>
