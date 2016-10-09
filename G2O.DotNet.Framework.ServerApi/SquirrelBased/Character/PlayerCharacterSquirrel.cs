@@ -23,6 +23,7 @@
 namespace G2O.DotNet.ServerApi
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
 
@@ -281,9 +282,15 @@ namespace G2O.DotNet.ServerApi
             this.squirrelApi = squirrelApi;
             this.server = server;
             this.Client = client;
-            //Instantiate a new instance of the inventory class for this character.
-            this.Inventory= new InventorySquirrel(squirrelApi,this);
+
+            // Instantiate a new instance of the inventory class for this character.
+            this.Inventory = new InventorySquirrel(squirrelApi, this);
         }
+
+        /// <summary>
+        /// Stores the value of all readable values after the object was disposed.
+        /// </summary>
+        private Dictionary<string, object> stateCopy;
 
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> equips a body armor.
@@ -378,15 +385,21 @@ namespace G2O.DotNet.ServerApi
         {
             get
             {
+                // Return a buffered copy of the last state if the object is allready disposed(the client that this character belongs to has disconnected).
+                if (this.disposed)
+                {
+                    return (float)this.stateCopy[nameof(this.Angle)];
+                }
+
                 return this.squirrelApi.Call<int>(StringGetPlayerAngle, this.Client.ClientId);
             }
 
             set
             {
-                //Check if the object is disposed.
+                // Check if the object is disposed.
                 if (this.disposed)
                 {
-                    throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel),"The object is already disposed(The related client has disconnected from the server");
+                    throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
                 }
 
                 // Normalize the angle.
@@ -402,18 +415,28 @@ namespace G2O.DotNet.ServerApi
         {
             get
             {
+                // Return a buffered copy of the last state if the object is allready disposed(the client that this character belongs to has disconnected).
+                if (this.disposed)
+                {
+                    return (string)this.stateCopy[nameof(this.CharacterWorld)];
+                }
+
                 return this.squirrelApi.Call<string>(StringGetPlayerWorld, this.Client.ClientId);
             }
+
             set
             {
                 if (string.IsNullOrEmpty(value))
                 {
                     throw new ArgumentException("Value cannot be null or empty.", nameof(value));
                 }
-                //Check if the object is disposed.
+
+                // Check if the object is disposed.
                 if (this.disposed)
                 {
-                    throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
+                    throw new ObjectDisposedException(
+                        nameof(PlayerCharacterSquirrel), 
+                        "The object is already disposed(The related client has disconnected from the server");
                 }
 
                 this.squirrelApi.Call(StringSetPlayerWorld, this.Client.ClientId, value);
@@ -433,6 +456,12 @@ namespace G2O.DotNet.ServerApi
         {
             get
             {
+                // Return a buffered copy of the last state if the object is allready disposed(the client that this character belongs to has disconnected).
+                if (this.disposed)
+                {
+                    return (int)this.stateCopy[nameof(this.Dexterity)];
+                }
+
                 return this.squirrelApi.Call<int>(StringGetPlayerDexterity, this.Client.ClientId);
             }
 
@@ -443,7 +472,7 @@ namespace G2O.DotNet.ServerApi
                     throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
-                //Check if the object is disposed.
+                // Check if the object is disposed.
                 if (this.disposed)
                 {
                     throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
@@ -461,6 +490,11 @@ namespace G2O.DotNet.ServerApi
         {
             get
             {
+                if (this.disposed)
+                {
+                    throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
+                }
+
                 int focusId = this.squirrelApi.Call<int>(StringGetPlayerFocus, this.Client.ClientId);
                 return focusId >= 0 ? this.server.Clients[focusId].PlayerCharacter : null;
             }
@@ -473,6 +507,12 @@ namespace G2O.DotNet.ServerApi
         {
             get
             {
+                // Return a buffered copy of the last state if the object is allready disposed(the client that this character belongs to has disconnected).
+                if (this.disposed)
+                {
+                    return (int)this.stateCopy[nameof(this.Health)];
+                }
+
                 return this.squirrelApi.Call<int>(StringGetPlayerHealth, this.Client.ClientId);
             }
 
@@ -483,7 +523,7 @@ namespace G2O.DotNet.ServerApi
                     throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
-                //Check if the object is disposed.
+                // Check if the object is disposed.
                 if (this.disposed)
                 {
                     throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
@@ -501,17 +541,53 @@ namespace G2O.DotNet.ServerApi
         /// <summary>
         ///     Gets a value indicating whether this <see cref="ICharacter" /> is dead.
         /// </summary>
-        public bool IsDead => this.squirrelApi.Call<bool>(StringIsPlayerDead, this.Client.ClientId);
+        public bool IsDead
+        {
+            get
+            {
+                // Return a buffered copy of the last state if the object is allready disposed(the client that this character belongs to has disconnected).
+                if (this.disposed)
+                {
+                    return (bool)this.stateCopy[nameof(this.IsDead)];
+                }
+
+                return this.squirrelApi.Call<bool>(StringIsPlayerDead, this.Client.ClientId);
+            }
+        }
 
         /// <summary>
         ///     Gets a value indicating whether this <see cref="ICharacter" /> is spawned.
         /// </summary>
-        public bool IsSpawned => this.squirrelApi.Call<bool>(StringIsPlayerSpawned, this.Client.ClientId);
+        public bool IsSpawned
+        {
+            get
+            {
+                // Return a buffered copy of the last state if the object is allready disposed(the client that this character belongs to has disconnected).
+                if (this.disposed)
+                {
+                    return (bool)this.stateCopy[nameof(this.IsSpawned)];
+                }
+
+                return this.squirrelApi.Call<bool>(StringIsPlayerSpawned, this.Client.ClientId);
+            }
+        }
 
         /// <summary>
         ///     Gets a value indicating whether this <see cref="ICharacter" /> is unconscious.
         /// </summary>
-        public bool IsUnconscious => this.squirrelApi.Call<bool>(StringIsPlayerUnconscious, this.Client.ClientId);
+        public bool IsUnconscious
+        {
+            get
+            {
+                // Return a buffered copy of the last state if the object is allready disposed(the client that this character belongs to has disconnected).
+                if (this.disposed)
+                {
+                    return (bool)this.stateCopy[nameof(this.IsUnconscious)];
+                }
+
+                return this.squirrelApi.Call<bool>(StringIsPlayerUnconscious, this.Client.ClientId);
+            }
+        }
 
         /// <summary>
         ///     Gets or sets the maximum health value of this <see cref="ICharacter" />.
@@ -520,6 +596,12 @@ namespace G2O.DotNet.ServerApi
         {
             get
             {
+                // Return a buffered copy of the last state if the object is allready disposed(the client that this character belongs to has disconnected).
+                if (this.disposed)
+                {
+                    return (int)this.stateCopy[nameof(this.MaxHealth)];
+                }
+
                 return this.squirrelApi.Call<int>(StringGetPlayerMaxHealth, this.Client.ClientId);
             }
 
@@ -530,7 +612,7 @@ namespace G2O.DotNet.ServerApi
                     throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
-                //Check if the object is disposed.
+                // Check if the object is disposed.
                 if (this.disposed)
                 {
                     throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
@@ -547,6 +629,12 @@ namespace G2O.DotNet.ServerApi
         {
             get
             {
+                // Return a buffered copy of the last state if the object is allready disposed(the client that this character belongs to has disconnected).
+                if (this.disposed)
+                {
+                    return (string)this.stateCopy[nameof(this.Name)];
+                }
+
                 return this.squirrelApi.Call<string>(StringGetPlayerName, this.Client.ClientId);
             }
 
@@ -557,7 +645,7 @@ namespace G2O.DotNet.ServerApi
                     throw new ArgumentException("Value cannot be null or empty.", nameof(value));
                 }
 
-                //Check if the object is disposed.
+                // Check if the object is disposed.
                 if (this.disposed)
                 {
                     throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
@@ -574,12 +662,18 @@ namespace G2O.DotNet.ServerApi
         {
             get
             {
+                // Return a buffered copy of the last state if the object is allready disposed(the client that this character belongs to has disconnected).
+                if (this.disposed)
+                {
+                    return (Color)this.stateCopy[nameof(this.NameColor)];
+                }
+
                 throw new NotImplementedException();
             }
 
             set
             {
-                //Check if the object is disposed.
+                // Check if the object is disposed.
                 if (this.disposed)
                 {
                     throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
@@ -596,6 +690,12 @@ namespace G2O.DotNet.ServerApi
         {
             get
             {
+                // Return a buffered copy of the last state if the object is allready disposed(the client that this character belongs to has disconnected).
+                if (this.disposed)
+                {
+                    return (Point3D)this.stateCopy[nameof(this.Position)];
+                }
+
                 int top = this.squirrelApi.SqGetTop();
                 try
                 {
@@ -666,7 +766,7 @@ namespace G2O.DotNet.ServerApi
 
             set
             {
-                //Check if the object is disposed.
+                // Check if the object is disposed.
                 if (this.disposed)
                 {
                     throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
@@ -683,6 +783,12 @@ namespace G2O.DotNet.ServerApi
         {
             get
             {
+                // Return a buffered copy of the last state if the object is allready disposed(the client that this character belongs to has disconnected).
+                if (this.disposed)
+                {
+                    return (int)this.stateCopy[nameof(this.RespawnTime)];
+                }
+
                 return this.squirrelApi.Call<int>(StringGetPlayerRespawnTime, this.Client.ClientId);
             }
 
@@ -693,7 +799,7 @@ namespace G2O.DotNet.ServerApi
                     throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
-                //Check if the object is disposed.
+                // Check if the object is disposed.
                 if (this.disposed)
                 {
                     throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
@@ -710,6 +816,12 @@ namespace G2O.DotNet.ServerApi
         {
             get
             {
+                // Return a buffered copy of the last state if the object is allready disposed(the client that this character belongs to has disconnected).
+                if (this.disposed)
+                {
+                    return (int)this.stateCopy[nameof(this.Strength)];
+                }
+
                 return this.squirrelApi.Call<int>(StringGetPlayerStrength, this.Client.ClientId);
             }
 
@@ -720,7 +832,7 @@ namespace G2O.DotNet.ServerApi
                     throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
-                //Check if the object is disposed.
+                // Check if the object is disposed.
                 if (this.disposed)
                 {
                     throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
@@ -737,6 +849,12 @@ namespace G2O.DotNet.ServerApi
         {
             get
             {
+                // Return a buffered copy of the last state if the object is allready disposed(the client that this character belongs to has disconnected).
+                if (this.disposed)
+                {
+                    return (WeaponMode)this.stateCopy[nameof(this.WeaponMode)];
+                }
+
                 return (WeaponMode)this.squirrelApi.Call<int>(StringGetPlayerWeaponMode, this.Client.ClientId);
             }
 
@@ -747,7 +865,7 @@ namespace G2O.DotNet.ServerApi
                     throw new InvalidEnumArgumentException(nameof(value), (int)value, typeof(WeaponMode));
                 }
 
-                //Check if the object is disposed.
+                // Check if the object is disposed.
                 if (this.disposed)
                 {
                     throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
@@ -764,6 +882,38 @@ namespace G2O.DotNet.ServerApi
         {
             if (!this.disposed)
             {
+                //Store all readable values, so they can later be read even if a new client connects and uses up the slot that was released by client that disconnected.
+                this.stateCopy = new Dictionary<string, object>
+                                     {
+                                         { nameof(this.Angle), this.Angle }, 
+                                         { nameof(this.CharacterWorld), this.CharacterWorld }, 
+                                         { nameof(this.Dexterity), this.Dexterity }, 
+                                         { nameof(this.Health), this.Health }, 
+                                         { nameof(this.MaxHealth), this.MaxHealth }, 
+                                         { nameof(this.Name), this.Name }, 
+                                         { nameof(this.NameColor), this.NameColor }, 
+                                         { nameof(this.Position), this.Position }, 
+                                         { nameof(this.RespawnTime), this.RespawnTime }, 
+                                         { nameof(this.Strength), this.Strength }, 
+                                         { nameof(this.RespawnTime), this.WeaponMode },
+                                         { nameof(this.IsDead), this.IsDead },
+                                         { nameof(this.IsSpawned), this.IsSpawned },
+                                         { nameof(this.IsUnconscious), this.IsUnconscious }
+                                     };
+
+                // Get all weapon skills an store them
+                foreach (WeaponSkill weaponskill in Enum.GetValues(typeof(WeaponSkill)))
+                {
+                    this.stateCopy.Add($"{nameof(this.GetSkillWeapon)}{weaponskill}", this.GetSkillWeapon(weaponskill));
+                }
+
+                // Get all talents and store them.
+                foreach (Talent talent in Enum.GetValues(typeof(Talent)))
+                {
+                    this.stateCopy.Add($"{nameof(this.GetTalent)}{talent}", this.GetTalent(talent));
+                }
+
+
                 this.disposed = true;
             }
         }
@@ -779,7 +929,7 @@ namespace G2O.DotNet.ServerApi
                 throw new ArgumentException("Value cannot be null or empty.", nameof(itemInstance));
             }
 
-            //Check if the object is disposed.
+            // Check if the object is disposed.
             if (this.disposed)
             {
                 throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
@@ -794,7 +944,7 @@ namespace G2O.DotNet.ServerApi
         /// <returns>The id of the animation that is currently played by this <see cref="ICharacter" />.</returns>
         public int GetAniId()
         {
-            //Check if the object is disposed.
+            // Check if the object is disposed.
             if (this.disposed)
             {
                 throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
@@ -815,6 +965,12 @@ namespace G2O.DotNet.ServerApi
                 throw new InvalidEnumArgumentException(nameof(weaponSkill), (int)weaponSkill, typeof(WeaponSkill));
             }
 
+            // Return a buffered copy of the last state if the object is allready disposed(the client that this character belongs to has disconnected).
+            if (this.disposed)
+            {
+                return (int)this.stateCopy[$"{nameof(this.GetSkillWeapon)}{weaponSkill}"];
+            }
+
             return this.squirrelApi.Call<int>(StringGetPlayerSkillWeapon, this.Client.ClientId, (int)weaponSkill);
         }
 
@@ -828,6 +984,12 @@ namespace G2O.DotNet.ServerApi
             if (!Enum.IsDefined(typeof(Talent), talent))
             {
                 throw new InvalidEnumArgumentException(nameof(talent), (int)talent, typeof(Talent));
+            }
+
+            // Return a buffered copy of the last state if the object is allready disposed(the client that this character belongs to has disconnected).
+            if (this.disposed)
+            {
+                return (int)this.stateCopy[$"{nameof(this.GetTalent)}{talent}"];
             }
 
             return this.squirrelApi.Call<int>(StringGetPlayerTalent, this.Client.ClientId, (int)talent);
@@ -844,7 +1006,7 @@ namespace G2O.DotNet.ServerApi
                 throw new ArgumentOutOfRangeException(nameof(aniId));
             }
 
-            //Check if the object is disposed.
+            // Check if the object is disposed.
             if (this.disposed)
             {
                 throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
@@ -870,7 +1032,7 @@ namespace G2O.DotNet.ServerApi
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
 
-            //Check if the object is disposed.
+            // Check if the object is disposed.
             if (this.disposed)
             {
                 throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
@@ -896,7 +1058,7 @@ namespace G2O.DotNet.ServerApi
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
 
-            //Check if the object is disposed.
+            // Check if the object is disposed.
             if (this.disposed)
             {
                 throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
@@ -910,7 +1072,7 @@ namespace G2O.DotNet.ServerApi
         /// </summary>
         public void Spawn()
         {
-            //Check if the object is disposed.
+            // Check if the object is disposed.
             if (this.disposed)
             {
                 throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
@@ -924,7 +1086,7 @@ namespace G2O.DotNet.ServerApi
         /// </summary>
         public void StopAllAnimations()
         {
-            //Check if the object is disposed.
+            // Check if the object is disposed.
             if (this.disposed)
             {
                 throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
@@ -944,7 +1106,7 @@ namespace G2O.DotNet.ServerApi
                 throw new ArgumentException("Value cannot be null or empty.", nameof(itemInstance));
             }
 
-            //Check if the object is disposed.
+            // Check if the object is disposed.
             if (this.disposed)
             {
                 throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
@@ -958,7 +1120,7 @@ namespace G2O.DotNet.ServerApi
         /// </summary>
         public void UnspawnPlayer()
         {
-            //Check if the object is disposed.
+            // Check if the object is disposed.
             if (this.disposed)
             {
                 throw new ObjectDisposedException(nameof(PlayerCharacterSquirrel), "The object is already disposed(The related client has disconnected from the server");
