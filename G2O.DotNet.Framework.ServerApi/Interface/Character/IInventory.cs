@@ -17,24 +17,57 @@
 // -
 // </copyright>
 // <summary>
+// Interface for the classes that implement the inventory specific methods of the server API.
+// Also contains members for a basic item tracking functionality.
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
 namespace G2O.DotNet.ServerApi.Character
 {
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Interface for the classes that implement the inventory specific methods of the server API.
+    /// Also contains members for a basic item tracking functionality.
+    /// </summary>
     public interface IInventory
     {
+        /// <summary>
+        /// Gets all Items that are contained in this instance of <see cref="IInventory"/>.
+        /// </summary>
         IEnumerable<IItem> Items { get; }
 
+        /// <summary>
+        /// Adds a item to the inventory
+        /// </summary>
+        /// <param name="itemInstance">The instance name of the item.</param>
+        /// <param name="amount">The amount of items that should be added.</param>
         void AddItem(string itemInstance, int amount);
 
+        /// <summary>
+        /// Removes all items from the player inventory.
+        /// </summary>
         void Clear();
 
+        /// <summary>
+        /// Gets the available data about a item that is contained in this instance of <see cref="IInventory"/>.
+        /// <remarks>Throws an exception if the given item instance is not contained in the inventory.</remarks>
+        /// </summary>
+        /// <param name="itemInstance">The instance name of the item.</param>
+        /// <returns>Item data.</returns>
         IItem GetItem(string itemInstance);
 
+        /// <summary>
+        /// Checks if this instance of <see cref="IInventory"/> contains at least one item with the given instance name.
+        /// </summary>
+        /// <param name="itemInstance">The instance name of the item which should be searched.</param>
         void HasItem(string itemInstance);
 
+        /// <summary>
+        /// Removes a item from this instance of <see cref="IInventory"/>.
+        /// <remarks>Throws an exception if more the <see cref="amount"/> is bigger than the actually available amount.</remarks>
+        /// </summary>
+        /// <param name="itemInstance">The instance name of the item that should be removed.</param>
+        /// <param name="amount">The amount of items that should be removed.</param>
         void RemoveItem(string itemInstance, int amount);
     }
 }
