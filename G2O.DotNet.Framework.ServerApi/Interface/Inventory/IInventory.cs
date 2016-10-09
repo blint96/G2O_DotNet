@@ -59,8 +59,13 @@ namespace G2O.DotNet.ServerApi.Inventory
         /// <summary>
         /// Checks if this instance of <see cref="IInventory"/> contains at least one item with the given instance name.
         /// </summary>
-        /// <param name="itemInstance">The instance name of the item which should be searched.</param>
-        void HasItem(string itemInstance);
+        /// <param name="itemInstance">
+        /// The instance name of the item which should be searched.
+        /// </param>
+        /// <returns>
+        /// True if the <see cref="IInventory"/> contains at least one item with the given instance name./>.
+        /// </returns>
+        bool HasItem(string itemInstance);
 
         /// <summary>
         /// Removes a item from this instance of <see cref="IInventory"/>.
