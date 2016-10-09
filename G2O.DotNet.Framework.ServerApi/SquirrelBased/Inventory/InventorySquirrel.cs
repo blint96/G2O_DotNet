@@ -30,9 +30,10 @@ namespace G2O.DotNet.ServerApi.Inventory
     using G2O.DotNet.Squirrel.Interop;
 
     /// <summary>
-    /// The implementation of the <see cref="IInventory"/> interface that uses the squirrel API to call the server functions.
+    ///     The implementation of the <see cref="IInventory" /> interface that uses the squirrel API to call the server
+    ///     functions.
     /// </summary>
-    internal class InventorySquirrel : IInventory
+    internal class InventorySquirrel : IInventory, IDisposable
     {
         /// <summary>
         ///     Stores the ANSI version of the string "giveItem"
@@ -58,6 +59,11 @@ namespace G2O.DotNet.ServerApi.Inventory
         ///     The used instance of the <see cref="ISquirrelApi" />.
         /// </summary>
         private readonly ISquirrelApi squirrelApi;
+
+        /// <summary>
+        ///     Indicates wheter this object is disposed an can no longer be used to call server functions.
+        /// </summary>
+        private bool disposed;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="InventorySquirrel" /> class.
@@ -119,6 +125,14 @@ namespace G2O.DotNet.ServerApi.Inventory
                 throw new ArgumentOutOfRangeException(nameof(amount));
             }
 
+            // Check if the object is disposed.
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(
+                    nameof(InventorySquirrel), 
+                    "The object was disposed(the related client has disconnected from the server)");
+            }
+
             this.squirrelApi.Call(StringGiveItem, this.character.Client.ClientId, itemInstance, amount);
 
             // Add the items to the internal storage dictionary.
@@ -137,9 +151,28 @@ namespace G2O.DotNet.ServerApi.Inventory
         /// </summary>
         public void Clear()
         {
+            // Check if the object is disposed.
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(
+                    nameof(InventorySquirrel), 
+                    "The object was disposed(the related client has disconnected from the server)");
+            }
+
             foreach (var itemInstance in this.items.Keys)
             {
                 this.RemoveItem(itemInstance, this.items[itemInstance]);
+            }
+        }
+
+        /// <summary>
+        ///     Releases all unmanaged resources and makes this object unable the access this resources(server functions)
+        /// </summary>
+        public void Dispose()
+        {
+            if (!this.disposed)
+            {
+                this.disposed = true;
             }
         }
 
@@ -204,6 +237,14 @@ namespace G2O.DotNet.ServerApi.Inventory
             if (amount <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(amount));
+            }
+
+            // Check if the object is disposed.
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(
+                    nameof(InventorySquirrel), 
+                    "The object was disposed(the related client has disconnected from the server)");
             }
 
             // Check if the items can be removed(do not allow to remove more items than are available.
