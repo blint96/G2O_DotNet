@@ -21,7 +21,7 @@
 // Also contains members for a basic item tracking functionality.
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace G2O.DotNet.ServerApi.Character
+namespace G2O.DotNet.ServerApi.Inventory
 {
     using System.Collections.Generic;
 

@@ -20,7 +20,7 @@
 // Interface for classes that describe item data.
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace G2O.DotNet.ServerApi.Character
+namespace G2O.DotNet.ServerApi.Inventory
 {
     /// <summary>
     /// Interface for classes that describe item data.

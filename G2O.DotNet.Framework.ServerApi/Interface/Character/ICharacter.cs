@@ -26,6 +26,7 @@ namespace G2O.DotNet.ServerApi.Character
 
     using G2O.DotNet.ServerApi.Client;
     using G2O.DotNet.ServerApi.Data;
+    using G2O.DotNet.ServerApi.Inventory;
 
     /// <summary>
     ///     The interface for the classes that implement the object oriented wrapper of the character specific functions of the

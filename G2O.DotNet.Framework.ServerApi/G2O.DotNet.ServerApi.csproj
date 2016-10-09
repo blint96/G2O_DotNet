@@ -54,8 +54,8 @@
     <Compile Include="Interface\Character\HealthChangedEventArgs.cs" />
     <Compile Include="Interface\Character\HitEventArgs.cs" />
     <Compile Include="Interface\Character\ICharacter.cs" />
-    <Compile Include="Interface\Character\IInventory.cs" />
-    <Compile Include="Interface\Character\IItem.cs" />
+    <Compile Include="Interface\Inventory\IInventory.cs" />
+    <Compile Include="Interface\Inventory\IItem.cs" />
     <Compile Include="Interface\Character\ItemEquipedEventArgs.cs" />
     <Compile Include="Interface\Character\MaxHealthChangedEventArgs.cs" />
     <Compile Include="Interface\Character\WeaponSkill.cs" />

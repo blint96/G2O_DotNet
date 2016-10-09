@@ -29,6 +29,7 @@ namespace G2O.DotNet.ServerApi
     using G2O.DotNet.ServerApi.Character;
     using G2O.DotNet.ServerApi.Client;
     using G2O.DotNet.ServerApi.Data;
+    using G2O.DotNet.ServerApi.Inventory;
     using G2O.DotNet.ServerApi.Server;
     using G2O.DotNet.Squirrel;
     using G2O.DotNet.Squirrel.Exceptions;
