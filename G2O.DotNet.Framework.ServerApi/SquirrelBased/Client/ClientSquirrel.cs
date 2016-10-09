@@ -308,7 +308,11 @@ namespace G2O.DotNet.ServerApi.Client
         /// </param>
         internal void OnDisconnect(ClientDisconnectedEventArgs e)
         {
+            this.Dispose();
+            (this.PlayerCharacter as IDisposable)?.Dispose();
+            (this.PlayerCharacter.Inventory as IDisposable)?.Dispose();
             this.Disconnect?.Invoke(this, e);
+            //Dispose the Client and all related objects.
         }
 
         /// <summary>
