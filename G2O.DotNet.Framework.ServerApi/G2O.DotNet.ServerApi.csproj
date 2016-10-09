@@ -74,6 +74,7 @@
     <Compile Include="Interface\Client\MessageReceivedEventArgs.cs" />
     <Compile Include="Interface\Data\Point3D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SquirrelBased\Inventory\InventorySquirrel.cs" />
     <Compile Include="SquirrelBased\Server\ServerEventListenerSquirrel.cs" />
     <Compile Include="Interface\Server\IPacket.cs" />
     <Compile Include="Interface\Server\IServer.cs" />
