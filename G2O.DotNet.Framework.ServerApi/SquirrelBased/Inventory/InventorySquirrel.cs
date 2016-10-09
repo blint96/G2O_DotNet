@@ -98,6 +98,11 @@ namespace G2O.DotNet.ServerApi.Inventory
         }
 
         /// <summary>
+        ///     Gets the <see cref="ICharacter" /> that this <see cref="IInventory" /> belongs to.
+        /// </summary>
+        public ICharacter Owner => this.character;
+
+        /// <summary>
         ///     Adds a item to the inventory
         /// </summary>
         /// <param name="itemInstance">The instance name of the item.</param>
