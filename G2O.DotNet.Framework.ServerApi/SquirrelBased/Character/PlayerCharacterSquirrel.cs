@@ -231,6 +231,16 @@ namespace G2O.DotNet.ServerApi
         private static readonly AnsiString StringZ = "z";
 
         /// <summary>
+        ///     Stores the ANSI version of the string "getPlayerWorld"
+        /// </summary>
+        private static readonly AnsiString StringGetPlayerWorld = "getPlayerWorld";
+
+        /// <summary>
+        ///     Stores the ANSI version of the string "setPlayerWorld"
+        /// </summary>
+        private static readonly AnsiString StringSetPlayerWorld = "setPlayerWorld";
+
+        /// <summary>
         ///     The used instance of the server API.
         /// </summary>
         private readonly IServer server;
@@ -380,7 +390,21 @@ namespace G2O.DotNet.ServerApi
         /// <summary>
         ///     Gets or sets the world that the <see cref="PlayerCharacterSquirrel" /> is in.
         /// </summary>
-        public string CharacterWorld { get; set; }
+        public string CharacterWorld
+        {
+            get
+            {
+                return this.squirrelApi.Call<string>(StringGetPlayerWorld, this.Client.ClientId);
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentException("Value cannot be null or empty.", nameof(value));
+                }
+                this.squirrelApi.Call(StringSetPlayerWorld, this.Client.ClientId, value);
+            }
+        }
 
         /// <summary>
         ///     Gets the client two which the <see cref="ICharacter" /> belongs to.
