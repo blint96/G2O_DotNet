@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Interface\Character\ChangeWeaponModeEventArgs.cs" />
     <Compile Include="Interface\Character\CharacterWorldChangedEventArgs.cs" />
+    <Compile Include="GeneralImplementation\Inventory\Item.cs" />
     <Compile Include="SquirrelBased\Character\PlayerCharacterSquirrel.cs" />
     <Compile Include="Interface\Character\ColorChangedEventArgs.cs" />
     <Compile Include="Interface\Character\DeadEventArgs.cs" />
