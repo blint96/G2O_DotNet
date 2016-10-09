@@ -281,6 +281,8 @@ namespace G2O.DotNet.ServerApi
             this.squirrelApi = squirrelApi;
             this.server = server;
             this.Client = client;
+            //Instantiate a new instance of the inventory class for this character.
+            this.Inventory= new InventorySquirrel(squirrelApi,this);
         }
 
         /// <summary>
