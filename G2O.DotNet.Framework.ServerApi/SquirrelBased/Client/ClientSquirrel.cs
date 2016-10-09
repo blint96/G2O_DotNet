@@ -36,9 +36,9 @@ namespace G2O.DotNet.ServerApi.Client
     internal class ClientSquirrel : IClient, IDisposable
     {
         /// <summary>
-        ///     Stores the ansi version of the string "band"
+        ///     Stores the ansi version of the string "ban"
         /// </summary>
-        private static readonly AnsiString StringBan = "band";
+        private static readonly AnsiString StringBan = "ban";
 
         /// <summary>
         ///     Stores the ansi version of the string "getPlayerIP"
