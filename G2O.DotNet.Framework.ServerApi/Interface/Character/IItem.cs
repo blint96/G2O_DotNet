@@ -17,14 +17,24 @@
 // -
 // </copyright>
 // <summary>
+// Interface for classes that describe item data.
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
 namespace G2O.DotNet.ServerApi.Character
 {
+    /// <summary>
+    /// Interface for classes that describe item data.
+    /// </summary>
     public interface IItem
     {
+        /// <summary>
+        /// Gets the amount of items.
+        /// </summary>
         int Amount { get; }
 
+        /// <summary>
+        /// Gets the instance name of the item.
+        /// </summary>
         string Instance { get; }
     }
 }
