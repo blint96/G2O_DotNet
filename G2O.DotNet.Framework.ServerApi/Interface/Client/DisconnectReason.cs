@@ -17,16 +17,29 @@
 // -
 // </copyright>
 // <summary>
+// Defines the different reasons for a client to disconnect from the server.
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
 namespace G2O.DotNet.ServerApi.Client
 {
+    /// <summary>
+    ///     Defines the different reasons for a client to disconnect from the server.
+    /// </summary>
     public enum DisconnectReason
     {
+        /// <summary>
+        ///     The client has disconnected normally(or the server has closed the connection)
+        /// </summary>
         Disconnected, 
 
+        /// <summary>
+        ///     The client lost the connection unexpected.
+        /// </summary>
         LostConnection, 
 
+        /// <summary>
+        ///     A fatal error was detected by this client before it closed the connection to the server.
+        /// </summary>
         HasCrashed, 
     }
 }
