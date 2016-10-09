@@ -36,47 +36,47 @@ namespace G2O.DotNet.ServerApi.Client
     internal class ClientSquirrel : IClient, IDisposable
     {
         /// <summary>
-        ///     Stores the ansi version of the string "ban"
+        ///     Stores the ANSI version of the string "ban"
         /// </summary>
         private static readonly AnsiString StringBan = "ban";
 
         /// <summary>
-        ///     Stores the ansi version of the string "getPlayerIP"
+        ///     Stores the ANSI version of the string "getPlayerIP"
         /// </summary>
         private static readonly AnsiString StringGetPlayerIp = "getPlayerIP";
 
         /// <summary>
-        ///     Stores the ansi version of the string "getPlayerMacAddr"
+        ///     Stores the ANSI version of the string "getPlayerMacAddr"
         /// </summary>
         private static readonly AnsiString StringGetPlayerMacAddr = "getPlayerMacAddr";
 
         /// <summary>
-        ///     Stores the ansi version of the string "getPlayerPing"
+        ///     Stores the ANSI version of the string "getPlayerPing"
         /// </summary>
         private static readonly AnsiString StringGetPlayerPing = "getPlayerPing";
 
         /// <summary>
-        ///     Stores the ansi version of the string "getPlayerSerial"
+        ///     Stores the ANSI version of the string "getPlayerSerial"
         /// </summary>
         private static readonly AnsiString StringGetPlayerSerial = "getPlayerSerial";
 
         /// <summary>
-        ///     Stores the ansi version of the string "kick"
+        ///     Stores the ANSI version of the string "kick"
         /// </summary>
         private static readonly AnsiString StringKick = "kick";
 
         /// <summary>
-        ///     Stores the ansi version of the string "sendMessageToPlayer"
+        ///     Stores the ANSI version of the string "sendMessageToPlayer"
         /// </summary>
         private static readonly AnsiString StringSendMessageToPlayer = "sendMessageToPlayer";
 
         /// <summary>
-        ///     Stores the ansi version of the string "sendPlayerMessageToAll"
+        ///     Stores the ANSI version of the string "sendPlayerMessageToAll"
         /// </summary>
         private static readonly AnsiString StringSendPlayerMessageToAll = "sendPlayerMessageToAll";
 
         /// <summary>
-        ///     Stores the ansi version of the string "sendPlayerMessageToPlayer"
+        ///     Stores the ANSI version of the string "sendPlayerMessageToPlayer"
         /// </summary>
         private static readonly AnsiString StringSendPlayerMessageToPlayer = "sendPlayerMessageToPlayer";
 
