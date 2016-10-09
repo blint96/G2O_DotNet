@@ -41,177 +41,177 @@ namespace G2O.DotNet.ServerApi
     internal class PlayerCharacterSquirrel : ICharacter, IDisposable
     {
         /// <summary>
-        ///     Stores the ansi version of the string "equipItem"
+        ///     Stores the ANSI version of the string "equipItem"
         /// </summary>
         private static readonly AnsiString StringEquipItem = "equipItem";
 
         /// <summary>
-        ///     Stores the ansi version of the string "getAniId"
+        ///     Stores the ANSI version of the string "getAniId"
         /// </summary>
         private static readonly AnsiString StringGetAniId = "getAniId";
 
         /// <summary>
-        ///     Stores the ansi version of the string "getPlayerAngle"
+        ///     Stores the ANSI version of the string "getPlayerAngle"
         /// </summary>
         private static readonly AnsiString StringGetPlayerAngle = "getPlayerAngle";
 
         /// <summary>
-        ///     Stores the ansi version of the string "getPlayerColor"
+        ///     Stores the ANSI version of the string "getPlayerColor"
         /// </summary>
         private static readonly AnsiString StringGetPlayerColor = "getPlayerColor";
 
         /// <summary>
-        ///     Stores the ansi version of the string "getPlayerDexterity"
+        ///     Stores the ANSI version of the string "getPlayerDexterity"
         /// </summary>
         private static readonly AnsiString StringGetPlayerDexterity = "getPlayerDexterity";
 
         /// <summary>
-        ///     Stores the ansi version of the string "getPlayerFocus"
+        ///     Stores the ANSI version of the string "getPlayerFocus"
         /// </summary>
         private static readonly AnsiString StringGetPlayerFocus = "getPlayerFocus";
 
         /// <summary>
-        ///     Stores the ansi version of the string "getPlayerHealth"
+        ///     Stores the ANSI version of the string "getPlayerHealth"
         /// </summary>
         private static readonly AnsiString StringGetPlayerHealth = "getPlayerHealth";
 
         /// <summary>
-        ///     Stores the ansi version of the string "getPlayerMaxHealth"
+        ///     Stores the ANSI version of the string "getPlayerMaxHealth"
         /// </summary>
         private static readonly AnsiString StringGetPlayerMaxHealth = "getPlayerMaxHealth";
 
         /// <summary>
-        ///     Stores the ansi version of the string "getPlayerName"
+        ///     Stores the ANSI version of the string "getPlayerName"
         /// </summary>
         private static readonly AnsiString StringGetPlayerName = "getPlayerName";
 
         /// <summary>
-        ///     Stores the ansi version of the string "getPlayerPosition"
+        ///     Stores the ANSI version of the string "getPlayerPosition"
         /// </summary>
         private static readonly AnsiString StringGetPlayerPosition = "getPlayerPosition";
 
         /// <summary>
-        ///     Stores the ansi version of the string "getPlayerRespawnTime"
+        ///     Stores the ANSI version of the string "getPlayerRespawnTime"
         /// </summary>
         private static readonly AnsiString StringGetPlayerRespawnTime = "getPlayerRespawnTime";
 
         /// <summary>
-        ///     Stores the ansi version of the string "getPlayerSkillWeapon"
+        ///     Stores the ANSI version of the string "getPlayerSkillWeapon"
         /// </summary>
         private static readonly AnsiString StringGetPlayerSkillWeapon = "getPlayerSkillWeapon";
 
         /// <summary>
-        ///     Stores the ansi version of the string "getPlayerStrength"
+        ///     Stores the ANSI version of the string "getPlayerStrength"
         /// </summary>
         private static readonly AnsiString StringGetPlayerStrength = "getPlayerStrength";
 
         /// <summary>
-        ///     Stores the ansi version of the string "getPlayerTalent"
+        ///     Stores the ANSI version of the string "getPlayerTalent"
         /// </summary>
         private static readonly AnsiString StringGetPlayerTalent = "getPlayerTalent";
 
         /// <summary>
-        ///     Stores the ansi version of the string "getPlayerWeaponMode"
+        ///     Stores the ANSI version of the string "getPlayerWeaponMode"
         /// </summary>
         private static readonly AnsiString StringGetPlayerWeaponMode = "getPlayerWeaponMode";
 
         /// <summary>
-        ///     Stores the ansi version of the string "isPlayerDead"
+        ///     Stores the ANSI version of the string "isPlayerDead"
         /// </summary>
         private static readonly AnsiString StringIsPlayerDead = "isPlayerDead";
 
         /// <summary>
-        ///     Stores the ansi version of the string "isPlayerSpawned"
+        ///     Stores the ANSI version of the string "isPlayerSpawned"
         /// </summary>
         private static readonly AnsiString StringIsPlayerSpawned = "isPlayerSpawned";
 
         /// <summary>
-        ///     Stores the ansi version of the string "isPlayerUnconscious"
+        ///     Stores the ANSI version of the string "isPlayerUnconscious"
         /// </summary>
         private static readonly AnsiString StringIsPlayerUnconscious = "isPlayerUnconscious";
 
         /// <summary>
-        ///     Stores the ansi version of the string "playAniId"
+        ///     Stores the ANSI version of the string "playAniId"
         /// </summary>
         private static readonly AnsiString StringPlayAniId = "playAniId";
 
         /// <summary>
-        ///     Stores the ansi version of the string "setPlayerAngle"
+        ///     Stores the ANSI version of the string "setPlayerAngle"
         /// </summary>
         private static readonly AnsiString StringSetPlayerAngle = "setPlayerAngle";
 
         /// <summary>
-        ///     Stores the ansi version of the string "setPlayerColor"
+        ///     Stores the ANSI version of the string "setPlayerColor"
         /// </summary>
         private static readonly AnsiString StringSetPlayerColor = "setPlayerColor";
 
         /// <summary>
-        ///     Stores the ansi version of the string "setPlayerDexterity"
+        ///     Stores the ANSI version of the string "setPlayerDexterity"
         /// </summary>
         private static readonly AnsiString StringSetPlayerDexterity = "setPlayerDexterity";
 
         /// <summary>
-        ///     Stores the ansi version of the string "setPlayerHealth"
+        ///     Stores the ANSI version of the string "setPlayerHealth"
         /// </summary>
         private static readonly AnsiString StringSetPlayerHealth = "setPlayerHealth";
 
         /// <summary>
-        ///     Stores the ansi version of the string "setPlayerMaxHealth"
+        ///     Stores the ANSI version of the string "setPlayerMaxHealth"
         /// </summary>
         private static readonly AnsiString StringSetPlayerMaxHealth = "setPlayerMaxHealth";
 
         /// <summary>
-        ///     Stores the ansi version of the string "setPlayerName"
+        ///     Stores the ANSI version of the string "setPlayerName"
         /// </summary>
         private static readonly AnsiString StringSetPlayerName = "setPlayerName";
 
         /// <summary>
-        ///     Stores the ansi version of the string "setPlayerPosition"
+        ///     Stores the ANSI version of the string "setPlayerPosition"
         /// </summary>
         private static readonly AnsiString StringSetPlayerPosition = "setPlayerPosition";
 
         /// <summary>
-        ///     Stores the ansi version of the string "setPlayerRespawnTime"
+        ///     Stores the ANSI version of the string "setPlayerRespawnTime"
         /// </summary>
         private static readonly AnsiString StringSetPlayerRespawnTime = "setPlayerRespawnTime";
 
         /// <summary>
-        ///     Stores the ansi version of the string "setPlayerSkillWeapon"
+        ///     Stores the ANSI version of the string "setPlayerSkillWeapon"
         /// </summary>
         private static readonly AnsiString StringSetPlayerSkillWeapon = "setPlayerSkillWeapon";
 
         /// <summary>
-        ///     Stores the ansi version of the string "setPlayerStrength"
+        ///     Stores the ANSI version of the string "setPlayerStrength"
         /// </summary>
         private static readonly AnsiString StringSetPlayerStrength = "setPlayerStrength";
 
         /// <summary>
-        ///     Stores the ansi version of the string "setPlayerTalent"
+        ///     Stores the ANSI version of the string "setPlayerTalent"
         /// </summary>
         private static readonly AnsiString StringSetPlayerTalent = "setPlayerTalent";
 
         /// <summary>
-        ///     Stores the ansi version of the string "setPlayerWeaponMode"
+        ///     Stores the ANSI version of the string "setPlayerWeaponMode"
         /// </summary>
         private static readonly AnsiString StringSetPlayerWeaponMode = "setPlayerWeaponMode";
 
         /// <summary>
-        ///     Stores the ansi version of the string "setPlayspawnPlayererTalent"
+        ///     Stores the ANSI version of the string "setPlayspawnPlayererTalent"
         /// </summary>
         private static readonly AnsiString StringSpawnPlayer = "setPlayspawnPlayererTalent";
 
         /// <summary>
-        ///     Stores the ansi version of the string "stopAni"
+        ///     Stores the ANSI version of the string "stopAni"
         /// </summary>
         private static readonly AnsiString StringStopAni = "stopAni";
 
         /// <summary>
-        ///     Stores the ansi version of the string "unequipItem"
+        ///     Stores the ANSI version of the string "unequipItem"
         /// </summary>
         private static readonly AnsiString StringUnequipItem = "unequipItem";
 
         /// <summary>
-        ///     Stores the ansi version of the string "unspawnPlayer"
+        ///     Stores the ANSI version of the string "unspawnPlayer"
         /// </summary>
         private static readonly AnsiString StringUnspawnPlayer = "unspawnPlayer";
 
