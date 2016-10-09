@@ -997,7 +997,7 @@ namespace G2O.DotNet.ServerApi
                                          { nameof(this.Position), this.Position }, 
                                          { nameof(this.RespawnTime), this.RespawnTime }, 
                                          { nameof(this.Strength), this.Strength }, 
-                                         { nameof(this.RespawnTime), this.WeaponMode }, 
+                                         { nameof(this.WeaponMode), this.WeaponMode }, 
                                          { nameof(this.IsDead), this.IsDead }, 
                                          { nameof(this.IsSpawned), this.IsSpawned }, 
                                          { nameof(this.IsUnconscious), this.IsUnconscious }

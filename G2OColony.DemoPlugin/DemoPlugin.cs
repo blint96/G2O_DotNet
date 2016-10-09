@@ -38,6 +38,12 @@ namespace G2OColony.DemoPlugin
         {
             server.Initialize += this.ServerInitialize;
             server.Clients.ClientConnect += Clients_ClientConnect;
+            server.Clients.ClientDisconnect += Clients_ClientDisconnect;
+        }
+
+        private void Clients_ClientDisconnect(object sender, ClientDisconnectedEventArgs e)
+        {
+            IClient client = e.Client;
         }
 
         private void Clients_ClientConnect(object sender, ClientConnectedEventArgs e)
@@ -48,6 +54,12 @@ namespace G2OColony.DemoPlugin
         private void NewClient_CommandReceived(object sender, CommandReceivedEventArgs e)
         {
             Console.WriteLine($"Command was send {e.Command}");
+            IClient client1 = sender as IClient;
+
+            if (e.Command.Equals("ChangeWorld",StringComparison.InvariantCultureIgnoreCase))
+            {
+                client1.PlayerCharacter.CharacterWorld = @"OLDWORLD\\OLDWORLD";
+            }
             if (e.Command == "tele")
             {
                 var client = sender as IClient;
