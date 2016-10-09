@@ -111,7 +111,7 @@ namespace G2O.DotNet.ServerApi.Server
             }
 
             this.squirrelApi = squirrelApi;
-            this.Clients = new ClientList(squirrelApi, this);
+            this.Clients = new ClientListSquirrel(squirrelApi, this);
             this.serverEventListenerSquirrel = new ServerEventListenerSquirrel(squirrelApi, this);
         }
 

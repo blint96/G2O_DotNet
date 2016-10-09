@@ -66,7 +66,7 @@
     <Compile Include="SquirrelBased\Client\ClientSquirrel.cs" />
     <Compile Include="Interface\Client\ClientConnectedEventArgs.cs" />
     <Compile Include="Interface\Client\ClientDisconnectedEventArgs.cs" />
-    <Compile Include="SquirrelBased\Client\ClientList.cs" />
+    <Compile Include="SquirrelBased\Client\ClientListSquirrel.cs" />
     <Compile Include="Interface\Client\CommandReceivedEventArgs.cs" />
     <Compile Include="Interface\Client\DisconnectReason.cs" />
     <Compile Include="Interface\Client\IClient.cs" />

@@ -258,9 +258,9 @@ namespace G2O.DotNet.ServerApi.Server
 
         void OnPlayerDisconnect(int id, int reason)
         {
-            ClientList clientList = this.g2OServerSquirrel.Clients as ClientList;
+            ClientListSquirrel clientListSquirrel = this.g2OServerSquirrel.Clients as ClientListSquirrel;
             IClient client = this.g2OServerSquirrel.Clients[id];
-            clientList?.OnClientDisconnect(new ClientDisconnectedEventArgs(client, (DisconnectReason)reason));
+            clientListSquirrel?.OnClientDisconnect(new ClientDisconnectedEventArgs(client, (DisconnectReason)reason));
             ClientSquirrel realClientSquirrel = client as ClientSquirrel;
             realClientSquirrel?.OnDisconnect(new ClientDisconnectedEventArgs(client, (DisconnectReason)reason));
         }
@@ -323,8 +323,8 @@ namespace G2O.DotNet.ServerApi.Server
 
         void OnPlayerJoin(int id)
         {
-            ClientList clientList = this.g2OServerSquirrel.Clients as ClientList;
-            clientList?.OnClientConnect(id);
+            ClientListSquirrel clientListSquirrel = this.g2OServerSquirrel.Clients as ClientListSquirrel;
+            clientListSquirrel?.OnClientConnect(id);
         }
 
         void OnPlayerMessage(int id, string message)

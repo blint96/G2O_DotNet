@@ -17,6 +17,8 @@
 // -
 // </copyright>
 // <summary>
+// Interface for the classes that track the currently connected clients and allow access to the related server
+// functions.
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
 namespace G2O.DotNet.ServerApi.Client
@@ -24,28 +26,44 @@ namespace G2O.DotNet.ServerApi.Client
     using System;
     using System.Collections.Generic;
 
+    /// <summary>
+    ///     Interface for the classes that track the currently connected clients and allow access to the related server
+    ///     functions.
+    /// </summary>
     public interface IClientList
     {
+        /// <summary>
+        ///     Invokes all registered handlers if a game client connects to the server.
+        /// </summary>
         event EventHandler<ClientConnectedEventArgs> ClientConnect;
 
+        /// <summary>
+        ///     Invokes all registered handlers if a game client disconnects from the server.
+        /// </summary>
         event EventHandler<ClientDisconnectedEventArgs> ClientDisconnect;
 
-        int Count { get; }
-
-        int MaxSlots { get; }
-
         /// <summary>
-        /// Gets a enumerable of all online clients.
-        /// <remarks>The order of the clients must not match their client id.</remarks>
+        ///     Gets a enumerable of all online clients.
+        ///     <remarks>The order of the clients must not match their client id.</remarks>
         /// </summary>
         IEnumerable<IClient> Clients { get; }
 
         /// <summary>
-        /// Gets a <see cref="IClient"/> by its client id.
-        /// <remarks>Returns null if no client with the given id is online.</remarks>
+        ///     Gets the count of currently connected game clients.
+        /// </summary>
+        int Count { get; }
+
+        /// <summary>
+        ///     Gets the maximum of game clients that can be connected to the server.
+        /// </summary>
+        int MaxSlots { get; }
+
+        /// <summary>
+        ///     Gets a <see cref="IClient" /> by its client id.
+        ///     <remarks>Returns null if no client with the given id is online.</remarks>
         /// </summary>
         /// <param name="clientId">The client id for which the client should be returned</param>
-        /// <returns></returns>
+        /// <returns>Returns the client that has the specified client id.</returns>
         IClient this[int clientId] { get; }
     }
 }
