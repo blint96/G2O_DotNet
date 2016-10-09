@@ -33,7 +33,7 @@ namespace G2O.DotNet.ServerApi.Client
     /// <summary>
     ///     Implementation of the <see cref="IClient" /> interface using the <see cref="ISquirrelApi" />.
     /// </summary>
-    internal class ClientSquirrel : IClient, IDisposable
+    internal class ClientSquirrel : IClient, IDisposable, IEquatable<ClientSquirrel>
     {
         /// <summary>
         ///     Stores the ANSI version of the string "ban"
@@ -218,6 +218,70 @@ namespace G2O.DotNet.ServerApi.Client
         }
 
         /// <summary>
+        ///     Checks if another object is equal to the current object.
+        /// </summary>
+        /// <param name="other">The other object.</param>
+        /// <returns>True if both objects are equal.</returns>
+        public bool Equals(ClientSquirrel other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            return this.ClientId == other.ClientId && this.IpAddress.Equals(other.IpAddress)
+                   && string.Equals(this.MacAddress, other.MacAddress) && string.Equals(this.Nickname, other.Nickname)
+                   && string.Equals(this.Serial, other.Serial);
+        }
+
+        /// <summary>
+        ///     Checks if another object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The other object.</param>
+        /// <returns>True if both objects are equal.</returns>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != this.GetType())
+            {
+                return false;
+            }
+
+            return this.Equals((ClientSquirrel)obj);
+        }
+
+        /// <summary>
+        ///     Gets a hash code for the current object.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = this.ClientId;
+                hashCode = (hashCode * 397) ^ this.IpAddress.GetHashCode();
+                hashCode = (hashCode * 397) ^ this.MacAddress.GetHashCode();
+                hashCode = (hashCode * 397) ^ this.Nickname.GetHashCode();
+                hashCode = (hashCode * 397) ^ this.Serial.GetHashCode();
+                return hashCode;
+            }
+        }
+
+        /// <summary>
         ///     Kick this <see cref="IClient" /> from the server.
         /// </summary>
         /// <param name="reason">The reason of the kick.</param>
@@ -290,6 +354,16 @@ namespace G2O.DotNet.ServerApi.Client
         }
 
         /// <summary>
+        ///     Returns a string representation of the object.
+        ///     <remarks>This is thought to be mainly used for debugging.</remarks>
+        /// </summary>
+        /// <returns>A string representation of the object.</returns>
+        public override string ToString()
+        {
+            return $"Client[{this.ClientId}]";
+        }
+
+        /// <summary>
         ///     Invokes the <see cref="CommandReceived" /> event.
         /// </summary>
         /// <param name="e">
@@ -312,7 +386,8 @@ namespace G2O.DotNet.ServerApi.Client
             (this.PlayerCharacter as IDisposable)?.Dispose();
             (this.PlayerCharacter.Inventory as IDisposable)?.Dispose();
             this.Disconnect?.Invoke(this, e);
-            //Dispose the Client and all related objects.
+
+            // Dispose the Client and all related objects.
         }
 
         /// <summary>
