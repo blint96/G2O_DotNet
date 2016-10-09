@@ -19,14 +19,12 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Squirrel
+namespace G2O.DotNet.Squirrel
 {
     using System;
-    using System.Collections.Generic;
-    using System.Runtime.InteropServices;
 
-    using GothicOnline.G2.DotNet.Interop;
-    using GothicOnline.G2.DotNet.Squirrel.Exceptions;
+    using G2O.DotNet.Squirrel.Exceptions;
+    using G2O.DotNet.Squirrel.Interop;
 
     public static class SquirrelCallHelper
     {

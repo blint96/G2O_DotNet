@@ -15,7 +15,7 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Loader
+namespace G2O.DotNet.Loader
 {
     using System;
 

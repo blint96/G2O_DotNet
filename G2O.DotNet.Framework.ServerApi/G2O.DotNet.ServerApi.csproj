@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EBC933C1-6244-44BD-8B51-B572CA157E94}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>G2O.DotNet.ServerApi</RootNamespace>
+    <AssemblyName>G2O.DotNet.ServerApi</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\G2O_Server\FrameworkComponents\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interface\Character\ChangeWeaponModeEventArgs.cs" />
+    <Compile Include="Interface\Character\CharacterWorldChangedEventArgs.cs" />
+    <Compile Include="SquirrelBased\Character\PlayerCharacterSquirrel.cs" />
+    <Compile Include="Interface\Character\ColorChangedEventArgs.cs" />
+    <Compile Include="Interface\Character\DeadEventArgs.cs" />
+    <Compile Include="Interface\Character\FocusChangedEventArgs.cs" />
+    <Compile Include="Interface\Character\NameColorChangedEventArgs.cs" />
+    <Compile Include="Interface\Character\Hand.cs" />
+    <Compile Include="Interface\Character\HandItemEquipedEventArgs.cs" />
+    <Compile Include="Interface\Character\HealthChangedEventArgs.cs" />
+    <Compile Include="Interface\Character\HitEventArgs.cs" />
+    <Compile Include="Interface\Character\ICharacter.cs" />
+    <Compile Include="Interface\Character\IInventory.cs" />
+    <Compile Include="Interface\Character\IItem.cs" />
+    <Compile Include="Interface\Character\ItemEquipedEventArgs.cs" />
+    <Compile Include="Interface\Character\MaxHealthChangedEventArgs.cs" />
+    <Compile Include="Interface\Character\WeaponSkill.cs" />
+    <Compile Include="Interface\Character\Talent.cs" />
+    <Compile Include="Interface\Character\UnconsciousEventArgs.cs" />
+    <Compile Include="Interface\Character\WeaponMode.cs" />
+    <Compile Include="SquirrelBased\Client\ClientSquirrel.cs" />
+    <Compile Include="Interface\Client\ClientConnectedEventArgs.cs" />
+    <Compile Include="Interface\Client\ClientDisconnectedEventArgs.cs" />
+    <Compile Include="SquirrelBased\Client\ClientList.cs" />
+    <Compile Include="Interface\Client\CommandReceivedEventArgs.cs" />
+    <Compile Include="Interface\Client\DisconnectReason.cs" />
+    <Compile Include="Interface\Client\IClient.cs" />
+    <Compile Include="Interface\Client\IClientList.cs" />
+    <Compile Include="Interface\Client\MessageReceivedEventArgs.cs" />
+    <Compile Include="Interface\Data\Point3D.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SquirrelBased\Server\ServerEventListenerSquirrel.cs" />
+    <Compile Include="Interface\Server\IPacket.cs" />
+    <Compile Include="Interface\Server\IServer.cs" />
+    <Compile Include="Interface\Server\PacketReceivedEventArgs.cs" />
+    <Compile Include="Interface\Server\PacketReliability.cs" />
+    <Compile Include="SquirrelBased\Server\G2OServerSquirrel.cs" />
+    <Compile Include="Interface\Server\ServerInitializedEventArgs.cs" />
+    <Compile Include="Interface\Server\ServerTime.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\G2O.DotNet.Framework.Squirrel\G2O.DotNet.Squirrel.csproj">
+      <Project>{887c33bf-16f8-4cb0-b093-373a8d150b3d}</Project>
+      <Name>G2O.DotNet.Squirrel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

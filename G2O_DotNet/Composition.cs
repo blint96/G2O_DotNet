@@ -19,7 +19,7 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Loader
+namespace G2O.DotNet.Loader
 {
     using System;
     using System.Collections.Generic;
@@ -28,9 +28,9 @@ namespace GothicOnline.G2.DotNet.Loader
     using System.IO;
     using System.Reflection;
 
-    using GothicOnline.G2.DotNet.Framework.Plugin;
-    using GothicOnline.G2.DotNet.ServerApi.Server;
-    using GothicOnline.G2.DotNet.Squirrel;
+    using G2O.DotNet.Plugin;
+    using G2O.DotNet.ServerApi.Server;
+    using G2O.DotNet.Squirrel;
 
     internal class Composition
     {

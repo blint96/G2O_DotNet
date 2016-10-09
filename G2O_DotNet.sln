@@ -11,17 +11,17 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "G2O_DotNet_LoaderMono", "G2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{BA7CCF80-498E-4EB2-94BE-44EBA64928E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GothicOnline.G2.DotNet.Loader", "G2O_DotNet\GothicOnline.G2.DotNet.Loader.csproj", "{3E62A4E0-7A83-45DE-814D-1FEB9D16D92A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G2O.DotNet.Loader", "G2O_DotNet\G2O.DotNet.Loader.csproj", "{3E62A4E0-7A83-45DE-814D-1FEB9D16D92A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Enviroment", "Enviroment", "{1276E019-B316-4334-B7E9-122DAA6ED50D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{49DE20A8-899A-4872-8B94-3532D667C687}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GothicOnline.G2.DotNet.Squirrel", "G2O.DotNet.Framework.Squirrel\GothicOnline.G2.DotNet.Squirrel.csproj", "{887C33BF-16F8-4CB0-B093-373A8D150B3D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G2O.DotNet.Squirrel", "G2O.DotNet.Framework.Squirrel\G2O.DotNet.Squirrel.csproj", "{887C33BF-16F8-4CB0-B093-373A8D150B3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GothicOnline.G2.DotNet.ServerApi", "G2O.DotNet.Framework.ServerApi\GothicOnline.G2.DotNet.ServerApi.csproj", "{EBC933C1-6244-44BD-8B51-B572CA157E94}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G2O.DotNet.ServerApi", "G2O.DotNet.Framework.ServerApi\G2O.DotNet.ServerApi.csproj", "{EBC933C1-6244-44BD-8B51-B572CA157E94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GothicOnline.G2.DotNet.Plugin", "GothicOnline.G2.DotNet.Framework.Plugin\GothicOnline.G2.DotNet.Plugin.csproj", "{CC607F62-31EE-42E7-9704-C4CB42CF17A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G2O.DotNet.Plugin", "GothicOnline.G2.DotNet.Framework.Plugin\G2O.DotNet.Plugin.csproj", "{CC607F62-31EE-42E7-9704-C4CB42CF17A3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{09BC2330-2CF5-4C80-B28E-ABC4262210D0}"
 EndProject

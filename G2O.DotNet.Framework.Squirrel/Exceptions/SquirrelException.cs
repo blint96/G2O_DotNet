@@ -19,12 +19,10 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Squirrel.Exceptions
+namespace G2O.DotNet.Squirrel.Exceptions
 {
     using System;
     using System.Runtime.Serialization;
-
-    using GothicOnline.G2.DotNet.Squirrel;
 
     /// <summary>
     ///     A exception that describes a failure while calling a function through the squirrel api.

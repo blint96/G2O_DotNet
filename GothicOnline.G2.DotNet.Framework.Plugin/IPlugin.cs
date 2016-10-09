@@ -19,7 +19,7 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Framework.Plugin
+namespace G2O.DotNet.Plugin
 {
     /// <summary>
     /// Interface for all plugins.

@@ -25,10 +25,10 @@ namespace G2OColony.DemoPlugin
     using System.ComponentModel.Composition;
     using System.Runtime.Remoting.Channels;
 
-    using GothicOnline.G2.DotNet.Framework.Plugin;
-    using GothicOnline.G2.DotNet.ServerApi;
-    using GothicOnline.G2.DotNet.ServerApi.Client;
-    using GothicOnline.G2.DotNet.ServerApi.Server;
+    using G2O.DotNet.Plugin;
+    using G2O.DotNet.ServerApi.Client;
+    using G2O.DotNet.ServerApi.Data;
+    using G2O.DotNet.ServerApi.Server;
 
     [Export(typeof(IPlugin))]
     public class DemoPlugin : IPlugin
@@ -40,12 +40,12 @@ namespace G2OColony.DemoPlugin
             server.Clients.ClientConnect += Clients_ClientConnect;
         }
 
-        private void Clients_ClientConnect(object sender, GothicOnline.G2.DotNet.ServerApi.Client.ClientConnectedEventArgs e)
+        private void Clients_ClientConnect(object sender, ClientConnectedEventArgs e)
         {
             e.NewClient.CommandReceived += this.NewClient_CommandReceived;
         }
 
-        private void NewClient_CommandReceived(object sender, GothicOnline.G2.DotNet.ServerApi.Client.CommandReceivedEventArgs e)
+        private void NewClient_CommandReceived(object sender, CommandReceivedEventArgs e)
         {
             Console.WriteLine($"Command was send {e.Command}");
             if (e.Command == "tele")

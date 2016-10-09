@@ -19,7 +19,7 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Squirrel
+namespace G2O.DotNet.Squirrel
 {
     using System;
     using System.Runtime.InteropServices;

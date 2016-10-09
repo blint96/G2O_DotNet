@@ -19,13 +19,11 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace GothicOnline.G2.DotNet.Loader.Squirrel
+namespace G2O.DotNet.Squirrel
 {
     using System;
-    using System.Runtime.InteropServices;
-
-    using GothicOnline.G2.DotNet.Squirrel;
     using System.ComponentModel.Composition;
+    using System.Runtime.InteropServices;
 
     [Export(typeof(ISquirrelApi))]
     internal class SquirrelApi : ISquirrelApi
