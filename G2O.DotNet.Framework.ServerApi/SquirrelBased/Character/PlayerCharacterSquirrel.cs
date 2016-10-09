@@ -1211,6 +1211,16 @@ namespace G2O.DotNet.ServerApi
         }
 
         /// <summary>
+        ///     Returns a string representation of the object.
+        ///     <remarks>This is thought to be mainly used for debugging.</remarks>
+        /// </summary>
+        /// <returns>A string representation of the object.</returns>
+        public override string ToString()
+        {
+            return $"Character[{this.Name}]";
+        }
+
+        /// <summary>
         ///     Unequips a item that is currently equipped by this <see cref="ICharacter" />.
         /// </summary>
         /// <param name="itemInstance">The instance name of the item that should be unequipped by this <see cref="ICharacter" />.</param>
