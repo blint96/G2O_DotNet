@@ -19,7 +19,7 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace G2O.DotNet.Squirrel.Exceptions
+namespace G2O.DotNet.Squirrel
 {
     using System;
     using System.Runtime.Serialization;

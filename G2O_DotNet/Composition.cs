@@ -29,7 +29,7 @@ namespace G2O.DotNet.Loader
     using System.Reflection;
 
     using G2O.DotNet.Plugin;
-    using G2O.DotNet.ServerApi.Server;
+    using G2O.DotNet.ServerApi;
     using G2O.DotNet.Squirrel;
 
     internal class Composition

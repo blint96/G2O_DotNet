@@ -26,9 +26,7 @@ namespace G2OColony.DemoPlugin
     using System.Runtime.Remoting.Channels;
 
     using G2O.DotNet.Plugin;
-    using G2O.DotNet.ServerApi.Client;
-    using G2O.DotNet.ServerApi.Data;
-    using G2O.DotNet.ServerApi.Server;
+    using G2O.DotNet.ServerApi;
 
     [Export(typeof(IPlugin))]
     public class DemoPlugin : IPlugin

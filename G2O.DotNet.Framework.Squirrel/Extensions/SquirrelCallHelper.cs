@@ -23,9 +23,6 @@ namespace G2O.DotNet.Squirrel
 {
     using System;
 
-    using G2O.DotNet.Squirrel.Exceptions;
-    using G2O.DotNet.Squirrel.Interop;
-
     public static class SquirrelCallHelper
     {
         public static void PushValue(this ISquirrelApi squirrelApi, object value)
