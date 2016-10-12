@@ -55,12 +55,15 @@ namespace G2O.DotNet.Loader
             var catalog = new AggregateCatalog();
 
             // Components
-            string componentsFolder = Path.Combine(Environment.CurrentDirectory, "FrameworkComponents");
-            Directory.CreateDirectory(componentsFolder);
-            catalog.Catalogs.Add(new DirectoryCatalog(componentsFolder));
+            string frameworkComponents = Path.GetDirectoryName(this.GetType().Assembly.Location);
+
+            Directory.CreateDirectory(frameworkComponents);
+            catalog.Catalogs.Add(new DirectoryCatalog(frameworkComponents));
             foreach (
-                var assemblyFile in Directory.EnumerateFiles(componentsFolder, "*.dll", SearchOption.AllDirectories))
+                var assemblyFile in Directory.EnumerateFiles(frameworkComponents, "*.dll", SearchOption.AllDirectories))
             {
+
+
                 var asm = Assembly.LoadFrom(assemblyFile);
                 if (!this.assemblies.ContainsKey(asm.FullName))
                 {
@@ -69,7 +72,7 @@ namespace G2O.DotNet.Loader
             }
 
             // Plugins
-            string pluginFolder = Path.Combine(Environment.CurrentDirectory, "ManagedPlugins");
+            string pluginFolder = Path.Combine(Directory.GetParent(frameworkComponents).FullName, "ManagedPlugins");
             Directory.CreateDirectory(pluginFolder);
             catalog.Catalogs.Add(new DirectoryCatalog(pluginFolder));
             foreach (var assemblyFile in Directory.EnumerateFiles(pluginFolder, "*.dll", SearchOption.AllDirectories))

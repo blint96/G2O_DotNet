@@ -13,7 +13,7 @@ extern "C"
 	int EXPORT sqmodule_load(void* vm, void* api)
 	{
 		Console::WriteLine("[" + LOADER_NAME + "] Trying to load G2O_DotNet");
-		String^ file = Path::Combine(Environment::CurrentDirectory,"G2O.DotNet.Loader.dll");
+		String^ file = Path::Combine(Environment::CurrentDirectory,"Framework","G2O.DotNet.EntryPoint.dll");
 		if (File::Exists(file))
 		{
 			try

@@ -29,7 +29,7 @@ namespace G2O.DotNet.Loader
         {
             try
             {
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.WriteLine("[G2ONet]Managed Code loaded!");
 
                 //Instantiate the lazy loaded plugins.

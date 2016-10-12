@@ -7,8 +7,8 @@
     <ProjectGuid>{3E62A4E0-7A83-45DE-814D-1FEB9D16D92A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>G2O.DotNet.Loader</RootNamespace>
-    <AssemblyName>G2O.DotNet.Loader</AssemblyName>
+    <RootNamespace>G2O.DotNet.EntryPoint</RootNamespace>
+    <AssemblyName>G2O.DotNet.EntryPoint</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
