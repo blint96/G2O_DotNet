@@ -258,9 +258,12 @@ namespace G2O.DotNet.ServerApi.Squirrel
         {
             ClientListSquirrel clientListSquirrel = this.g2OServerSquirrel.Clients as ClientListSquirrel;
             IClient client = this.g2OServerSquirrel.Clients[id];
-            clientListSquirrel?.OnClientDisconnect(new ClientDisconnectedEventArgs(client, (DisconnectReason)reason));
-            ClientSquirrel realClientSquirrel = client as ClientSquirrel;
-            realClientSquirrel?.OnDisconnect(new ClientDisconnectedEventArgs(client, (DisconnectReason)reason));
+            if (client != null)
+            {
+                clientListSquirrel?.OnClientDisconnect(new ClientDisconnectedEventArgs(client, (DisconnectReason)reason));
+                ClientSquirrel realClientSquirrel = client as ClientSquirrel;
+                realClientSquirrel?.OnDisconnect(new ClientDisconnectedEventArgs(client, (DisconnectReason)reason));
+            }
         }
 
         private void OnPlayerEnterWorld(int pid, string newWorld)

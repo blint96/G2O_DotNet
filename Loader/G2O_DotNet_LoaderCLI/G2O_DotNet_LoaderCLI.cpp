@@ -13,7 +13,8 @@ extern "C"
 	int EXPORT sqmodule_load(void* vm, void* api)
 	{
 		Console::WriteLine("[" + LOADER_NAME + "] Trying to load G2O_DotNet");
-		String^ file = Path::Combine(Environment::CurrentDirectory,"Framework","G2O.DotNet.EntryPoint.dll");
+		
+		String^ file = Path::Combine(Path::GetDirectoryName(Assembly::GetCallingAssembly()->Location),"G2O.DotNet.EntryPoint.dll");
 		if (File::Exists(file))
 		{
 			try
@@ -45,13 +46,14 @@ extern "C"
 			}
 			catch (Exception^ ex)
 			{
-				Console::WriteLine("[" + LOADER_NAME + "] G2O.DotNet.Loader.dll could not be loaded");
+				Console::WriteLine("[" + LOADER_NAME + "] '" + file + "' not be loaded");
+				Console::WriteLine(ex);	
 				return -1;
 			}
 		}
 		else
 		{
-			Console::WriteLine("[" + LOADER_NAME + "] G2O.DotNet.Loader.dll could not be found!!");
+			Console::WriteLine("[" + LOADER_NAME + "] '" + file + "' could not be found!!");
 			return -1;
 		}
 		return -1;

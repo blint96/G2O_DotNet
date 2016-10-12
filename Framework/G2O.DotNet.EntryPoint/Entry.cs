@@ -18,6 +18,7 @@
 namespace G2O.DotNet.EntryPoint
 {
     using System;
+    using System.Windows.Forms;
 
     class Entry
     {
@@ -31,7 +32,6 @@ namespace G2O.DotNet.EntryPoint
             {
                  Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.WriteLine("[G2ONet]Managed Code loaded!");
-
                 //Instantiate the lazy loaded plugins.
                 Console.ForegroundColor = ConsoleColor.Green;
                 Composition composition = new Composition(vm, apiPtr);

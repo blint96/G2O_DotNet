@@ -38,11 +38,6 @@ namespace G2O.DotNet.EntryPoint
 
         private CompositionContainer _container;
 
-        [Import(typeof(ISquirrelApi))]
-        private ISquirrelApi apiImport;
-
-        [Import(typeof(IServer))]
-        private IServer server;
 
         [ImportMany]
         private IEnumerable<Lazy<IPlugin>> plugins;
@@ -93,10 +88,6 @@ namespace G2O.DotNet.EntryPoint
 
 
         }
-
-        public ISquirrelApi ApiImport => this.apiImport;
-
-        public IServer Server => this.server;
 
         public IEnumerable<Lazy<IPlugin>> Plugins => this.plugins;
 
