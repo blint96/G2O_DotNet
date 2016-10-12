@@ -15,7 +15,7 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace G2O.DotNet.Loader
+namespace G2O.DotNet.EntryPoint
 {
     using System;
 
