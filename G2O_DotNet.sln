@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "G2O_DotNet_LoaderCLI", "Loader\G2O_DotNet_LoaderCLI\G2O_DotNet_LoaderCLI.vcxproj", "{48A6B4E1-DD91-4B3C-9F67-7604661C5D00}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "G2O.DotNet.Loader.CLI", "Loader\G2O_DotNet_LoaderCLI\G2O_DotNet_LoaderCLI.vcxproj", "{48A6B4E1-DD91-4B3C-9F67-7604661C5D00}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Loader", "Loader", "{422A5E3F-BAC7-4A5B-904E-FFA1E64E74F4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "G2O_DotNet_LoaderMono", "Loader\G2O_DotNet_LoaderMono\G2O_DotNet_LoaderMono.vcxproj", "{7273799D-F145-49BF-964D-38395E8EF154}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "G2O.DotNet.Loader.Mono", "Loader\G2O_DotNet_LoaderMono\G2O_DotNet_LoaderMono.vcxproj", "{7273799D-F145-49BF-964D-38395E8EF154}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{BA7CCF80-498E-4EB2-94BE-44EBA64928E9}"
 EndProject
@@ -24,6 +24,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G2OColony.DemoPlugin", "Plugins\G2OColony.DemoPlugin\G2OColony.DemoPlugin.csproj", "{90354D19-4DA4-4B6C-9AA1-1112DA1D8D2F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G2O.DotNet.ServerApi.Squirrel", "Framework\G2O.DotNet.ServerApi.Squirrel\G2O.DotNet.ServerApi.Squirrel.csproj", "{18BFB3E3-029D-4FE3-83D2-1FEE08DF7DBE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{931B7980-A4D1-4AEC-9B89-6CF8E80F3DDE}"
+	ProjectSection(SolutionItems) = preProject
+		License.txt = License.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
