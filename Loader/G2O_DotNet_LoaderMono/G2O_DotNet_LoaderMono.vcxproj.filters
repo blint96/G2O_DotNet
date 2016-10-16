@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\squirrel">
-      <UniqueIdentifier>{3b792b9b-4b12-4032-9787-435b93b64839}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -24,30 +21,12 @@
     <ClInclude Include="Defines.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="squirrel\sq_macro.h">
-      <Filter>Header Files\squirrel</Filter>
-    </ClInclude>
-    <ClInclude Include="squirrel\sqmodule.h">
-      <Filter>Header Files\squirrel</Filter>
-    </ClInclude>
-    <ClInclude Include="squirrel\sqmodule_helpers.h">
-      <Filter>Header Files\squirrel</Filter>
-    </ClInclude>
-    <ClInclude Include="squirrel\sqmodule_syms.h">
-      <Filter>Header Files\squirrel</Filter>
-    </ClInclude>
-    <ClInclude Include="squirrel\squirrel.h">
-      <Filter>Header Files\squirrel</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="G2O_DotNet_LoaderMono.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dllmain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sqmodule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
