@@ -23,8 +23,9 @@ namespace G2OColony.DemoPlugin
 {
     using System;
     using System.ComponentModel.Composition;
-    using G2O.DotNet.ServerApi;
+
     using G2O.DotNet.Plugin;
+    using G2O.DotNet.ServerApi;
 
     [Export(typeof(IPlugin))]
     public class DemoPlugin : IPlugin

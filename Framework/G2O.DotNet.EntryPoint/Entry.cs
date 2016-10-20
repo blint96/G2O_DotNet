@@ -18,10 +18,13 @@
 namespace G2O.DotNet.EntryPoint
 {
     using System;
+    using System.IO;
     using System.Windows.Forms;
 
     class Entry
     {
+
+        private static DependencyResolver resolver = new DependencyResolver();
 
         /// <summary>
         ///     Entry Point of the interface dll
@@ -30,8 +33,13 @@ namespace G2O.DotNet.EntryPoint
         {
             try
             {
-                 Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.WriteLine("[G2ONet]Managed Code loaded!");
+                string dependencyDir = Path.Combine(Path.GetDirectoryName(typeof(Entry).Assembly.Location), "Dependencies");
+                resolver.AddManagedDependencyDir(dependencyDir);
+                resolver.AddNativeDependency32Bit(Path.Combine(dependencyDir, "x86", "sqlite3.dll"));
+                resolver.AddNativeDependency64Bit(Path.Combine(dependencyDir, "x64", "sqlite3.dll"));
+
                 //Instantiate the lazy loaded plugins.
                 Console.ForegroundColor = ConsoleColor.Green;
                 Composition composition = new Composition(vm, apiPtr);

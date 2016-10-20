@@ -55,7 +55,7 @@ namespace G2O.DotNet.EntryPoint
             Directory.CreateDirectory(frameworkComponents);
             catalog.Catalogs.Add(new DirectoryCatalog(frameworkComponents));
             foreach (
-                var assemblyFile in Directory.EnumerateFiles(frameworkComponents, "*.dll", SearchOption.AllDirectories))
+                var assemblyFile in Directory.EnumerateFiles(frameworkComponents, "*.dll"))
             {
 
 
