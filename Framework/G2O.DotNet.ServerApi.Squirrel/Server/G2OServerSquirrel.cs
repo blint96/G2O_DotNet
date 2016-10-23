@@ -32,7 +32,7 @@ namespace G2O.DotNet.ServerApi.Squirrel
     ///     Implementation of the G2O server api using the squirrel api to access the functions.
     ///     <remarks>This is a MEF component.</remarks>
     /// </summary>
-    [Export(typeof(IServer))]
+    [Export("SquirrelServerAPI",typeof(IServer))]
     internal class G2OServerSquirrel : IServer
     {
         /// <summary>

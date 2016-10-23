@@ -24,7 +24,7 @@ namespace G2O.DotNet.Database
     /// <summary>
     ///     Interface for classes that can create instances of the <see cref="IServerContext" /> interface.
     /// </summary>
-    internal interface IDatabaseContextFactory
+    public interface IDatabaseContextFactory
     {
         /// <summary>
         ///     Creates a new instance of the server database context of the framework database.

@@ -35,8 +35,6 @@ namespace G2O.DotNet.ServerApi
             this.Killer = killer;
         }
 
-        public ICharacter Character { get; }
-
         public ICharacter Killer { get; }
     }
 }
