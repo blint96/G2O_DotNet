@@ -112,6 +112,7 @@
       <HintPath>..\..\packages\System.Collections.Immutable.1.1.36\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -131,7 +132,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountEntity.cs" />
+    <Compile Include="CharacterEntity.cs" />
+    <Compile Include="DatabaseContextFactory.cs" />
+    <Compile Include="IDatabaseContextFactory.cs" />
+    <Compile Include="IServerContext.cs" />
+    <Compile Include="ItemOwnership.cs" />
+    <Compile Include="PermissionOwnershipEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoleEntity.cs" />
+    <Compile Include="RoleInheritanceEntity.cs" />
+    <Compile Include="ServerContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
