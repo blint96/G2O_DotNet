@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UserCharacter.cs" company="Colony Online Project">
+// <copyright file="CharacterInterceptor.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,25 +19,45 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace G2O.DotNet.UserLayer
+namespace G2O.DotNet.ApiInterceptorLayer
 {
     using System;
     using System.Drawing;
 
-    using G2O.DotNet.Database;
     using G2O.DotNet.ServerApi;
 
-    internal class UserCharacter : ICharacter
+    /// <summary>
+    ///     A class that decorates the <see cref="ICharacter" /> interface with events that allow listeners to be informed
+    ///     about calls that change the method.
+    /// </summary>
+    internal class CharacterInterceptor : ICharacterInterceptor
     {
-        private readonly UserClientList clientList;
+        /// <summary>
+        ///     Stores a reference to the <see cref="ClientListInterceptor" /> object.
+        /// </summary>
+        private readonly ClientListInterceptor clientListInterceptor;
 
-        private readonly IDatabaseContextFactory contextFactory;
-
+        /// <summary>
+        ///     Stores a reference to the original instance of <see cref="ICharacter" /> that is intercepted by the current
+        ///     instance of <see cref="CharacterInterceptor" />
+        /// </summary>
         private readonly ICharacter orgCharacter;
 
-        private readonly UserClient parentClient;
+        /// <summary>
+        ///     Stores a reference to the  parent <see cref="ClientInterceptor" /> instance.
+        /// </summary>
+        private readonly ClientInterceptor parentClient;
 
-        internal UserCharacter(ICharacter orgCharacter, UserClient parentClient, UserClientList clientList, IDatabaseContextFactory contextFactory)
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="CharacterInterceptor" />
+        /// </summary>
+        /// <param name="orgCharacter">The original <see cref="ICharacter" /> instance that should be intercepted.</param>
+        /// <param name="parentClient">The the parent <see cref="ClientInterceptor" /> instance.</param>
+        /// <param name="clientListInterceptor">reference to the <see cref="ClientListInterceptor" /></param>
+        internal CharacterInterceptor(
+            ICharacter orgCharacter, 
+            ClientInterceptor parentClient, 
+            ClientListInterceptor clientListInterceptor)
         {
             if (orgCharacter == null)
             {
@@ -49,127 +69,365 @@ namespace G2O.DotNet.UserLayer
                 throw new ArgumentNullException(nameof(parentClient));
             }
 
-            if (clientList == null)
+            if (clientListInterceptor == null)
             {
-                throw new ArgumentNullException(nameof(clientList));
-            }
-            if (contextFactory == null)
-            {
-                throw new ArgumentNullException(nameof(contextFactory));
+                throw new ArgumentNullException(nameof(clientListInterceptor));
             }
 
             this.orgCharacter = orgCharacter;
             this.parentClient = parentClient;
-            this.clientList = clientList;
-            this.contextFactory = contextFactory;
-            this.Inventory = new UserInventory(orgCharacter.Inventory, this, contextFactory);
-
-            // Redirect the events of the original api object.
-            this.orgCharacter.ArmorEquiped += this.OrgCharacterArmorEquiped;
-            this.orgCharacter.Died += this.OrgCharacterDied;
-            this.orgCharacter.FocusChanged += this.OrgCharacterFocusChanged;
-            this.orgCharacter.HandItemEquiped += this.OrgCharacterHandItemEquiped;
-            this.orgCharacter.HealthChanged += this.OrgCharacterHealthChanged;
-            this.orgCharacter.HelmetEquiped += this.OrgCharacterHelmetEquiped;
-            this.orgCharacter.Hit += this.OrgCharacterHit;
-            this.orgCharacter.MaxHealthChanged += this.OrgCharacterMaxHealthChanged;
-            this.orgCharacter.CharacterEnterWorld += this.OrgCharacterCharacterEnterWorld;
-            this.orgCharacter.MeleeWeaponEquiped += this.OrgCharacterMeleeWeaponEquiped;
-            this.orgCharacter.CharacterWorldChanged += this.OrgCharacterCharacterWorldChanged;
-            this.orgCharacter.NameColorChanged += this.OrgCharacterNameColorChanged;
-            this.orgCharacter.RangedWeaponEquiped += this.OrgCharacterRangedWeaponEquiped;
-            this.orgCharacter.ShieldEquiped += this.OrgCharacterShieldEquiped;
-            this.orgCharacter.Respawned += this.OrgCharacterRespawned;
-            this.orgCharacter.Unconscious += this.OrgCharacterUnconscious;
-            this.orgCharacter.WeaponModeChanged += this.OrgCharacterWeaponModeChanged;
+            this.clientListInterceptor = clientListInterceptor;
+            this.Inventory = new InventoryInterceptor(orgCharacter.Inventory, this);
         }
 
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> equips a body armor.
         /// </summary>
-        public event EventHandler<ItemEquipedEventArgs> ArmorEquiped;
+        public event EventHandler<ItemEquipedEventArgs> ArmorEquiped
+        {
+            add
+            {
+                this.orgCharacter.ArmorEquiped += value;
+            }
+
+            remove
+            {
+                this.orgCharacter.ArmorEquiped -= value;
+            }
+        }
 
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> joins a game world.
         /// </summary>
-        public event EventHandler<CharacterWorldChangedEventArgs> CharacterEnterWorld;
+        public event EventHandler<CharacterWorldChangedEventArgs> CharacterEnterWorld
+        {
+            add
+            {
+                this.orgCharacter.CharacterEnterWorld += value;
+            }
+
+            remove
+            {
+                this.orgCharacter.CharacterEnterWorld -= value;
+            }
+        }
 
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> changes the game world that it is in.
         /// </summary>
-        public event EventHandler<CharacterWorldChangedEventArgs> CharacterWorldChanged;
+        public event EventHandler<CharacterWorldChangedEventArgs> CharacterWorldChanged
+        {
+            add
+            {
+                this.orgCharacter.CharacterWorldChanged += value;
+            }
+
+            remove
+            {
+                this.orgCharacter.CharacterWorldChanged -= value;
+            }
+        }
 
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> dies.
         /// </summary>
-        public event EventHandler<DeadEventArgs> Died;
+        public event EventHandler<DeadEventArgs> Died
+        {
+            add
+            {
+                this.orgCharacter.Died += value;
+            }
+
+            remove
+            {
+                this.orgCharacter.Died -= value;
+            }
+        }
 
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> changes its focus.
         /// </summary>
-        public event EventHandler<FocusChangedEventArgs> FocusChanged;
+        public event EventHandler<FocusChangedEventArgs> FocusChanged
+        {
+            add
+            {
+                this.orgCharacter.FocusChanged += value;
+            }
+
+            remove
+            {
+                this.orgCharacter.FocusChanged -= value;
+            }
+        }
 
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> equips a hand item.
         /// </summary>
-        public event EventHandler<HandItemEquipedEventArgs> HandItemEquiped;
+        public event EventHandler<HandItemEquipedEventArgs> HandItemEquiped
+        {
+            add
+            {
+                this.orgCharacter.HandItemEquiped += value;
+            }
+
+            remove
+            {
+                this.orgCharacter.HandItemEquiped -= value;
+            }
+        }
 
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> changes its health value.
         /// </summary>
-        public event EventHandler<HealthChangedEventArgs> HealthChanged;
+        public event EventHandler<HealthChangedEventArgs> HealthChanged
+        {
+            add
+            {
+                this.orgCharacter.HealthChanged += value;
+            }
+
+            remove
+            {
+                this.orgCharacter.HealthChanged -= value;
+            }
+        }
 
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> equips a helmet.
         /// </summary>
-        public event EventHandler<ItemEquipedEventArgs> HelmetEquiped;
+        public event EventHandler<ItemEquipedEventArgs> HelmetEquiped
+        {
+            add
+            {
+                this.orgCharacter.HelmetEquiped += value;
+            }
+
+            remove
+            {
+                this.orgCharacter.HelmetEquiped -= value;
+            }
+        }
 
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> is hit by something(most likely another
         ///     <see cref="ICharacter" />).
         /// </summary>
-        public event EventHandler<HitEventArgs> Hit;
+        public event EventHandler<HitEventArgs> Hit
+        {
+            add
+            {
+                this.orgCharacter.Hit += value;
+            }
+
+            remove
+            {
+                this.orgCharacter.Hit -= value;
+            }
+        }
 
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> changes its maximum health value.
         /// </summary>
-        public event EventHandler<MaxHealthChangedEventArgs> MaxHealthChanged;
+        public event EventHandler<MaxHealthChangedEventArgs> MaxHealthChanged
+        {
+            add
+            {
+                this.orgCharacter.MaxHealthChanged += value;
+            }
+
+            remove
+            {
+                this.orgCharacter.MaxHealthChanged -= value;
+            }
+        }
 
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> equips a melee weapon.
         /// </summary>
-        public event EventHandler<ItemEquipedEventArgs> MeleeWeaponEquiped;
+        public event EventHandler<ItemEquipedEventArgs> MeleeWeaponEquiped
+        {
+            add
+            {
+                this.orgCharacter.MeleeWeaponEquiped += value;
+            }
+
+            remove
+            {
+                this.orgCharacter.MeleeWeaponEquiped -= value;
+            }
+        }
 
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> changes its name
         ///     <see cref="System.Drawing.Color" />.
         /// </summary>
-        public event EventHandler<NameColorChangedEventArgs> NameColorChanged;
+        public event EventHandler<NameColorChangedEventArgs> NameColorChanged
+        {
+            add
+            {
+                this.orgCharacter.NameColorChanged += value;
+            }
+
+            remove
+            {
+                this.orgCharacter.NameColorChanged -= value;
+            }
+        }
+
+        /// <summary>
+        ///     Invokes all registered handlers if the "EquipItem" method is called.
+        /// </summary>
+        public event EventHandler<NotifyAboutCallEventArgs<string>> OnEquipItem;
+
+        /// <summary>
+        ///     Invokes all registered handlers if the "PlayAniId" method is called.
+        /// </summary>
+        public event EventHandler<NotifyAboutCallEventArgs<int>> OnPlayAniId;
+
+        /// <summary>
+        ///     Invokes all registered handlers if the value of the "MaxHealth" property is set.
+        /// </summary>
+        public event EventHandler<NotifyAboutCallEventArgs<int>> OnSetMaxHealth;
+
+        /// <summary>
+        ///     Invokes all registered handlers if the value of the "Name" property is set.
+        /// </summary>
+        public event EventHandler<NotifyAboutCallEventArgs<string>> OnSetName;
+
+        /// <summary>
+        ///     Invokes all registered handlers if the value of the "NameColor" property is set.
+        /// </summary>
+        public event EventHandler<NotifyAboutCallEventArgs<Color>> OnSetNameColor;
+
+        /// <summary>
+        ///     Invokes all registered handlers if the value of the "Position" property is set.
+        /// </summary>
+        public event EventHandler<NotifyAboutCallEventArgs<Point3D>> OnSetPosition;
+
+        /// <summary>
+        ///     Invokes all registered handlers if the value of the "respawnTime" property is set.
+        /// </summary>
+        public event EventHandler<NotifyAboutCallEventArgs<int>> OnSetRespawnTime;
+
+        /// <summary>
+        ///     Invokes all registered handlers if the "SetSkillWeapon" method is called.
+        /// </summary>
+        public event EventHandler<NotifyAboutCallEventArgs<WeaponSkill, int>> OnSetSkillWeapon;
+
+        /// <summary>
+        ///     Invokes all registered handlers if the value of the "Strength" property is set.
+        /// </summary>
+        public event EventHandler<NotifyAboutCallEventArgs<int>> OnSetStrength;
+
+        /// <summary>
+        ///     Invokes all registered handlers if the "SetTalent" method is called.
+        /// </summary>
+        public event EventHandler<NotifyAboutCallEventArgs<Talent, int>> OnSetTalent;
+
+        /// <summary>
+        ///     Invokes all registered handlers if the value of the "WeaponMode" property is set.
+        /// </summary>
+        public event EventHandler<NotifyAboutCallEventArgs<WeaponMode>> OnSetWeaponMode;
+
+        /// <summary>
+        ///     Invokes all registered handlers if the "Spawn" method is called.
+        /// </summary>
+        public event EventHandler<EventArgs> OnSpawn;
+
+        /// <summary>
+        ///     Invokes all registered handlers if the "StopAllAnimations" method is called.
+        /// </summary>
+        public event EventHandler<EventArgs> OnStopAllAnimations;
+
+        /// <summary>
+        ///     Invokes all registered handlers if the "UnequipItem" method is called.
+        /// </summary>
+        public event EventHandler<NotifyAboutCallEventArgs<string>> OnUnequipItem;
+
+        /// <summary>
+        ///     Invokes all registered handlers if the "Unspawn" method is called.
+        /// </summary>
+        public event EventHandler<EventArgs> OnUnspawn;
 
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> equips a ranged weapon
         /// </summary>
-        public event EventHandler<ItemEquipedEventArgs> RangedWeaponEquiped;
+        public event EventHandler<ItemEquipedEventArgs> RangedWeaponEquiped
+        {
+            add
+            {
+                this.orgCharacter.RangedWeaponEquiped += value;
+            }
+
+            remove
+            {
+                this.orgCharacter.RangedWeaponEquiped -= value;
+            }
+        }
 
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> respawns.
         /// </summary>
-        public event EventHandler<EventArgs> Respawned;
+        public event EventHandler<EventArgs> Respawned
+        {
+            add
+            {
+                this.orgCharacter.Respawned += value;
+            }
+
+            remove
+            {
+                this.orgCharacter.Respawned -= value;
+            }
+        }
 
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> equips a shield.
         /// </summary>
-        public event EventHandler<ItemEquipedEventArgs> ShieldEquiped;
+        public event EventHandler<ItemEquipedEventArgs> ShieldEquiped
+        {
+            add
+            {
+                this.orgCharacter.ShieldEquiped += value;
+            }
+
+            remove
+            {
+                this.orgCharacter.ShieldEquiped -= value;
+            }
+        }
 
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> becomes unconscious.
         /// </summary>
-        public event EventHandler<UnconsciousEventArgs> Unconscious;
+        public event EventHandler<UnconsciousEventArgs> Unconscious
+        {
+            add
+            {
+                this.orgCharacter.Unconscious += value;
+            }
+
+            remove
+            {
+                this.orgCharacter.Unconscious -= value;
+            }
+        }
 
         /// <summary>
         ///     Calls all registered handlers when this <see cref="ICharacter" /> changes its <see cref="ICharacter.WeaponMode" />.
         /// </summary>
-        public event EventHandler<ChangeWeaponModeEventArgs> WeaponModeChanged;
+        public event EventHandler<ChangeWeaponModeEventArgs> WeaponModeChanged
+        {
+            add
+            {
+                this.orgCharacter.WeaponModeChanged += value;
+            }
+
+            remove
+            {
+                this.orgCharacter.WeaponModeChanged -= value;
+            }
+        }
 
         /// <summary>
         ///     Gets or sets the angle of the character in the game world.
@@ -203,6 +461,10 @@ namespace G2O.DotNet.UserLayer
             }
         }
 
+        /// <summary>
+        ///     Gets the client two which the <see cref="ICharacter" /> belongs to.
+        ///     <remarks>Returns null if this is not a client(player) character.</remarks>
+        /// </summary>
         public IClient Client => this.parentClient;
 
         /// <summary>
@@ -232,7 +494,7 @@ namespace G2O.DotNet.UserLayer
                 var orgFocus = this.orgCharacter.Focus;
                 if (orgFocus != null)
                 {
-                    return this.clientList[orgFocus.Client.ClientId].PlayerCharacter;
+                    return this.clientListInterceptor[orgFocus.Client.ClientId].PlayerCharacter;
                 }
 
                 return null;
@@ -259,8 +521,6 @@ namespace G2O.DotNet.UserLayer
         ///     Gets the <see cref="IInventory" /> of this <see cref="ICharacter" />.
         /// </summary>
         public IInventory Inventory { get; }
-
-
 
         /// <summary>
         ///     Gets a value indicating whether this <see cref="ICharacter" /> is dead.
@@ -290,6 +550,7 @@ namespace G2O.DotNet.UserLayer
             set
             {
                 this.orgCharacter.MaxHealth = value;
+                this.OnSetMaxHealth?.Invoke(this, new NotifyAboutCallEventArgs<int>(value));
             }
         }
 
@@ -306,6 +567,7 @@ namespace G2O.DotNet.UserLayer
             set
             {
                 this.orgCharacter.Name = value;
+                this.OnSetName?.Invoke(this, new NotifyAboutCallEventArgs<string>(value));
             }
         }
 
@@ -322,6 +584,7 @@ namespace G2O.DotNet.UserLayer
             set
             {
                 this.orgCharacter.NameColor = value;
+                this.OnSetNameColor?.Invoke(this, new NotifyAboutCallEventArgs<Color>(value));
             }
         }
 
@@ -338,6 +601,7 @@ namespace G2O.DotNet.UserLayer
             set
             {
                 this.orgCharacter.Position = value;
+                this.OnSetPosition?.Invoke(this, new NotifyAboutCallEventArgs<Point3D>(value));
             }
         }
 
@@ -354,6 +618,7 @@ namespace G2O.DotNet.UserLayer
             set
             {
                 this.orgCharacter.RespawnTime = value;
+                this.OnSetRespawnTime?.Invoke(this, new NotifyAboutCallEventArgs<int>(value));
             }
         }
 
@@ -370,6 +635,7 @@ namespace G2O.DotNet.UserLayer
             set
             {
                 this.orgCharacter.Strength = value;
+                this.OnSetStrength?.Invoke(this, new NotifyAboutCallEventArgs<int>(value));
             }
         }
 
@@ -386,8 +652,15 @@ namespace G2O.DotNet.UserLayer
             set
             {
                 this.orgCharacter.WeaponMode = value;
+                this.OnSetWeaponMode?.Invoke(this, new NotifyAboutCallEventArgs<WeaponMode>(value));
             }
         }
+
+        /// <summary>
+        ///     Gets the <see cref="IInventoryInterceptor" /> instance that decorates the <see cref="IInventory" />
+        ///     of the <see cref="ICharacter" /> that is decorated by the current <see cref="ICharacterInterceptor" /> instance.
+        /// </summary>
+        IInventoryInterceptor ICharacterInterceptor.Inventory => this.Inventory as IInventoryInterceptor;
 
         /// <summary>
         ///     Equips a item on this <see cref="ICharacter" />.
@@ -396,6 +669,7 @@ namespace G2O.DotNet.UserLayer
         public void EquipItem(string itemInstance)
         {
             this.orgCharacter.EquipItem(itemInstance);
+            this.OnEquipItem?.Invoke(this, new NotifyAboutCallEventArgs<string>(itemInstance));
         }
 
         /// <summary>
@@ -434,6 +708,7 @@ namespace G2O.DotNet.UserLayer
         public void PlayAniId(int aniId)
         {
             this.orgCharacter.PlayAniId(aniId);
+            this.OnPlayAniId?.Invoke(this, new NotifyAboutCallEventArgs<int>(aniId));
         }
 
         /// <summary>
@@ -444,6 +719,7 @@ namespace G2O.DotNet.UserLayer
         public void SetSkillWeapon(WeaponSkill weaponSkill, int value)
         {
             this.orgCharacter.SetSkillWeapon(weaponSkill, value);
+            this.OnSetSkillWeapon?.Invoke(this, new NotifyAboutCallEventArgs<WeaponSkill, int>(weaponSkill, value));
         }
 
         /// <summary>
@@ -454,6 +730,7 @@ namespace G2O.DotNet.UserLayer
         public void SetTalent(Talent talent, int value)
         {
             this.orgCharacter.SetTalent(talent, value);
+            this.OnSetTalent?.Invoke(this, new NotifyAboutCallEventArgs<Talent, int>(talent, value));
         }
 
         /// <summary>
@@ -462,6 +739,7 @@ namespace G2O.DotNet.UserLayer
         public void Spawn()
         {
             this.orgCharacter.Spawn();
+            this.OnSpawn?.Invoke(this, new EventArgs());
         }
 
         /// <summary>
@@ -470,6 +748,7 @@ namespace G2O.DotNet.UserLayer
         public void StopAllAnimations()
         {
             this.orgCharacter.StopAllAnimations();
+            this.OnStopAllAnimations?.Invoke(this, new EventArgs());
         }
 
         /// <summary>
@@ -479,104 +758,16 @@ namespace G2O.DotNet.UserLayer
         public void UnequipItem(string itemInstance)
         {
             this.orgCharacter.UnequipItem(itemInstance);
+            this.OnUnequipItem?.Invoke(this, new NotifyAboutCallEventArgs<string>(itemInstance));
         }
 
         /// <summary>
         ///     Unspawns this <see cref="ICharacter" /> if it is spawned.
         /// </summary>
-        public void UnspawnPlayer()
+        public void Unspawn()
         {
-            this.orgCharacter.UnspawnPlayer();
-        }
-
-        private void OrgCharacterArmorEquiped(object sender, ItemEquipedEventArgs e)
-        {
-            this.ArmorEquiped?.Invoke(this, e);
-        }
-
-        private void OrgCharacterCharacterEnterWorld(object sender, CharacterWorldChangedEventArgs e)
-        {
-            this.CharacterEnterWorld?.Invoke(this, e);
-        }
-
-        private void OrgCharacterCharacterWorldChanged(object sender, CharacterWorldChangedEventArgs e)
-        {
-            this.CharacterWorldChanged?.Invoke(this, e);
-        }
-
-        private void OrgCharacterDied(object sender, DeadEventArgs e)
-        {
-            ICharacter attacker = this.clientList[e.Killer.Client.ClientId].PlayerCharacter;
-            this.Died?.Invoke(this, new DeadEventArgs(attacker));
-        }
-
-        private void OrgCharacterFocusChanged(object sender, FocusChangedEventArgs e)
-        {
-            ICharacter newFocus = this.clientList[e.NewFocus.Client.ClientId].PlayerCharacter;
-            ICharacter oldFocus = this.clientList[e.OldFocus.Client.ClientId].PlayerCharacter;
-            this.FocusChanged?.Invoke(this, new FocusChangedEventArgs(oldFocus, newFocus));
-        }
-
-        private void OrgCharacterHandItemEquiped(object sender, HandItemEquipedEventArgs e)
-        {
-            this.HandItemEquiped?.Invoke(this, e);
-        }
-
-        private void OrgCharacterHealthChanged(object sender, HealthChangedEventArgs e)
-        {
-            this.HealthChanged?.Invoke(this, e);
-        }
-
-        private void OrgCharacterHelmetEquiped(object sender, ItemEquipedEventArgs e)
-        {
-            this.HelmetEquiped?.Invoke(this, e);
-        }
-
-        private void OrgCharacterHit(object sender, HitEventArgs e)
-        {
-            ICharacter attacker = this.clientList[e.Attacker.Client.ClientId].PlayerCharacter;
-            this.Hit?.Invoke(this, new HitEventArgs(attacker, e.Damage, e.Type));
-        }
-
-        private void OrgCharacterMaxHealthChanged(object sender, MaxHealthChangedEventArgs e)
-        {
-            this.MaxHealthChanged?.Invoke(this, e);
-        }
-
-        private void OrgCharacterMeleeWeaponEquiped(object sender, ItemEquipedEventArgs e)
-        {
-            this.MeleeWeaponEquiped?.Invoke(this, e);
-        }
-
-        private void OrgCharacterNameColorChanged(object sender, NameColorChangedEventArgs e)
-        {
-            this.NameColorChanged?.Invoke(this, e);
-        }
-
-        private void OrgCharacterRangedWeaponEquiped(object sender, ItemEquipedEventArgs e)
-        {
-            this.RangedWeaponEquiped?.Invoke(this, e);
-        }
-
-        private void OrgCharacterRespawned(object sender, EventArgs e)
-        {
-            this.Respawned?.Invoke(this, e);
-        }
-
-        private void OrgCharacterShieldEquiped(object sender, ItemEquipedEventArgs e)
-        {
-            this.ShieldEquiped?.Invoke(this, e);
-        }
-
-        private void OrgCharacterUnconscious(object sender, UnconsciousEventArgs e)
-        {
-            ICharacter attacker = this.clientList[e.Attacker.Client.ClientId].PlayerCharacter;
-            this.Unconscious?.Invoke(this, new UnconsciousEventArgs(attacker));
-        }
-
-        private void OrgCharacterWeaponModeChanged(object sender, ChangeWeaponModeEventArgs e)
-        {
-            this.WeaponModeChanged?.Invoke(this, e);
+            this.orgCharacter.Unspawn();
+            this.OnUnspawn?.Invoke(this, new EventArgs());
         }
     }
 }

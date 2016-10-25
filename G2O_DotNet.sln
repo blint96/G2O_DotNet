@@ -34,7 +34,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G2O.DotNet.Permission", "Fr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G2O.DotNet.Database", "Framework\G2O.DotNet.Database\G2O.DotNet.Database.csproj", "{3BC536C3-0440-416A-94A4-B2286E705880}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G2O.DotNet.UserLayer", "Framework\G2O.DotNet.UserLayer\G2O.DotNet.UserLayer.csproj", "{D160948B-A235-454B-9080-224104C8D30B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G2O.DotNet.ApiInterceptorLayer", "Framework\G2O.DotNet.UserLayer\G2O.DotNet.ApiInterceptorLayer.csproj", "{D160948B-A235-454B-9080-224104C8D30B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

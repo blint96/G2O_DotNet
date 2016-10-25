@@ -1239,7 +1239,7 @@ namespace G2O.DotNet.ServerApi.Squirrel
         /// <summary>
         ///     Unspawns this <see cref="ICharacter" /> if it is spawned.
         /// </summary>
-        public void UnspawnPlayer()
+        public void Unspawn()
         {
             // Check if the object is disposed.
             if (this.disposed)

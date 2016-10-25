@@ -268,6 +268,6 @@ namespace G2O.DotNet.ServerApi
         /// <summary>
         ///     Unspawns this <see cref="ICharacter" /> if it is spawned.
         /// </summary>
-        void UnspawnPlayer();
+        void Unspawn();
     }
 }
