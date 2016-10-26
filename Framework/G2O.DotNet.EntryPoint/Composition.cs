@@ -89,6 +89,9 @@ namespace G2O.DotNet.EntryPoint
 
         }
 
+        [Import(typeof(IServer))]
+        public IServer Serverapi { get; set; }
+
         public IEnumerable<Lazy<IPlugin>> Plugins => this.plugins;
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)

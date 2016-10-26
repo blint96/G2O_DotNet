@@ -49,6 +49,12 @@
     <Compile Include="DemoPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Framework\G2O.DotNet.ApiInterceptorLayer\G2O.DotNet.ApiInterceptorLayer.csproj">
+      <Project>{d160948b-a235-454b-9080-224104c8d30b}</Project>
+      <Name>G2O.DotNet.ApiInterceptorLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

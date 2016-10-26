@@ -26,17 +26,20 @@ namespace G2OColony.DemoPlugin
 
     using G2O.DotNet.Plugin;
     using G2O.DotNet.ServerApi;
+    using G2O.DotNet.ApiInterceptorLayer;
 
     [Export(typeof(IPlugin))]
     public class DemoPlugin : IPlugin
     {
         [ImportingConstructor]
-        public DemoPlugin([Import]IServer server)
+        public DemoPlugin([Import]IServer server,[Import] IServerInterceptor interceptor)
         {
             server.Initialize += this.ServerInitialize;
             server.Clients.ClientConnect += Clients_ClientConnect;
             server.Clients.ClientDisconnect += Clients_ClientDisconnect;
         }
+
+
 
         private void Clients_ClientDisconnect(object sender, ClientDisconnectedEventArgs e)
         {

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IServerInterceptor.cs" company="Colony Online Project">
+// <copyright file="ICommand.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,40 +19,36 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace G2O.DotNet.ApiInterceptorLayer
+namespace G2O.DotNet.Plugin
 {
-    using System;
-
+    using G2O.DotNet.Permission;
     using G2O.DotNet.ServerApi;
 
     /// <summary>
-    ///     Interface for the <see cref="IServer" /> interceptor class.
+    ///     Interface for all command classes.
     /// </summary>
-    public interface IServerInterceptor : IServer
+    public interface ICommand
     {
         /// <summary>
-        ///     Invokes all registered handlers when the "SendMessageToAll" method is called.
+        ///     Gets the identifier of the command.
         /// </summary>
-        event EventHandler<NotifyAboutCallEventArgs<int, int, int, string>> OnSendMessageToAll;
+        string CommandIdentifier { get; }
 
         /// <summary>
-        ///     Invokes all registered handlers when the "SendPacketToAll" method is called.
+        ///     Gets the <see cref="IPermission" /> that is required to invoke the command.
         /// </summary>
-        event EventHandler<NotifyAboutCallEventArgs<IPacket, PacketReliability>> OnSendPacketToAll;
+        IPermission RequiredPermission { get; }
 
         /// <summary>
-        ///     Invokes all registered handlers when the value of the "Description" property is set.
+        ///     Gets a value indicating whether the current <see cref="ICommand" /> instance has to be send by a client.
         /// </summary>
-        event EventHandler<NotifyAboutCallEventArgs<string>> OnSetDescription;
+        bool RequiresClient { get; }
 
         /// <summary>
-        ///     Invokes all registered handlers when the value of the "Time" property is set.
+        ///     Method that is called when the command is send.
         /// </summary>
-        event EventHandler<NotifyAboutCallEventArgs<ServerTime>> OnSetTime;
-
-        /// <summary>
-        ///     Invokes all registered handlers when the value of the "World" property is set.
-        /// </summary>
-        event EventHandler<NotifyAboutCallEventArgs<string>> OnSetWorld;
+        /// <param name="parameter">The command parameter string.</param>
+        /// <param name="sender">The client that has send the command(null if it was no client)</param>
+        void Invoke(string parameter, IClient sender);
     }
 }

@@ -45,8 +45,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ICommand.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\G2O.DotNet.Permission\G2O.DotNet.Permission.csproj">
+      <Project>{5a0541d7-2c0c-4753-9686-408a8ed63087}</Project>
+      <Name>G2O.DotNet.Permission</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\G2O.DotNet.ServerApi\G2O.DotNet.ServerApi.csproj">
+      <Project>{ebc933c1-6244-44bd-8b51-b572ca157e94}</Project>
+      <Name>G2O.DotNet.ServerApi</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

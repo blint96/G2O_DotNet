@@ -149,7 +149,7 @@ namespace G2O.DotNet.ApiInterceptorLayer
 
         /// <summary>
         ///     Removes a item from this instance of <see cref="IInventory" />.
-        ///     <remarks>Throws an exception if more the <see cref="amount" /> is bigger than the actually available amount.</remarks>
+        ///     <remarks>Throws an exception if more the amount is bigger than the actually available amount.</remarks>
         /// </summary>
         /// <param name="itemInstance">The instance name of the item that should be removed.</param>
         /// <param name="amount">The amount of items that should be removed.</param>
