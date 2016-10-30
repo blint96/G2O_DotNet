@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="LoginCommand.cs" company="Colony Online Project">
+// <copyright file="LogOutCommand.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -28,21 +28,21 @@ namespace G2O.DotNet.Account.Commands
     using G2O.DotNet.ServerApi;
 
     /// <summary>
-    ///     A class that defines the command for loging into a account.
+    /// Class that defines the command for logging out a client.
     /// </summary>
-    internal class LoginCommand : ICommand
+    internal class LogOutCommand : ICommand
     {
         /// <summary>
-        ///     The instance of <see cref="IAccountControler" /> that should be used by this command.
+        /// The used instance of <see cref="IAccountControler"/>.
         /// </summary>
         private readonly IAccountControler controler;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="LoginCommand" /> class.
+        /// Initializes a new instance of the <see cref="LogOutCommand"/> class.
         /// </summary>
-        /// <param name="controler">The instance of <see cref="IAccountControler" /> that should be used by this command.</param>
+        /// <param name="controler">The used instance of <see cref="IAccountControler"/>.</param>
         [ImportingConstructor]
-        public LoginCommand([Import] IAccountControler controler)
+        public LogOutCommand([Import] IAccountControler controler)
         {
             if (controler == null)
             {
@@ -55,52 +55,23 @@ namespace G2O.DotNet.Account.Commands
         /// <summary>
         ///     Gets the identifier of the command.
         /// </summary>
-        public string CommandIdentifier => "login";
+        public string CommandIdentifier { get; } = "logout";
 
         /// <summary>
         ///     Method that is called when the command is send.
         /// </summary>
         /// <param name="parameter">The command parameter string.</param>
         /// <param name="sender">The client that has send the command(null if it was no client)</param>
-        [RequiresLogin(false)]
         public void Invoke(string parameter, IClient sender)
         {
-            if (sender == null)
+            if (!this.controler.IsClientLoggedIn(sender))
             {
-                throw new ArgumentNullException(nameof(sender));
-            }
-            if (this.controler.IsClientLoggedIn(sender))
-            {
-                sender.SendMessage(255, 0, 0, "You are already logged in.");
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(parameter))
-            {
-                sender.SendMessage(255, 0, 0, "/Login <username> <password>");
-                return;
-            }
-
-            string[] parts = parameter.Split(' ');
-
-            if (parts.Length < 2)
-            {
-                sender.SendMessage(255, 0, 0, "/Login <username> <password>");
-                return;
-            }
-
-            // Try to login
-            if (this.controler.TryLogin(parts[0], parts[1], sender))
-            {
-                sender.SendMessage(0, 255, 0, "Login successfull");
+                sender.SendMessage(255, 0, 0, "You are not logged in.");
             }
             else
             {
-                // Tell the user that the login has failed and why.
-                var reason = this.controler.CheckAccountExists(parts[0])
-                                 ? "Wrong password."
-                                 : "Username does not exist.";
-                sender.SendMessage(255, 0, 0, "Login failed." + reason);
+                this.controler.LogOut(sender);
+                sender.SendMessage(0, 255, 0, "You have been logged out.");
             }
         }
     }

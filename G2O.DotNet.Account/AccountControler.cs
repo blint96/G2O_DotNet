@@ -53,6 +53,8 @@ namespace G2O.DotNet.Account
 
         public event EventHandler<LogedInOrOutEventArgs> ClientLoggedOut;
 
+        public event EventHandler<AccountCreatedEventArgs> AccountCreated;
+
         public bool CheckAccountExists(string username)
         {
             using (var db = this.contextFactory.CreateContext())
@@ -111,6 +113,9 @@ namespace G2O.DotNet.Account
                     CreationTime = DateTime.Now
                 };
                 db.Accounts.Add(newAccount);
+
+                //Invoke the account created event.
+                this.AccountCreated?.Invoke(this, new AccountCreatedEventArgs(newAccount));
             }
         }
 
@@ -135,6 +140,11 @@ namespace G2O.DotNet.Account
                 // Check if the stores password has equals the one computed now.
                 this.OnClientLoggedIn(account, client);
             }
+        }
+
+        public bool IsClientLoggedIn(IClient clientToCheck)
+        {
+            return this.LoggedInClients.ContainsKey(clientToCheck);
         }
 
         public void LogOut(IClient client)

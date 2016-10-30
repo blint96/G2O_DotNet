@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IAccountControler.cs" company="Colony Online Project">
+// <copyright file="AccountCreatedEventArgs.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -23,30 +23,30 @@ namespace G2O.DotNet.Account
 {
     using System;
 
-    using G2O.DotNet.ServerApi;
+    using G2O.DotNet.Database;
 
-    public interface IAccountControler
+    /// <summary>
+    ///     EventArgs class for the account created event.
+    /// </summary>
+    public class AccountCreatedEventArgs : EventArgs
     {
-        event EventHandler<LogedInOrOutEventArgs> ClientLoggedIn;
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AccountCreatedEventArgs" /> class.
+        /// </summary>
+        /// <param name="account">The database entity of the new account.</param>
+        public AccountCreatedEventArgs(AccountEntity account)
+        {
+            if (account == null)
+            {
+                throw new ArgumentNullException(nameof(account));
+            }
 
-        event EventHandler<LogedInOrOutEventArgs> ClientLoggedOut;
+            this.Account = account;
+        }
 
-        event EventHandler<AccountCreatedEventArgs> AccountCreated;
-
-        bool CheckAccountExists(string username);
-
-        bool CheckLogin(string username, string password);
-
-        void CreateAccount(string username, string password);
-
-        bool TryLogin(string username, string password, IClient client);
-
-        bool ValidatePassword(string password);
-
-        void ForceLogin(string username, IClient client);
-
-        bool IsClientLoggedIn(IClient clientToCheck);
-
-        void LogOut(IClient client);
+        /// <summary>
+        ///     Gets the database entity of the new account.
+        /// </summary>
+        public AccountEntity Account { get; }
     }
 }

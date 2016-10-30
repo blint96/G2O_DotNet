@@ -52,6 +52,9 @@
     <Compile Include="AccountControler.cs" />
     <Compile Include="Authorizer.cs" />
     <Compile Include="CommandCollection.cs" />
+    <Compile Include="Commands\CreateAccountCommand.cs" />
+    <Compile Include="Commands\LogOutCommand.cs" />
+    <Compile Include="EventArgs\AccountCreatedEventArgs.cs" />
     <Compile Include="Exceptions\AccountInUseException.cs" />
     <Compile Include="Exceptions\AlreadyLoggedInException.cs" />
     <Compile Include="Exceptions\NotLoggedInException.cs" />

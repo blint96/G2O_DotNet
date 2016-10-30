@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="LoginCommand.cs" company="Colony Online Project">
+// <copyright file="CreateAccountCommand.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -28,21 +28,21 @@ namespace G2O.DotNet.Account.Commands
     using G2O.DotNet.ServerApi;
 
     /// <summary>
-    ///     A class that defines the command for loging into a account.
+    /// Class that defines the command for creating a new account.
     /// </summary>
-    internal class LoginCommand : ICommand
+    internal class CreateAccountCommand : ICommand
     {
         /// <summary>
-        ///     The instance of <see cref="IAccountControler" /> that should be used by this command.
+        ///     The used instance of <see cref="IAccountControler" />.
         /// </summary>
         private readonly IAccountControler controler;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="LoginCommand" /> class.
+        ///     Initializes a new instance of the <see cref="CreateAccountCommand" /> class.
         /// </summary>
-        /// <param name="controler">The instance of <see cref="IAccountControler" /> that should be used by this command.</param>
+        /// <param name="controler">The used instance of <see cref="IAccountControler" />.</param>
         [ImportingConstructor]
-        public LoginCommand([Import] IAccountControler controler)
+        public CreateAccountCommand([Import] IAccountControler controler)
         {
             if (controler == null)
             {
@@ -55,7 +55,7 @@ namespace G2O.DotNet.Account.Commands
         /// <summary>
         ///     Gets the identifier of the command.
         /// </summary>
-        public string CommandIdentifier => "login";
+        public string CommandIdentifier { get; } = "register";
 
         /// <summary>
         ///     Method that is called when the command is send.
@@ -69,39 +69,45 @@ namespace G2O.DotNet.Account.Commands
             {
                 throw new ArgumentNullException(nameof(sender));
             }
+
+            // Check client is already logged in.
             if (this.controler.IsClientLoggedIn(sender))
             {
-                sender.SendMessage(255, 0, 0, "You are already logged in.");
+                sender.SendMessage(255, 0, 0, "You are logged in.");
                 return;
             }
 
+            // Check param empty.
             if (string.IsNullOrWhiteSpace(parameter))
             {
-                sender.SendMessage(255, 0, 0, "/Login <username> <password>");
+                sender.SendMessage(255, 0, 0, "/Register <username> <password> <password repeat>");
                 return;
             }
 
             string[] parts = parameter.Split(' ');
 
-            if (parts.Length < 2)
+            // Check param count.
+            if (parts.Length < 3)
             {
-                sender.SendMessage(255, 0, 0, "/Login <username> <password>");
+                sender.SendMessage(255, 0, 0, "/Register <username> <password> <password repeat>");
                 return;
             }
 
-            // Try to login
-            if (this.controler.TryLogin(parts[0], parts[1], sender))
+            // Check name available
+            if (this.controler.CheckAccountExists(parts[0]))
             {
-                sender.SendMessage(0, 255, 0, "Login successfull");
+                sender.SendMessage(255, 0, 0, "A account with the given name does already exist");
+                return;
             }
-            else
+
+            if (parts[1].Equals(parts[2], StringComparison.InvariantCulture))
             {
-                // Tell the user that the login has failed and why.
-                var reason = this.controler.CheckAccountExists(parts[0])
-                                 ? "Wrong password."
-                                 : "Username does not exist.";
-                sender.SendMessage(255, 0, 0, "Login failed." + reason);
+                sender.SendMessage(255, 0, 0, "The password and its repeat are not equal");
+                return;
             }
+
+            this.controler.CreateAccount(parts[0], parts[1]);
+            sender.SendMessage(0, 255, 0, "Account created you can now log in.");
         }
     }
 }

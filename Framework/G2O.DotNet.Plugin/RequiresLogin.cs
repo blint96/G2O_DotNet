@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IAccountControler.cs" company="Colony Online Project">
+// <copyright file="RequiresLogin.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,34 +19,27 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace G2O.DotNet.Account
+namespace G2O.DotNet.Plugin
 {
     using System;
 
-    using G2O.DotNet.ServerApi;
-
-    public interface IAccountControler
+    /// <summary>
+    ///     A attribute class that allow the specify whether a command requires the invoking client to be logged in.
+    /// </summary>
+    public class RequiresLogin : Attribute
     {
-        event EventHandler<LogedInOrOutEventArgs> ClientLoggedIn;
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="RequiresLogin" /> class.
+        /// </summary>
+        /// <param name="loginRequired">A value indicating whether attributed action requires the invoker to be logged in.</param>
+        public RequiresLogin(bool loginRequired)
+        {
+            this.LoginRequired = loginRequired;
+        }
 
-        event EventHandler<LogedInOrOutEventArgs> ClientLoggedOut;
-
-        event EventHandler<AccountCreatedEventArgs> AccountCreated;
-
-        bool CheckAccountExists(string username);
-
-        bool CheckLogin(string username, string password);
-
-        void CreateAccount(string username, string password);
-
-        bool TryLogin(string username, string password, IClient client);
-
-        bool ValidatePassword(string password);
-
-        void ForceLogin(string username, IClient client);
-
-        bool IsClientLoggedIn(IClient clientToCheck);
-
-        void LogOut(IClient client);
+        /// <summary>
+        ///     Gets a value indicating whether attributed action requires the invoker to be logged in.
+        /// </summary>
+        public bool LoginRequired { get; }
     }
 }
