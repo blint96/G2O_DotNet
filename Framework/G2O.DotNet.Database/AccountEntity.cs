@@ -52,6 +52,10 @@ namespace G2O.DotNet.Database
         [Required]
         public string PasswordHash { get; set; }
 
+        [Required]
+        public string PasswordSalt { get; set; }
+
+        public DateTime CreationTime { get; set; }
 
         public ICollection<CharacterEntity> PlayerCharacter { get; set; }
     }

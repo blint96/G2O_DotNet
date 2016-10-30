@@ -28,7 +28,7 @@ namespace G2O.DotNet.ApiInterceptorLayer
     /// <summary>
     ///     Interface for the
     /// </summary>
-    internal interface IClientListInterceptor : IClientList
+    public interface IClientListInterceptor : IClientList
     {
         /// <summary>
         ///     Gets a enumerable of all <see cref="IClientInterceptor" /> instances in the current

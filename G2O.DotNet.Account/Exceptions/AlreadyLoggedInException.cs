@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ICommand.cs" company="Colony Online Project">
+// <copyright file="AlreadyLoggedInException.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,25 +19,21 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace G2O.DotNet.Plugin
+namespace G2O.DotNet.Account
 {
-    using G2O.DotNet.ServerApi;
+    using System;
 
     /// <summary>
-    ///     Interface for all command classes.
+    ///     A class that describes an error that occurs if a already logged in user tries to login again.
     /// </summary>
-    public interface ICommand
+    public class AlreadyLoggedInException : Exception
     {
         /// <summary>
-        ///     Gets the identifier of the command.
+        ///     Initializes a new instance of the <see cref="AlreadyLoggedInException" /> class.
         /// </summary>
-        string CommandIdentifier { get; }
-
-        /// <summary>
-        ///     Method that is called when the command is send.
-        /// </summary>
-        /// <param name="parameter">The command parameter string.</param>
-        /// <param name="sender">The client that has send the command(null if it was no client)</param>
-        void Invoke(string parameter, IClient sender);
+        public AlreadyLoggedInException()
+            : base("An already logged in client tried to login again.")
+        {
+        }
     }
 }

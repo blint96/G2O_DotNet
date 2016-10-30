@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ICommand.cs" company="Colony Online Project">
+// <copyright file="AccountInUseException.cs" company="Colony Online Project">
 // -
 // Copyright (C) 2016  Julian Vogel
 // This program is free software: you can redistribute it and/or modify
@@ -19,25 +19,28 @@
 // <summary>
 // </summary>
 //  -------------------------------------------------------------------------------------------------------------------
-namespace G2O.DotNet.Plugin
+namespace G2O.DotNet.Account
 {
-    using G2O.DotNet.ServerApi;
+    using System;
 
     /// <summary>
-    ///     Interface for all command classes.
+    /// A class that describes a an error that occurs if someone tries to login on a account that is already in use(by another client).
     /// </summary>
-    public interface ICommand
+    public class AccountInUseException : Exception
     {
         /// <summary>
-        ///     Gets the identifier of the command.
+        /// Initializes a new instance of the <see cref="AccountInUseException"/> class.
         /// </summary>
-        string CommandIdentifier { get; }
+        /// <param name="accountName">The name of the account that is already logged in.</param>
+        public AccountInUseException(string accountName)
+            : base("The account '" + accountName + "' is allready logged in.")
+        {
+            this.AccountName = accountName;
+        }
 
         /// <summary>
-        ///     Method that is called when the command is send.
+        /// Gets the name of the account that is already logged in.
         /// </summary>
-        /// <param name="parameter">The command parameter string.</param>
-        /// <param name="sender">The client that has send the command(null if it was no client)</param>
-        void Invoke(string parameter, IClient sender);
+        public string AccountName { get; }
     }
 }

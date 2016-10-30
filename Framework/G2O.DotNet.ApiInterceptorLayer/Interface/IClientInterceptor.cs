@@ -28,7 +28,7 @@ namespace G2O.DotNet.ApiInterceptorLayer
     /// <summary>
     ///     Interface for the client interceptor class.
     /// </summary>
-    internal interface IClientInterceptor : IClient
+    public interface IClientInterceptor : IClient
     {
         /// <summary>
         ///     Invokes all registered handlers before the "CommandReceived" event is invoked.
