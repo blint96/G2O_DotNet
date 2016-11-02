@@ -13,16 +13,31 @@ namespace G2O.DotNet.Account
     {
         private readonly IClientInterceptor client;
 
+        private readonly CommandCollection commandCollection;
+
         private IRole role;
 
-        public Authorizer(IClientInterceptor client)
+        public Authorizer(IClientInterceptor client,CommandCollection commandCollection)
         {
             if (client == null)
             {
                 throw new ArgumentNullException(nameof(client));
             }
+            if (commandCollection == null)
+            {
+                throw new ArgumentNullException(nameof(commandCollection));
+            }
+
             this.client = client;
+            this.commandCollection = commandCollection;
             this.client.BeforeCommandReceived += this.InvokeCommand;
+            this.client.Disconnect += this.Client_Disconnect;
+        }
+
+        private void Client_Disconnect(object sender, ServerApi.ClientDisconnectedEventArgs e)
+        {
+            this.client.BeforeCommandReceived -= this.InvokeCommand;
+            this.client.Disconnect -= this.Client_Disconnect;
         }
 
         public void SetRole(IRole role)

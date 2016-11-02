@@ -33,23 +33,23 @@ namespace G2O.DotNet.Account.Commands
     internal class LogOutCommand : ICommand
     {
         /// <summary>
-        /// The used instance of <see cref="IAccountControler"/>.
+        /// The used instance of <see cref="IAccountController"/>.
         /// </summary>
-        private readonly IAccountControler controler;
+        private readonly IAccountController controller;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LogOutCommand"/> class.
         /// </summary>
-        /// <param name="controler">The used instance of <see cref="IAccountControler"/>.</param>
+        /// <param name="controller">The used instance of <see cref="IAccountController"/>.</param>
         [ImportingConstructor]
-        public LogOutCommand([Import] IAccountControler controler)
+        public LogOutCommand([Import] IAccountController controller)
         {
-            if (controler == null)
+            if (controller == null)
             {
-                throw new ArgumentNullException(nameof(controler));
+                throw new ArgumentNullException(nameof(controller));
             }
 
-            this.controler = controler;
+            this.controller = controller;
         }
 
         /// <summary>
@@ -64,13 +64,13 @@ namespace G2O.DotNet.Account.Commands
         /// <param name="sender">The client that has send the command(null if it was no client)</param>
         public void Invoke(string parameter, IClient sender)
         {
-            if (!this.controler.IsClientLoggedIn(sender))
+            if (!this.controller.IsClientLoggedIn(sender))
             {
                 sender.SendMessage(255, 0, 0, "You are not logged in.");
             }
             else
             {
-                this.controler.LogOut(sender);
+                this.controller.LogOut(sender);
                 sender.SendMessage(0, 255, 0, "You have been logged out.");
             }
         }

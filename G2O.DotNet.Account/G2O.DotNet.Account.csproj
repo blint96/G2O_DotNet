@@ -49,16 +49,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountControler.cs" />
+    <Compile Include="AccountController.cs" />
     <Compile Include="Authorizer.cs" />
     <Compile Include="CommandCollection.cs" />
     <Compile Include="Commands\CreateAccountCommand.cs" />
     <Compile Include="Commands\LogOutCommand.cs" />
+    <Compile Include="CommandContainer.cs" />
     <Compile Include="EventArgs\AccountCreatedEventArgs.cs" />
     <Compile Include="Exceptions\AccountInUseException.cs" />
     <Compile Include="Exceptions\AlreadyLoggedInException.cs" />
     <Compile Include="Exceptions\NotLoggedInException.cs" />
-    <Compile Include="IAccountControler.cs" />
+    <Compile Include="IAccountController.cs" />
     <Compile Include="EventArgs\LogedInOrOutEventArgs.cs" />
     <Compile Include="Commands\LoginCommand.cs" />
     <Compile Include="PasswordHasher.cs" />

@@ -33,23 +33,23 @@ namespace G2O.DotNet.Account.Commands
     internal class CreateAccountCommand : ICommand
     {
         /// <summary>
-        ///     The used instance of <see cref="IAccountControler" />.
+        ///     The used instance of <see cref="IAccountController" />.
         /// </summary>
-        private readonly IAccountControler controler;
+        private readonly IAccountController controller;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="CreateAccountCommand" /> class.
         /// </summary>
-        /// <param name="controler">The used instance of <see cref="IAccountControler" />.</param>
+        /// <param name="controller">The used instance of <see cref="IAccountController" />.</param>
         [ImportingConstructor]
-        public CreateAccountCommand([Import] IAccountControler controler)
+        public CreateAccountCommand([Import] IAccountController controller)
         {
-            if (controler == null)
+            if (controller == null)
             {
-                throw new ArgumentNullException(nameof(controler));
+                throw new ArgumentNullException(nameof(controller));
             }
 
-            this.controler = controler;
+            this.controller = controller;
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace G2O.DotNet.Account.Commands
             }
 
             // Check client is already logged in.
-            if (this.controler.IsClientLoggedIn(sender))
+            if (this.controller.IsClientLoggedIn(sender))
             {
                 sender.SendMessage(255, 0, 0, "You are logged in.");
                 return;
@@ -94,7 +94,7 @@ namespace G2O.DotNet.Account.Commands
             }
 
             // Check name available
-            if (this.controler.CheckAccountExists(parts[0]))
+            if (this.controller.CheckAccountExists(parts[0]))
             {
                 sender.SendMessage(255, 0, 0, "A account with the given name does already exist");
                 return;
@@ -106,7 +106,7 @@ namespace G2O.DotNet.Account.Commands
                 return;
             }
 
-            this.controler.CreateAccount(parts[0], parts[1]);
+            this.controller.CreateAccount(parts[0], parts[1]);
             sender.SendMessage(0, 255, 0, "Account created you can now log in.");
         }
     }

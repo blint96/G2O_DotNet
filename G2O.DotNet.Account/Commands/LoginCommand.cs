@@ -33,23 +33,23 @@ namespace G2O.DotNet.Account.Commands
     internal class LoginCommand : ICommand
     {
         /// <summary>
-        ///     The instance of <see cref="IAccountControler" /> that should be used by this command.
+        ///     The instance of <see cref="IAccountController" /> that should be used by this command.
         /// </summary>
-        private readonly IAccountControler controler;
+        private readonly IAccountController controller;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="LoginCommand" /> class.
         /// </summary>
-        /// <param name="controler">The instance of <see cref="IAccountControler" /> that should be used by this command.</param>
+        /// <param name="controller">The instance of <see cref="IAccountController" /> that should be used by this command.</param>
         [ImportingConstructor]
-        public LoginCommand([Import] IAccountControler controler)
+        public LoginCommand([Import] IAccountController controller)
         {
-            if (controler == null)
+            if (controller == null)
             {
-                throw new ArgumentNullException(nameof(controler));
+                throw new ArgumentNullException(nameof(controller));
             }
 
-            this.controler = controler;
+            this.controller = controller;
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace G2O.DotNet.Account.Commands
             {
                 throw new ArgumentNullException(nameof(sender));
             }
-            if (this.controler.IsClientLoggedIn(sender))
+            if (this.controller.IsClientLoggedIn(sender))
             {
                 sender.SendMessage(255, 0, 0, "You are already logged in.");
                 return;
@@ -90,14 +90,14 @@ namespace G2O.DotNet.Account.Commands
             }
 
             // Try to login
-            if (this.controler.TryLogin(parts[0], parts[1], sender))
+            if (this.controller.TryLogin(parts[0], parts[1], sender))
             {
                 sender.SendMessage(0, 255, 0, "Login successfull");
             }
             else
             {
                 // Tell the user that the login has failed and why.
-                var reason = this.controler.CheckAccountExists(parts[0])
+                var reason = this.controller.CheckAccountExists(parts[0])
                                  ? "Wrong password."
                                  : "Username does not exist.";
                 sender.SendMessage(255, 0, 0, "Login failed." + reason);
