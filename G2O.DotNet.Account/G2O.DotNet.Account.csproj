@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountController.cs" />
+    <Compile Include="AccountModule.cs" />
     <Compile Include="CommandAuthorization.cs" />
     <Compile Include="CommandCollection.cs" />
     <Compile Include="Commands\CreateAccountCommand.cs" />
