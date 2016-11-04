@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountController.cs" />
-    <Compile Include="Authorizer.cs" />
+    <Compile Include="CommandAuthorization.cs" />
     <Compile Include="CommandCollection.cs" />
     <Compile Include="Commands\CreateAccountCommand.cs" />
     <Compile Include="Commands\LogOutCommand.cs" />
@@ -64,6 +64,7 @@
     <Compile Include="Commands\LoginCommand.cs" />
     <Compile Include="PasswordHasher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Role.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Framework\G2O.DotNet.ApiInterceptorLayer\G2O.DotNet.ApiInterceptorLayer.csproj">
@@ -73,10 +74,6 @@
     <ProjectReference Include="..\Framework\G2O.DotNet.Database\G2O.DotNet.Database.csproj">
       <Project>{3bc536c3-0440-416a-94a4-b2286e705880}</Project>
       <Name>G2O.DotNet.Database</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Framework\G2O.DotNet.Permission\G2O.DotNet.Permission.csproj">
-      <Project>{5a0541d7-2c0c-4753-9686-408a8ed63087}</Project>
-      <Name>G2O.DotNet.Permission</Name>
     </ProjectReference>
     <ProjectReference Include="..\Framework\G2O.DotNet.Plugin\G2O.DotNet.Plugin.csproj">
       <Project>{cc607f62-31ee-42e7-9704-c4cb42cf17a3}</Project>
